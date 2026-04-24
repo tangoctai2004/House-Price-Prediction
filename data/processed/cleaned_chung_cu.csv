@@ -1,0 +1,1032 @@
+price_billion,area_m2,bedrooms_num,district,direction,balcony_direction,furniture_std,legal_std
+6.4,75.0,2.0,Hoài Đức,Không rõ,Không rõ,Cơ bản,HĐMB
+19.2,118.2,3.0,Tây Hồ,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+7.55,75.0,2.0,Hoàng Mai,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.2,99.1,3.0,Tây Hồ,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.3,97.5,3.0,Bắc Từ Liêm,Đông - Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.45,41.9,1.0,Nam Từ Liêm,Tây,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.65,42.8,1.0,Nam Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.35,68.0,2.0,Hà Đông,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.9,180.0,4.0,Hà Đông,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+13.9,89.7,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+19.8,154.0,4.0,Cầu Giấy,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+2.9,25.0,1.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.8,98.6,3.0,Khác,Đông - Nam,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+8.29,103.6,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+11.2,83.0,2.0,Nam Từ Liêm,Nam,Bắc,Đầy đủ,HĐMB
+3.5,55.0,2.0,Gia Lâm,Đông - Bắc,Tây - Nam,Không rõ,Sổ đỏ/Sổ hồng
+3.3,42.0,1.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.0,54.0,2.0,Hoài Đức,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.25,55.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,74.0,3.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Không rõ
+2.95,43.0,1.0,Gia Lâm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.9,81.0,3.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,Không rõ
+4.1,54.3,2.0,Nam Từ Liêm,Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.39,67.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+4.6,57.0,2.0,Hoài Đức,Đông - Bắc,Tây - Nam,Không rõ,HĐMB
+4.3,43.0,1.0,Nam Từ Liêm,Không rõ,Đông - Nam,Cơ bản,HĐMB
+2.56,31.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+20.0,113.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Không rõ
+17.4,80.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+9.0,90.0,3.0,Bắc Từ Liêm,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.3,153.0,4.0,Tây Hồ,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.5,55.0,2.0,Gia Lâm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.15,95.1,3.0,Gia Lâm,Không rõ,Đông - Nam,Cơ bản,HĐMB
+10.0,84.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+2.35,28.2,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+2.45,28.1,1.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+16.5,110.0,3.0,Tây Hồ,Đông - Nam,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+2.9,30.4,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+4.65,63.1,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.08,69.35,2.0,Hoài Đức,Không rõ,Không rõ,Cơ bản,HĐMB
+4.25,50.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,HĐMB
+37.1,220.5,4.0,Tây Hồ,Tây,Đông,Đầy đủ,HĐMB
+4.73,57.0,2.0,Hoài Đức,Bắc,Không rõ,Đầy đủ,HĐMB
+7.86,68.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+21.5,240.5,4.0,Hoàng Mai,Đông,Tây,Không nội thất,Sổ đỏ/Sổ hồng
+2.6,34.0,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,58.0,2.0,Hà Đông,Tây,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.7,112.0,3.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+14.0,125.0,3.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,HĐMB
+17.06,110.0,2.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.43,44.0,1.0,Hoài Đức,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,43.0,1.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.1,114.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.0,88.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.8,62.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,HĐMB
+5.5,75.0,2.0,Hoài Đức,Tây,Đông,Không rõ,Sổ đỏ/Sổ hồng
+4.42,67.0,2.0,Hà Đông,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.9,89.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+14.0,86.0,3.0,Tây Hồ,Tây - Bắc,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.2,53.0,2.0,Hoài Đức,Nam,Bắc,Cơ bản,HĐMB
+6.2,85.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+4.17,55.56,2.0,Hoài Đức,Tây,Đông,Không rõ,HĐMB
+6.67,58.2,2.0,Khác,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,55.0,2.0,Hoài Đức,Không rõ,Không rõ,Đầy đủ,Không rõ
+10.6,98.0,3.0,Khác,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+11.78,76.0,2.0,Long Biên,Không rõ,Không rõ,Không rõ,Không rõ
+9.35,102.0,3.0,Bắc Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,130.0,4.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.09,63.1,3.0,Khác,Tây - Bắc,Đông - Nam,Không rõ,HĐMB
+7.7,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.24,65.06,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+9.3,96.0,3.0,Bắc Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.55,66.8,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.0,70.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+6.41,89.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+21.5,160.0,4.0,Cầu Giấy,Đông - Bắc,Đông - Nam,Cơ bản,HĐMB
+10.1,63.6,4.0,Cầu Giấy,Tây - Nam,Đông - Bắc,Cơ bản,HĐMB
+16.5,88.0,2.0,Tây Hồ,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,86.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+15.2,104.0,3.0,Cầu Giấy,Bắc,Nam,Không nội thất,Không rõ
+4.68,55.0,1.0,Nam Từ Liêm,Đông - Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.89,66.0,2.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.65,67.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+5.9,73.0,2.0,Hoài Đức,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.8,70.0,2.0,Cầu Giấy,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.2,110.0,3.0,Cầu Giấy,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.95,55.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.2,83.0,2.0,Hoài Đức,Đông - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.18,61.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+5.34,53.4,2.0,Nam Từ Liêm,Tây - Bắc,Tây - Bắc,Cơ bản,HĐMB
+18.6,154.0,4.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+2.82,33.8,1.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.8,61.0,2.0,Hà Đông,Đông - Bắc,Đông - Bắc,Đầy đủ,HĐMB
+9.11,138.0,3.0,Hoài Đức,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+8.49,70.0,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+17.6,118.0,3.0,Tây Hồ,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+5.65,83.0,3.0,Gia Lâm,Đông - Bắc,Tây - Bắc,Cơ bản,HĐMB
+12.6,110.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+6.15,83.0,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,70.0,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.1,66.8,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.2,90.0,3.0,Bắc Từ Liêm,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.8,83.0,2.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.28,63.7,2.0,Gia Lâm,Đông - Bắc,Tây - Nam,Cơ bản,HĐMB
+6.4,78.0,2.0,Bắc Từ Liêm,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.5,48.0,2.0,Nam Từ Liêm,Đông - Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+8.7,66.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.3,53.0,2.0,Hoài Đức,Tây,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,94.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,90.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.9,70.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.8,66.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.4,55.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.55,57.0,2.0,Hoài Đức,Bắc,Nam,Đầy đủ,HĐMB
+9.5,94.0,2.0,Nam Từ Liêm,Tây,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,67.5,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Không rõ
+14.5,102.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.3,43.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.0,85.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,79.3,2.0,Khác,Không rõ,Tây - Nam,Đầy đủ,HĐMB
+6.8,85.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+2.4,28.1,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+21.8,240.0,4.0,Hoàng Mai,Nam,Đông,Không nội thất,Sổ đỏ/Sổ hồng
+6.62,72.0,2.0,Thanh Xuân,Không rõ,Tây - Bắc,Không rõ,Không rõ
+4.56,55.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+10.6,98.0,3.0,Nam Từ Liêm,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,83.0,2.0,Khác,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,82.0,3.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,75.6,2.0,Tây Hồ,Tây - Nam,Đông - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+30.0,193.0,4.0,Cầu Giấy,Không rõ,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+33.2,166.0,3.0,Cầu Giấy,Không rõ,Không rõ,Không nội thất,Sổ đỏ/Sổ hồng
+14.0,131.0,3.0,Thanh Xuân,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.38,98.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.36,85.0,3.0,Khác,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.08,128.0,3.0,Bắc Từ Liêm,Không rõ,Đông,Không rõ,Sổ đỏ/Sổ hồng
+6.6,60.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,95.0,3.0,Hoàng Mai,Nam,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,172.0,4.0,Bắc Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.9,73.0,2.0,Thanh Xuân,Không rõ,Đông - Nam,Đầy đủ,HĐMB
+7.31,69.6,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,HĐMB
+10.8,132.2,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.1,82.0,3.0,Khác,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.9,64.8,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.9,47.0,1.0,Gia Lâm,Đông - Nam,Tây - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+11.2,116.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+7.5,46.0,1.0,Nam Từ Liêm,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,111.36,3.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.7,60.0,2.0,Hà Đông,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.99,50.9,2.0,Hà Đông,Đông - Nam,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+13.7,113.0,3.0,Cầu Giấy,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.6,70.0,2.0,Hoàng Mai,Tây,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+8.3,83.0,2.0,Khác,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,107.0,3.0,Hoài Đức,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,73.0,2.0,Bắc Từ Liêm,Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.8,64.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,HĐMB
+12.7,111.4,3.0,Hà Đông,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+8.25,120.0,3.0,Long Biên,Tây - Bắc,Không rõ,Cơ bản,HĐMB
+4.1,55.0,2.0,Nam Từ Liêm,Đông,Bắc,Đầy đủ,Không rõ
+9.56,82.0,2.0,Thanh Xuân,Đông - Nam,Đông,Đầy đủ,HĐMB
+9.2,82.0,2.0,Hà Đông,Tây,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+8.2,72.0,2.0,Bắc Từ Liêm,Nam,Bắc,Cơ bản,HĐMB
+8.9,72.0,2.0,Cầu Giấy,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+14.0,105.88,3.0,Cầu Giấy,Không rõ,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.8,45.0,1.0,Hà Đông,Không rõ,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+7.4,70.0,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+10.5,87.0,2.0,Tây Hồ,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,70.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,89.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+28.5,251.0,4.0,Hoàng Mai,Không rõ,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+25.0,120.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.9,98.6,3.0,Khác,Đông - Nam,Tây - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+16.5,86.0,2.0,Tây Hồ,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.65,137.1,4.0,Hoài Đức,Đông - Nam,Đông - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+3.0,47.0,1.0,Gia Lâm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.79,127.0,4.0,Khác,Đông - Nam,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+31.5,200.0,4.0,Khác,Đông - Bắc,Đông - Nam,Không rõ,Không rõ
+2.86,30.3,1.0,Nam Từ Liêm,Tây,Đông,Không nội thất,Sổ đỏ/Sổ hồng
+5.88,80.0,3.0,Nam Từ Liêm,Đông - Nam,Không rõ,Đầy đủ,Không rõ
+8.28,96.0,3.0,Long Biên,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+8.95,63.9,2.0,Khác,Đông - Nam,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+5.3,66.8,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Không rõ
+2.6,28.0,1.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Không rõ
+10.8,75.0,2.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Không nội thất,HĐMB
+9.01,63.9,3.0,Khác,Đông - Nam,Không rõ,Không rõ,Không rõ
+23.5,110.0,3.0,Khác,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.37,43.0,1.0,Khác,Đông - Nam,Đông - Nam,Đầy đủ,HĐMB
+11.4,154.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,55.0,2.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.2,43.0,1.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+5.2,67.24,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+11.76,105.0,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,HĐMB
+5.35,92.0,3.0,Hà Đông,Không rõ,Đông - Nam,Đầy đủ,Khác
+5.7,62.0,2.0,Gia Lâm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.9,91.5,3.0,Long Biên,Đông - Nam,Không rõ,Cơ bản,Đang chờ sổ
+6.0,53.0,1.0,Hoàng Mai,Tây,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,55.0,2.0,Gia Lâm,Đông - Bắc,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.6,95.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.0,95.0,2.0,Khác,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,65.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.6,91.6,2.0,Hà Đông,Tây,Đông - Nam,Đầy đủ,HĐMB
+34.0,146.0,4.0,Khác,Không rõ,Đông - Nam,Không rõ,Không rõ
+16.6,114.5,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,34.0,1.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.5,64.0,2.0,Tây Hồ,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+11.25,103.0,3.0,Khác,Đông - Bắc,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.8,84.3,2.0,Bắc Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+16.89,76.4,2.0,Tây Hồ,Nam,Bắc,Đầy đủ,HĐMB
+7.85,81.3,3.0,Hà Đông,Không rõ,Không rõ,Cơ bản,HĐMB
+4.76,56.0,2.0,Hoài Đức,Bắc,Nam,Cơ bản,HĐMB
+4.0,64.0,2.0,Khác,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+5.6,70.0,2.0,Khác,Đông - Nam,Đông - Nam,Không rõ,HĐMB
+11.2,75.0,2.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+7.3,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+2.7,28.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+5.2,56.0,2.0,Hoài Đức,Không rõ,Đông,Không rõ,Không rõ
+9.0,98.0,3.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+6.2,98.8,3.0,Khác,Không rõ,Đông - Nam,Đầy đủ,HĐMB
+5.6,93.0,3.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.0,75.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,HĐMB
+6.0,65.0,2.0,Khác,Tây,Đông,Không rõ,Không rõ
+9.0,60.4,2.0,Khác,Không rõ,Không rõ,Không rõ,HĐMB
+3.62,48.0,1.0,Gia Lâm,Đông - Nam,Đông - Nam,Không rõ,HĐMB
+16.0,135.0,3.0,Hà Đông,Đông - Bắc,Không rõ,Cơ bản,HĐMB
+6.5,85.0,2.0,Long Biên,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.75,71.0,2.0,Nam Từ Liêm,Không rõ,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,116.0,3.0,Hoài Đức,Đông,Nam,Cơ bản,HĐMB
+8.95,112.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.8,75.3,2.0,Cầu Giấy,Bắc,Tây - Nam,Không nội thất,HĐMB
+8.7,54.0,2.0,Cầu Giấy,Bắc,Đông - Nam,Không nội thất,HĐMB
+20.0,125.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+7.5,90.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.68,55.0,2.0,Gia Lâm,Đông - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,103.0,3.0,Khác,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,95.0,2.0,Hoàng Mai,Đông - Bắc,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+6.9,61.0,2.0,Hoàng Mai,Đông,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+8.0,70.0,2.0,Hoàng Mai,Không rõ,Đông - Nam,Cơ bản,Không rõ
+9.0,93.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+7.6,85.0,3.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.4,55.0,2.0,Gia Lâm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.5,99.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+6.3,70.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+24.0,186.0,4.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.9,53.4,1.0,Khác,Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.9,58.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.55,47.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+18.0,145.0,3.0,Cầu Giấy,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+19.55,230.0,4.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.45,107.0,3.0,Hà Đông,Không rõ,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+3.0,48.0,1.0,Gia Lâm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+37.0,221.0,4.0,Tây Hồ,Không rõ,Đông - Nam,Không rõ,Không rõ
+4.9,57.0,2.0,Hoàng Mai,Đông - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,64.0,2.0,Nam Từ Liêm,Không rõ,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.95,65.0,2.0,Nam Từ Liêm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,61.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.1,89.0,3.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+15.46,112.0,3.0,Khác,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+14.4,80.0,3.0,Long Biên,Đông - Bắc,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+13.94,82.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+17.0,121.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Không rõ,HĐMB
+4.05,71.6,2.0,Hà Đông,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.9,55.0,2.0,Hoài Đức,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+13.2,113.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.7,66.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+3.2,28.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Không rõ
+7.7,80.0,2.0,Long Biên,Không rõ,Không rõ,Không rõ,Không rõ
+7.5,71.2,2.0,Thanh Xuân,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.62,75.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,HĐMB
+8.0,80.36,2.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.9,66.0,2.0,Thanh Xuân,Đông - Nam,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+7.5,82.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+7.68,101.7,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+7.42,70.0,2.0,Thanh Xuân,Không rõ,Không rõ,Cơ bản,HĐMB
+8.6,82.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.8,72.0,2.0,Thanh Xuân,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.0,75.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+8.96,128.0,3.0,Nam Từ Liêm,Bắc,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.65,55.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.15,53.4,2.0,Gia Lâm,Tây - Nam,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.8,36.0,1.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,HĐMB
+6.9,78.0,2.0,Nam Từ Liêm,Không rõ,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+13.0,130.0,3.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+17.41,151.4,4.0,Bắc Từ Liêm,Đông,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.1,54.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,HĐMB
+41.0,188.0,3.0,Khác,Đông - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+5.4,82.5,3.0,Hà Đông,Tây - Nam,Đông - Nam,Cơ bản,Đang chờ sổ
+8.8,89.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,78.0,2.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Đang chờ sổ
+6.6,76.0,3.0,Nam Từ Liêm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.25,77.5,2.0,Cầu Giấy,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+15.5,129.0,4.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Không rõ,Không rõ
+5.3,67.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+18.5,170.0,4.0,Long Biên,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.45,71.7,2.0,Long Biên,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+4.7,76.0,2.0,Long Biên,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+2.7,72.0,3.0,Nam Từ Liêm,Đông - Nam,Không rõ,Không rõ,Không rõ
+9.0,100.0,3.0,Nam Từ Liêm,Đông,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+11.5,98.0,3.0,Bắc Từ Liêm,Đông - Nam,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+16.0,131.0,2.0,Cầu Giấy,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,75.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+3.4,55.0,2.0,Gia Lâm,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.4,55.0,2.0,Gia Lâm,Đông - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,115.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,66.0,2.0,Cầu Giấy,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+3.65,54.8,2.0,Gia Lâm,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+3.13,42.9,2.0,Gia Lâm,Không rõ,Không rõ,Không rõ,Không rõ
+3.65,55.0,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Khác
+3.13,43.0,1.0,Gia Lâm,Tây - Nam,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.9,54.0,2.0,Gia Lâm,Không rõ,Đông - Bắc,Cơ bản,Không rõ
+7.8,72.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.65,55.0,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Không rõ
+3.35,55.0,2.0,Gia Lâm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.9,72.0,2.0,Long Biên,Đông - Bắc,Tây - Bắc,Đầy đủ,HĐMB
+6.0,76.0,2.0,Hoàng Mai,Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.8,128.0,3.0,Cầu Giấy,Đông - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+12.15,162.0,3.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+14.94,166.0,3.0,Thanh Xuân,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.9,62.5,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+15.6,130.0,3.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.8,70.0,2.0,Bắc Từ Liêm,Không rõ,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.6,75.0,3.0,Gia Lâm,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+4.48,45.5,1.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+5.0,67.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+5.85,76.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+12.35,120.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Cơ bản,HĐMB
+16.5,102.0,3.0,Cầu Giấy,Đông,Bắc,Không nội thất,HĐMB
+4.4,55.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+10.0,80.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+13.5,128.0,3.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.6,68.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.1,67.6,2.0,Khác,Đông - Nam,Tây - Bắc,Đầy đủ,HĐMB
+8.2,96.0,3.0,Long Biên,Không rõ,Đông - Nam,Không nội thất,HĐMB
+7.8,94.5,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+8.3,70.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+2.55,28.0,1.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.4,115.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+11.0,50.0,1.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+12.0,120.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,107.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.6,125.0,4.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.3,116.0,3.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.8,55.4,2.0,Gia Lâm,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,83.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+11.7,100.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,78.0,2.0,Hoàng Mai,Đông,Không rõ,Đầy đủ,HĐMB
+6.45,60.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.75,73.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.99,70.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+2.95,31.0,1.0,Nam Từ Liêm,Tây - Bắc,Không rõ,Không rõ,Không rõ
+17.2,104.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+11.2,82.6,2.0,Tây Hồ,Không rõ,Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+13.3,128.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.6,94.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Cơ bản,HĐMB
+10.5,115.0,3.0,Thanh Xuân,Đông - Bắc,Tây - Nam,Không rõ,Không rõ
+2.45,28.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Không rõ,Không rõ
+6.2,62.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.0,36.0,1.0,Cầu Giấy,Không rõ,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.9,73.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không rõ,Không rõ
+8.6,58.1,1.0,Tây Hồ,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+22.05,126.0,3.0,Bắc Từ Liêm,Nam,Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+8.43,64.49,2.0,Khác,Tây - Nam,Tây - Nam,Đầy đủ,HĐMB
+6.5,77.5,2.0,Long Biên,Tây - Bắc,Đông - Nam,Không nội thất,HĐMB
+7.0,109.0,3.0,Tây Hồ,Bắc,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,92.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+4.8,75.3,3.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+20.77,161.0,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+7.7,103.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.0,70.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Không rõ
+5.25,64.1,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Không rõ
+13.78,168.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Không rõ
+6.3,68.0,2.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.5,92.0,3.0,Cầu Giấy,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+2.18,26.0,1.0,Gia Lâm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.9,130.0,2.0,Cầu Giấy,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.4,87.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.2,114.0,3.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.9,69.0,3.0,Hà Đông,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.4,76.0,2.0,Tây Hồ,Đông,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.4,74.5,2.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+6.3,78.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+11.6,78.1,1.0,Tây Hồ,Bắc,Nam,Đầy đủ,HĐMB
+7.58,114.0,3.0,Khác,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+4.7,55.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.12,85.0,2.0,Nam Từ Liêm,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.3,55.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+3.9,70.0,2.0,Gia Lâm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+17.0,153.0,5.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Cơ bản,HĐMB
+4.1,69.7,2.0,Gia Lâm,Không rõ,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+18.76,101.4,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+10.5,107.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,78.0,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,73.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+4.45,90.0,3.0,Khác,Không rõ,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.3,65.8,2.0,Nam Từ Liêm,Đông,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,85.0,3.0,Khác,Đông - Nam,Tây - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+17.9,154.0,4.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+20.0,118.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.8,100.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.2,46.0,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+14.16,153.6,4.0,Gia Lâm,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+8.4,95.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+2.39,28.0,2.0,Gia Lâm,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+3.0,48.0,1.0,Gia Lâm,Tây - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.55,58.6,2.0,Nam Từ Liêm,Tây,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.0,184.0,4.0,Hoài Đức,Không rõ,Không rõ,Đầy đủ,HĐMB
+2.86,52.0,2.0,Hoàng Mai,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+18.4,161.0,4.0,Tây Hồ,Bắc,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.05,47.0,1.0,Gia Lâm,Tây - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,65.0,1.0,Tây Hồ,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+3.5,68.35,2.0,Hà Đông,Nam,Bắc,Đầy đủ,HĐMB
+7.0,107.0,3.0,Hà Đông,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.55,62.3,2.0,Nam Từ Liêm,Đông - Nam,Không rõ,Đầy đủ,HĐMB
+5.15,77.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Không rõ
+3.05,43.0,2.0,Gia Lâm,Không rõ,Đông - Bắc,Không rõ,Không rõ
+7.8,63.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.6,90.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,138.0,3.0,Thanh Xuân,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.16,70.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Không rõ
+15.0,120.0,3.0,Hoàng Mai,Tây - Nam,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,51.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+16.0,122.0,2.0,Tây Hồ,Bắc,Nam,Đầy đủ,HĐMB
+7.3,80.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.3,73.0,2.0,Hoài Đức,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+7.5,85.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.55,73.0,2.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.2,33.5,1.0,Khác,Không rõ,Tây - Nam,Không rõ,Đang chờ sổ
+4.72,55.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.8,80.0,3.0,Nam Từ Liêm,Không rõ,Nam,Cơ bản,HĐMB
+13.0,152.0,3.0,Cầu Giấy,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.85,60.7,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.4,59.0,2.0,Gia Lâm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.5,128.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.85,70.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.19,60.7,2.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,66.7,2.0,Hà Đông,Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,76.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+4.25,55.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.2,76.0,2.0,Cầu Giấy,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,80.0,2.0,Khác,Đông - Bắc,Tây - Nam,Đầy đủ,HĐMB
+10.7,79.3,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.6,84.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,125.4,3.0,Cầu Giấy,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+7.9,70.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.1,105.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+4.9,50.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.8,70.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.3,63.0,2.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Không rõ
+15.22,145.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.1,67.6,2.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.5,162.0,3.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.8,100.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+8.46,70.5,2.0,Thanh Xuân,Bắc,Nam,Cơ bản,HĐMB
+2.98,51.0,2.0,Khác,Đông - Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.0,97.0,3.0,Thanh Xuân,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.2,65.0,2.0,Khác,Tây - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.5,64.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Không rõ
+14.5,106.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+3.0,43.0,1.0,Gia Lâm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,91.0,3.0,Hà Đông,Đông,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+4.5,57.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+7.3,107.0,3.0,Hoàng Mai,Nam,Đông,Cơ bản,Đang chờ sổ
+5.3,64.5,2.0,Hoàng Mai,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,93.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,89.5,2.0,Long Biên,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,63.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.4,66.0,2.0,Nam Từ Liêm,Đông - Nam,Đông - Nam,Cơ bản,HĐMB
+6.0,74.1,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+19.7,160.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,67.5,2.0,Hoài Đức,Không rõ,Đông - Nam,Không nội thất,HĐMB
+3.85,63.0,2.0,Gia Lâm,Không rõ,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.4,55.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.5,92.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,HĐMB
+15.8,103.0,3.0,Khác,Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+11.0,142.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.6,80.0,2.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.7,92.0,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.12,63.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.45,69.9,2.0,Hoài Đức,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+6.7,43.7,4.0,Khác,Đông - Nam,Nam,Không nội thất,Sổ đỏ/Sổ hồng
+6.95,110.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+15.8,79.0,4.0,Khác,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.94,55.55,2.0,Hoài Đức,Không rõ,Tây,Cơ bản,Sổ đỏ/Sổ hồng
+1.88,36.0,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+10.4,136.1,3.0,Tây Hồ,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+9.5,106.6,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Không rõ,HĐMB
+7.65,67.0,2.0,Khác,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.66,74.5,2.0,Hà Đông,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.1,64.0,2.0,Cầu Giấy,Nam,Bắc,Không nội thất,HĐMB
+7.2,76.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.28,63.0,2.0,Gia Lâm,Đông - Bắc,Đông - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+9.4,109.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.26,171.0,3.0,Khác,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+4.55,70.0,2.0,Hà Đông,Đông,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.21,86.4,2.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+8.25,75.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Không rõ
+3.1,66.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+4.3,55.0,2.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+2.7,28.0,1.0,Nam Từ Liêm,Bắc,Nam,Đầy đủ,HĐMB
+5.75,61.7,2.0,Nam Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.55,95.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.6,90.0,2.0,Thanh Xuân,Đông - Bắc,Tây,Đầy đủ,HĐMB
+5.5,46.0,2.0,Cầu Giấy,Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.7,76.0,2.0,Hoài Đức,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+6.5,95.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+28.8,180.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+8.6,65.0,2.0,Nam Từ Liêm,Nam,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+6.3,53.5,2.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+9.5,94.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.85,67.0,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,136.0,3.0,Tây Hồ,Bắc,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,101.0,4.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.55,42.0,1.0,Gia Lâm,Đông - Bắc,Tây - Nam,Không rõ,Sổ đỏ/Sổ hồng
+8.15,101.5,3.0,Long Biên,Không rõ,Đông - Nam,Không rõ,Đang chờ sổ
+11.0,117.0,3.0,Cầu Giấy,Tây - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,63.0,2.0,Gia Lâm,Đông - Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+3.71,50.1,2.0,Gia Lâm,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.3,81.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.32,63.8,3.0,Gia Lâm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.65,73.0,2.0,Hà Đông,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.2,100.0,3.0,Gia Lâm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+14.3,105.0,3.0,Thanh Xuân,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+7.8,102.7,2.0,Hà Đông,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+14.6,116.0,3.0,Cầu Giấy,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.1,55.0,2.0,Nam Từ Liêm,Đông - Nam,Đông - Nam,Cơ bản,HĐMB
+9.8,113.1,3.0,Bắc Từ Liêm,Bắc,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+7.8,89.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.19,87.0,3.0,Hoàng Mai,Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,105.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,65.0,2.0,Nam Từ Liêm,Tây,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.8,167.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.2,129.0,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.4,160.0,3.0,Tây Hồ,Không rõ,Nam,Không rõ,Đang chờ sổ
+5.0,90.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,99.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,100.0,3.0,Nam Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+12.9,107.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+3.75,50.1,1.0,Gia Lâm,Đông - Nam,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+8.95,114.5,3.0,Hà Đông,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+2.3,60.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.85,58.5,2.0,Nam Từ Liêm,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,51.3,1.0,Gia Lâm,Đông - Bắc,Tây - Nam,Cơ bản,HĐMB
+12.3,123.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,71.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,HĐMB
+11.8,98.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.7,94.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+6.85,83.0,3.0,Nam Từ Liêm,Tây - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,55.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.3,100.3,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.2,63.0,2.0,Hà Đông,Đông,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.2,121.0,2.0,Thanh Xuân,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+10.0,90.0,3.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+8.2,114.0,3.0,Khác,Không rõ,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.65,50.0,1.0,Gia Lâm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.39,67.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,HĐMB
+17.5,154.0,4.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+9.8,102.5,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,HĐMB
+3.7,47.0,1.0,Gia Lâm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,73.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.3,91.0,3.0,Bắc Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.45,67.6,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.8,96.2,3.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Không nội thất,Sổ đỏ/Sổ hồng
+6.44,72.3,2.0,Khác,Đông - Bắc,Tây - Bắc,Không rõ,HĐMB
+7.05,50.0,1.0,Khác,Không rõ,Không rõ,Không rõ,HĐMB
+5.7,62.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.99,111.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+6.55,86.4,3.0,Gia Lâm,Đông - Bắc,Tây - Bắc,Cơ bản,HĐMB
+10.68,112.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.17,43.8,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+9.0,54.0,1.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.0,101.07,3.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,HĐMB
+4.4,55.0,2.0,Hoài Đức,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,70.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.1,75.0,2.0,Nam Từ Liêm,Không rõ,Nam,Không rõ,Không rõ
+29.0,190.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Không rõ
+7.8,84.0,3.0,Nam Từ Liêm,Không rõ,Bắc,Không rõ,HĐMB
+8.1,84.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.9,82.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+7.8,94.0,3.0,Tây Hồ,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.3,75.0,2.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+2.4,55.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,43.0,1.0,Nam Từ Liêm,Không rõ,Bắc,Không rõ,HĐMB
+7.8,84.0,3.0,Tây Hồ,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+15.0,130.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,80.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+21.56,159.2,5.0,Cầu Giấy,Tây - Nam,Đông - Bắc,Không nội thất,HĐMB
+4.6,72.0,2.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Không rõ
+7.5,95.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,69.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Cơ bản,HĐMB
+8.3,95.0,3.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.8,140.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+8.5,72.0,2.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Không rõ
+4.28,56.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+5.9,85.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Không rõ
+4.5,57.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+8.0,170.0,2.0,Hoài Đức,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+5.85,94.0,3.0,Hà Đông,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,73.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+4.77,75.3,2.0,Gia Lâm,Tây - Nam,Tây - Bắc,Cơ bản,HĐMB
+6.5,69.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,95.0,3.0,Khác,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,105.0,3.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.2,140.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+3.5,55.0,2.0,Gia Lâm,Đông - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,77.5,2.0,Long Biên,Tây - Bắc,Đông - Nam,Không nội thất,HĐMB
+10.29,116.9,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+6.8,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+10.0,110.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+14.0,105.0,3.0,Thanh Xuân,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.95,62.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+2.7,60.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.25,63.0,2.0,Nam Từ Liêm,Đông - Nam,Không rõ,Không rõ,Không rõ
+6.3,94.0,3.0,Khác,Nam,Bắc,Đầy đủ,HĐMB
+5.5,44.85,1.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+5.8,57.0,3.0,Thanh Xuân,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.65,76.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+26.88,141.5,4.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+5.1,69.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+24.9,110.0,3.0,Khác,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,169.0,3.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Không rõ
+5.8,77.0,3.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.75,60.0,2.0,Hoài Đức,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.3,161.0,3.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Không rõ
+6.94,95.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+20.0,195.0,4.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,HĐMB
+10.0,80.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.75,106.0,3.0,Hoàng Mai,Không rõ,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.31,72.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+9.4,69.22,2.0,Khác,Nam,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+11.18,74.5,2.0,Tây Hồ,Tây - Bắc,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+8.7,58.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,HĐMB
+7.62,68.6,1.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+11.7,65.1,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.0,120.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.3,76.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.16,106.0,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Không nội thất,Sổ đỏ/Sổ hồng
+4.85,52.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+3.5,65.0,2.0,Khác,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+5.9,63.6,2.0,Nam Từ Liêm,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.9,102.0,2.0,Hà Đông,Đông - Nam,Tây - Bắc,Cơ bản,Không rõ
+8.3,133.0,4.0,Hà Đông,Tây - Nam,Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+5.25,80.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,55.0,1.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.05,96.0,3.0,Hà Đông,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+14.72,92.0,2.0,Tây Hồ,Đông - Bắc,Tây - Nam,Cơ bản,HĐMB
+21.09,111.0,3.0,Tây Hồ,Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.0,129.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,103.0,3.0,Bắc Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+14.8,105.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,92.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,HĐMB
+9.2,101.0,3.0,Hoàng Mai,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,110.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.42,57.0,2.0,Hoài Đức,Không rõ,Đông - Nam,Cơ bản,HĐMB
+5.0,67.0,2.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.0,96.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.4,45.0,2.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,100.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.1,104.0,3.0,Hoàng Mai,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.15,107.0,3.0,Hà Đông,Tây - Bắc,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.9,46.0,1.0,Tây Hồ,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+18.5,170.0,3.0,Long Biên,Tây - Bắc,Đông - Nam,Cơ bản,Đang chờ sổ
+4.25,68.6,2.0,Khác,Đông - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.4,75.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.3,78.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Không rõ
+20.5,170.0,4.0,Long Biên,Đông - Nam,Tây - Bắc,Cơ bản,Đang chờ sổ
+28.0,170.0,3.0,Long Biên,Tây - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+11.8,108.0,3.0,Long Biên,Tây - Nam,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+7.5,81.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.39,44.0,1.0,Hoài Đức,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.9,66.1,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,75.0,2.0,Hoài Đức,Không rõ,Không rõ,Không rõ,Không rõ
+28.0,170.0,3.0,Long Biên,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.5,100.0,3.0,Nam Từ Liêm,Tây,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.3,63.5,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,HĐMB
+7.9,80.0,2.0,Nam Từ Liêm,Đông - Nam,Đông - Nam,Không rõ,Không rõ
+5.4,76.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,HĐMB
+5.15,55.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.15,56.4,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,HĐMB
+2.92,31.0,2.0,Gia Lâm,Không rõ,Không rõ,Không rõ,Không rõ
+4.65,66.5,2.0,Gia Lâm,Đông - Nam,Đông - Nam,Không rõ,Không rõ
+6.15,42.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.3,103.8,3.0,Bắc Từ Liêm,Tây,Đông,Cơ bản,Sổ đỏ/Sổ hồng
+4.1,69.0,2.0,Gia Lâm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,62.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+21.5,106.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+14.5,113.0,2.0,Tây Hồ,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+13.5,128.5,3.0,Cầu Giấy,Nam,Tây,Cơ bản,Sổ đỏ/Sổ hồng
+7.8,97.0,3.0,Long Biên,Đông,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.98,58.0,2.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+12.7,104.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+13.0,111.36,2.0,Hà Đông,Đông - Bắc,Không rõ,Cơ bản,HĐMB
+11.5,106.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+4.69,70.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+3.95,69.9,2.0,Hoài Đức,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+3.8,66.0,2.0,Hoài Đức,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.9,67.0,2.0,Hà Đông,Đông - Nam,Đông - Nam,Không rõ,HĐMB
+6.9,92.0,3.0,Cầu Giấy,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.15,43.5,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Đầy đủ,HĐMB
+10.8,98.0,3.0,Khác,Đông - Nam,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+7.25,75.0,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.35,73.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+5.3,53.0,3.0,Khác,Đông - Nam,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+19.5,230.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.9,119.0,3.0,Cầu Giấy,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.65,80.0,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.59,55.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+5.3,62.5,2.0,Hoài Đức,Nam,Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+8.5,70.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.73,68.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,HĐMB
+5.15,63.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,76.0,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+16.08,132.0,4.0,Nam Từ Liêm,Nam,Đông - Bắc,Đầy đủ,HĐMB
+18.0,125.0,3.0,Tây Hồ,Không rõ,Đông - Nam,Đầy đủ,Không rõ
+2.15,32.0,1.0,Gia Lâm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+11.5,71.0,2.0,Long Biên,Không rõ,Đông,Đầy đủ,Không rõ
+6.7,85.7,3.0,Hoàng Mai,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.95,62.0,2.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,64.5,2.0,Bắc Từ Liêm,Bắc,Nam,Không rõ,Sổ đỏ/Sổ hồng
+7.5,65.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,100.0,3.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.9,70.0,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.3,75.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+3.25,45.0,1.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,95.0,3.0,Hoàng Mai,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.6,61.0,2.0,Hà Đông,Đông - Bắc,Đông - Bắc,Đầy đủ,HĐMB
+8.0,75.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.1,47.7,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,134.0,3.0,Khác,Tây - Bắc,Nam,Không nội thất,Sổ đỏ/Sổ hồng
+11.3,104.0,3.0,Cầu Giấy,Đông - Nam,Không rõ,Không rõ,Không rõ
+5.8,89.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.25,70.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+5.7,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.35,60.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+4.65,65.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+4.6,65.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.8,80.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+3.85,60.0,2.0,Hoàng Mai,Không rõ,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.4,50.0,2.0,Hoàng Mai,Không rõ,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.3,71.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+2.9,43.0,1.0,Gia Lâm,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+7.8,83.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.2,81.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+15.16,129.6,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+4.9,57.0,3.0,Cầu Giấy,Nam,Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+10.4,109.5,3.0,Hoàng Mai,Đông,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.7,60.0,2.0,Gia Lâm,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+2.6,31.0,2.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.1,80.8,3.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.5,46.0,1.0,Nam Từ Liêm,Không rõ,Đông - Nam,Cơ bản,Không rõ
+3.29,66.0,2.0,Hoàng Mai,Tây,Đông,Đầy đủ,HĐMB
+5.96,88.0,3.0,Long Biên,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+11.0,85.0,2.0,Cầu Giấy,Không rõ,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+7.65,66.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+3.82,63.0,2.0,Gia Lâm,Tây - Bắc,Đông - Nam,Không nội thất,Sổ đỏ/Sổ hồng
+5.0,100.0,4.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.58,90.0,3.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.15,63.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+4.63,75.0,3.0,Khác,Không rõ,Không rõ,Không rõ,Không rõ
+11.0,140.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.0,134.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,190.0,4.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.8,57.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+9.5,152.0,4.0,Nam Từ Liêm,Đông - Nam,Nam,Không rõ,Sổ đỏ/Sổ hồng
+12.5,128.0,3.0,Thanh Xuân,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,62.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Không rõ,Không rõ
+12.6,123.0,3.0,Thanh Xuân,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,122.6,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+15.0,165.0,3.0,Thanh Xuân,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,205.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.2,71.22,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.4,88.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.5,147.8,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+10.0,112.0,3.0,Cầu Giấy,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.5,81.0,2.0,Nam Từ Liêm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,65.0,2.0,Khác,Tây - Nam,Đông - Nam,Đầy đủ,Khác
+3.55,55.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+24.0,180.0,4.0,Khác,Tây - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.8,73.9,3.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,54.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,117.0,3.0,Cầu Giấy,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+3.57,55.4,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.55,55.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.02,46.0,1.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.9,63.3,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+14.0,190.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,146.0,4.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,Không rõ
+5.0,75.0,2.0,Hà Đông,Tây - Nam,Đông - Nam,Không nội thất,Sổ đỏ/Sổ hồng
+19.0,172.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+11.0,135.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không nội thất,Sổ đỏ/Sổ hồng
+15.0,75.0,2.0,Thanh Xuân,Tây - Nam,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+9.0,120.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+20.0,170.0,4.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+18.0,172.0,4.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+15.0,180.0,4.0,Cầu Giấy,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.3,76.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+12.0,136.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+19.0,180.0,4.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.0,120.0,4.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+26.5,285.0,4.0,Cầu Giấy,Đông - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+14.5,180.0,4.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+8.0,90.0,3.0,Thanh Xuân,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.6,60.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+20.0,178.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+20.0,195.0,4.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+12.64,80.6,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Không nội thất,HĐMB
+12.3,146.0,4.0,Nam Từ Liêm,Đông - Bắc,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.5,66.0,2.0,Hoài Đức,Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,80.0,3.0,Hoài Đức,Đông - Bắc,Tây - Nam,Đầy đủ,HĐMB
+8.9,89.0,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+11.76,105.0,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,HĐMB
+12.0,95.0,3.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.8,76.0,1.0,Tây Hồ,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.6,142.0,4.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.65,65.0,2.0,Hoàng Mai,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.05,47.0,1.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.05,150.0,4.0,Hoài Đức,Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.58,65.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.2,65.5,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,85.0,3.0,Hoàng Mai,Không rõ,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.3,120.0,3.0,Cầu Giấy,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.2,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.65,52.0,1.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+6.8,100.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+13.2,104.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Khác
+5.4,102.0,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+8.1,70.0,2.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.45,71.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Không rõ
+7.9,71.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,122.6,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,75.0,2.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,112.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.8,77.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.5,92.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.4,76.0,2.0,Hoài Đức,Không rõ,Không rõ,Cơ bản,HĐMB
+5.86,77.0,2.0,Hoài Đức,Đông,Không rõ,Cơ bản,HĐMB
+5.86,77.0,2.0,Hoài Đức,Đông,Không rõ,Cơ bản,HĐMB
+6.4,76.0,2.0,Hoài Đức,Không rõ,Không rõ,Cơ bản,HĐMB
+8.6,120.0,3.0,Long Biên,Đông - Nam,Tây - Bắc,Cơ bản,HĐMB
+4.62,55.56,2.0,Hoài Đức,Nam,Nam,Cơ bản,HĐMB
+4.6,60.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.2,110.0,3.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Không rõ
+6.5,68.0,2.0,Nam Từ Liêm,Không rõ,Đông - Nam,Đầy đủ,HĐMB
+4.6,58.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.98,43.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.3,110.0,3.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,96.0,3.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.7,70.0,2.0,Cầu Giấy,Đông,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+4.75,70.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.68,63.2,2.0,Gia Lâm,Không rõ,Tây - Bắc,Cơ bản,HĐMB
+9.2,99.0,3.0,Tây Hồ,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+9.5,62.4,2.0,Thanh Xuân,Đông - Nam,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,105.0,3.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.2,57.0,2.0,Gia Lâm,Tây - Bắc,Không rõ,Không rõ,HĐMB
+4.8,75.0,3.0,Gia Lâm,Không rõ,Đông - Bắc,Không rõ,Sổ đỏ/Sổ hồng
+14.15,128.0,3.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.4,63.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,70.0,2.0,Cầu Giấy,Tây - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,80.0,2.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+10.4,137.0,3.0,Hà Đông,Không rõ,Tây - Bắc,Không rõ,Không rõ
+7.0,61.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Không rõ
+6.8,78.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.7,92.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,90.0,3.0,Hà Đông,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+3.65,45.2,1.0,Gia Lâm,Đông - Bắc,Tây - Nam,Đầy đủ,HĐMB
+4.15,62.7,2.0,Gia Lâm,Không rõ,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,77.2,3.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,75.0,3.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.2,86.0,2.0,Tây Hồ,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.3,89.0,3.0,Gia Lâm,Đông - Nam,Đông - Nam,Cơ bản,HĐMB
+4.35,64.6,2.0,Gia Lâm,Không rõ,Không rõ,Không rõ,HĐMB
+5.12,71.2,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,HĐMB
+7.17,95.1,3.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+4.25,62.8,2.0,Gia Lâm,Đông - Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+13.5,168.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.18,61.0,2.0,Gia Lâm,Đông - Nam,Không rõ,Không rõ,Không rõ
+4.35,63.7,2.0,Gia Lâm,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.05,70.0,2.0,Gia Lâm,Không rõ,Tây - Bắc,Đầy đủ,HĐMB
+2.9,43.0,1.0,Gia Lâm,Không rõ,Đông - Bắc,Không rõ,Không rõ
+4.25,70.5,2.0,Gia Lâm,Không rõ,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.9,68.4,2.0,Gia Lâm,Không rõ,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.3,97.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,86.0,3.0,Hà Đông,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+10.3,98.7,3.0,Bắc Từ Liêm,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+13.0,121.0,3.0,Cầu Giấy,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.08,55.56,2.0,Hoài Đức,Nam,Nam,Cơ bản,HĐMB
+2.27,30.0,1.0,Gia Lâm,Đông - Nam,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.7,131.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+17.0,258.0,5.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.7,67.0,2.0,Bắc Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.88,43.72,1.0,Hoài Đức,Bắc,Bắc,Cơ bản,HĐMB
+10.2,124.5,4.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+8.2,96.0,3.0,Khác,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+4.5,60.0,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+10.5,87.4,2.0,Tây Hồ,Không rõ,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+13.8,109.8,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.5,78.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.8,91.5,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.1,60.0,2.0,Tây Hồ,Không rõ,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.0,65.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,80.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.0,77.5,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+11.2,85.0,3.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+13.8,127.5,3.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Không rõ
+5.0,100.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+6.6,65.0,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.39,57.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Đang chờ sổ
+4.75,62.0,2.0,Hoàng Mai,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+5.0,60.0,3.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Không rõ
+10.5,99.5,3.0,Bắc Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+13.58,146.0,3.0,Khác,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+3.1,43.0,2.0,Gia Lâm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,61.0,2.0,Hà Đông,Tây - Nam,Không rõ,Đầy đủ,HĐMB
+7.3,82.0,2.0,Cầu Giấy,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+8.9,95.0,3.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+14.5,107.0,3.0,Thanh Xuân,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.0,110.0,3.0,Cầu Giấy,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.15,70.0,2.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Không rõ
+4.5,60.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.5,96.0,3.0,Cầu Giấy,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.2,85.0,2.0,Cầu Giấy,Nam,Đông,Đầy đủ,Không rõ
+9.0,104.52,3.0,Nam Từ Liêm,Không rõ,Đông - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+6.2,82.0,3.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.5,72.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+9.6,105.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+5.5,64.0,2.0,Long Biên,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.2,77.0,2.0,Long Biên,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+8.0,97.0,3.0,Long Biên,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+7.25,81.5,2.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Cơ bản,HĐMB
+8.3,85.0,3.0,Tây Hồ,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.68,96.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+5.5,67.0,2.0,Thanh Xuân,Bắc,Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,91.0,2.0,Hà Đông,Tây - Bắc,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+9.3,100.0,3.0,Tây Hồ,Nam,Bắc,Không rõ,Không rõ
+3.15,36.0,1.0,Nam Từ Liêm,Tây - Nam,Đông - Bắc,Cơ bản,HĐMB
+7.5,66.0,2.0,Thanh Xuân,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.5,55.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+7.2,68.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.55,33.0,2.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+8.9,108.0,3.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Đầy đủ,Không rõ
+4.9,55.0,2.0,Gia Lâm,Đông - Bắc,Tây - Nam,Không rõ,Sổ đỏ/Sổ hồng
+8.1,95.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,HĐMB
+12.0,171.0,3.0,Nam Từ Liêm,Tây,Nam,Cơ bản,Sổ đỏ/Sổ hồng
+5.0,79.0,2.0,Hoàng Mai,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+4.55,54.0,2.0,Hoàng Mai,Đông,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,85.0,3.0,Long Biên,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.05,86.0,2.0,Hà Đông,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+17.0,125.1,4.0,Cầu Giấy,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+3.75,57.0,2.0,Hà Đông,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+3.75,55.0,2.0,Hà Đông,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.04,63.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.2,62.0,2.0,Hà Đông,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.7,54.0,2.0,Hà Đông,Tây - Nam,Đông - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.6,63.5,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+5.8,96.8,3.0,Hoài Đức,Đông - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+2.6,35.0,2.0,Gia Lâm,Không rõ,Tây - Nam,Không nội thất,HĐMB
+7.0,69.0,2.0,Cầu Giấy,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+8.5,86.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+15.8,129.0,2.0,Thanh Xuân,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,61.7,2.0,Nam Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+6.7,66.7,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.3,107.4,3.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.5,45.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,HĐMB
+8.0,80.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+14.5,150.0,4.0,Tây Hồ,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,115.0,4.0,Nam Từ Liêm,Đông - Bắc,Đông,Không rõ,Sổ đỏ/Sổ hồng
+5.9,60.7,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,78.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Không rõ
+9.0,109.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+4.0,69.9,2.0,Hoài Đức,Tây,Đông,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,83.0,2.0,Hoài Đức,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.88,68.0,2.0,Khác,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+32.71,221.0,3.0,Long Biên,Không rõ,Không rõ,Đầy đủ,HĐMB
+14.0,100.0,3.0,Cầu Giấy,Đông,Tây - Bắc,Không nội thất,HĐMB
+8.6,72.4,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.6,154.3,4.0,Hà Đông,Không rõ,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+10.5,82.6,2.0,Tây Hồ,Không rõ,Tây,Cơ bản,Sổ đỏ/Sổ hồng
+15.5,94.7,3.0,Cầu Giấy,Bắc,Nam,Không nội thất,HĐMB
+9.0,128.0,2.0,Hoài Đức,Không rõ,Không rõ,Đầy đủ,Không rõ
+7.6,75.0,3.0,Khác,Không rõ,Không rõ,Cơ bản,Không rõ
+2.95,45.0,2.0,Long Biên,Không rõ,Không rõ,Cơ bản,Sổ đỏ/Sổ hồng
+11.3,79.0,2.0,Nam Từ Liêm,Đông - Bắc,Đông - Bắc,Không nội thất,HĐMB
+4.9,69.6,2.0,Bắc Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,103.0,3.0,Bắc Từ Liêm,Không rõ,Đông - Bắc,Cơ bản,Sổ đỏ/Sổ hồng
+5.8,68.0,2.0,Hoàng Mai,Đông - Nam,Tây - Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+7.0,74.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+10.75,97.6,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+11.9,104.1,3.0,Bắc Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.49,96.0,3.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+8.5,111.4,3.0,Hà Đông,Đông - Nam,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.1,66.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+18.0,125.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+12.5,100.0,2.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,75.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,115.0,3.0,Nam Từ Liêm,Đông,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,64.0,2.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.0,90.3,3.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,115.0,3.0,Nam Từ Liêm,Đông,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+3.9,54.8,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.18,48.0,2.0,Hà Đông,Đông,Tây,Đầy đủ,Sổ đỏ/Sổ hồng
+3.6,48.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+8.4,87.5,2.0,Bắc Từ Liêm,Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+5.5,75.7,3.0,Nam Từ Liêm,Không rõ,Đông - Nam,Không rõ,Sổ đỏ/Sổ hồng
+2.3,32.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+8.8,104.0,3.0,Nam Từ Liêm,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+16.0,115.0,3.0,Nam Từ Liêm,Đông,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+9.0,80.0,3.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Không rõ
+7.8,73.0,2.0,Thanh Xuân,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.0,68.0,2.0,Hoàng Mai,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+6.9,82.0,2.0,Hoàng Mai,Đông - Nam,Bắc,Đầy đủ,Sổ đỏ/Sổ hồng
+8.7,115.0,3.0,Hoàng Mai,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.5,141.0,3.0,Cầu Giấy,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+12.0,106.0,3.0,Hoàng Mai,Tây,Đông,Không rõ,Sổ đỏ/Sổ hồng
+10.0,94.0,2.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,HĐMB
+13.8,143.0,3.0,Thanh Xuân,Không rõ,Không rõ,Không rõ,Không rõ
+10.6,130.0,3.0,Khác,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+7.4,78.0,2.0,Thanh Xuân,Không rõ,Không rõ,Cơ bản,HĐMB
+4.8,83.0,3.0,Long Biên,Không rõ,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+14.4,130.0,3.0,Cầu Giấy,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+13.8,182.0,4.0,Cầu Giấy,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+4.8,64.2,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+7.8,53.0,1.0,Khác,Không rõ,Không rõ,Không rõ,Sổ đỏ/Sổ hồng
+6.0,85.0,3.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Không rõ
+6.65,92.0,2.0,Nam Từ Liêm,Không rõ,Không rõ,Không rõ,Không rõ
+5.69,62.0,2.0,Thanh Xuân,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+3.92,55.0,2.0,Gia Lâm,Đông - Bắc,Tây - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+6.5,80.0,2.0,Hoàng Mai,Tây - Bắc,Đông - Nam,Đầy đủ,Sổ đỏ/Sổ hồng
+5.2,54.0,2.0,Hà Đông,Không rõ,Không rõ,Không rõ,HĐMB
+21.1,240.05,2.0,Hoàng Mai,Không rõ,Không rõ,Không rõ,Không rõ
+15.2,105.0,3.0,Khác,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+7.5,100.0,3.0,Nam Từ Liêm,Đông - Bắc,Tây - Nam,Cơ bản,Sổ đỏ/Sổ hồng
+4.89,82.0,2.0,Hà Đông,Không rõ,Không rõ,Đầy đủ,Sổ đỏ/Sổ hồng
+15.2,93.0,2.0,Tây Hồ,Không rõ,Không rõ,Không rõ,HĐMB
