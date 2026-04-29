@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự Đoán Giá Nhà Đất | Prophet Estate</title>
+    <meta name="description" content="Định giá bất động sản thông minh bằng AI — chính xác, nhanh chóng, dựa trên dữ liệu thị trường thực tế Việt Nam.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
+    <style>
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    {% include '_header.html' %}
+
+    <main>
+        <!-- HERO BAND -->
+        <section class="hero-band">
+            <div class="container hero-grid">
+                
+                <!-- Left: Text content -->
+                <div class="hero-content">
+                    <div class="hero-eyebrow">Định giá bởi Machine Learning</div>
+                    <h1 class="display-xl">Dự Đoán Giá Nhà Đất</h1>
+                    <p class="body-md">Ứng dụng AI tiên tiến mang đến định giá bất động sản chính xác nhất — dựa trên hơn 2.500 giao dịch thực tế tại Hà Nội.</p>
+                    
+                    <div class="hero-cta-row">
+                        <button class="button-primary" onclick="document.getElementById('area').focus()">Định giá ngay</button>
+                        <a href="/analytics" class="button-text-link">Xem phân tích thị trường →</a>
+                    </div>
+                    
+                    <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-lg);">
+                        <div>
+                            <div class="display-md" style="color: var(--colors-ink);">2.5K+</div>
+                            <div class="caption">BĐS phân tích</div>
+                        </div>
+                        <div>
+                            <div class="display-md" style="color: var(--colors-ink);">13</div>
+                            <div class="caption">Quận Hà Nội</div>
+                        </div>
+                        <div>
+                            <div class="display-md" style="color: var(--colors-ink);">AI</div>
+                            <div class="caption">Random Forest</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Product Mockup Card (Form) -->
+                <div class="prediction-form-card">
+                    <!-- Type toggle -->
+                    <div class="type-toggle">
+                        <input type="radio" id="type-chung-cu" name="property_type_toggle" value="chung_cu" checked>
+                        <label for="type-chung-cu" class="toggle-label">Chung Cư</label>
+                        <input type="radio" id="type-nha-dat" name="property_type_toggle" value="nha_dat">
+                        <label for="type-nha-dat" class="toggle-label">Nhà Đất</label>
+                    </div>
+
+                    <form id="prediction-form">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="area">Diện tích (m²)</label>
+                                <input type="number" id="area" name="area" class="text-input" step="0.1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bedrooms">Số phòng ngủ</label>
+                                <input type="number" id="bedrooms" name="bedrooms" class="text-input" min="0" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="district">Quận/Huyện</label>
+                                <select id="district" name="district" class="select-input">
+                                    <option value="Cầu Giấy">Cầu Giấy</option>
+                                    <option value="Nam Từ Liêm">Nam Từ Liêm</option>
+                                    <option value="Thanh Xuân">Thanh Xuân</option>
+                                    <option value="Hà Đông">Hà Đông</option>
+                                    <option value="Đống Đa">Đống Đa</option>
+                                    <option value="Tây Hồ">Tây Hồ</option>
+                                    <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+                                    <option value="Hoài Đức">Hoài Đức</option>
+                                    <option value="Hoàng Mai">Hoàng Mai</option>
+                                    <option value="Long Biên">Long Biên</option>
+                                    <option value="Bắc Từ Liêm">Bắc Từ Liêm</option>
+                                    <option value="Gia Lâm">Gia Lâm</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="direction">Hướng nhà</label>
+                                <select id="direction" name="direction" class="select-input">
+                                    <option value="Đông">Đông</option>
+                                    <option value="Tây">Tây</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Bắc">Bắc</option>
+                                    <option value="Đông Nam">Đông Nam</option>
+                                    <option value="Tây Bắc">Tây Bắc</option>
+                                    <option value="Đông Bắc">Đông Bắc</option>
+                                    <option value="Tây Nam">Tây Nam</option>
+                                    <option value="Không rõ">Không rõ</option>
+                                </select>
+                            </div>
+
+                            <!-- Chung Cư only -->
+                            <div class="input-group chung-cu-only">
+                                <label for="balcony_direction">Hướng ban công</label>
+                                <select id="balcony_direction" name="balcony_direction" class="select-input">
+                                    <option value="Đông">Đông</option>
+                                    <option value="Tây">Tây</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Bắc">Bắc</option>
+                                    <option value="Đông Nam">Đông Nam</option>
+                                    <option value="Không rõ">Không rõ</option>
+                                </select>
+                            </div>
+
+                            <!-- Nhà Đất only -->
+                            <div class="input-group nha-dat-only" style="display:none">
+                                <label for="floors">Số tầng</label>
+                                <input type="number" id="floors" name="floors" class="text-input" min="1">
+                            </div>
+                            <div class="input-group nha-dat-only" style="display:none">
+                                <label for="frontage">Mặt tiền (m)</label>
+                                <input type="number" id="frontage" name="frontage" class="text-input" step="0.1">
+                            </div>
+                            <div class="input-group nha-dat-only" style="display:none">
+                                <label for="road_width">Đường vào (m)</label>
+                                <input type="number" id="road_width" name="road_width" class="text-input" step="0.1">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="furniture">Nội thất</label>
+                                <select id="furniture" name="furniture" class="select-input">
+                                    <option value="Đầy đủ">Đầy đủ</option>
+                                    <option value="Cơ bản">Cơ bản</option>
+                                    <option value="Không nội thất">Không nội thất</option>
+                                    <option value="Không rõ">Không rõ</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="legal">Pháp lý</label>
+                                <select id="legal" name="legal" class="select-input">
+                                    <option value="Sổ đỏ">Sổ đỏ/Sổ hồng</option>
+                                    <option value="Hợp đồng mua bán">HĐMB</option>
+                                    <option value="Không rõ">Không rõ</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="error-message" class="error-message"></div>
+
+                        <button type="submit" id="submit-btn" class="button-primary" style="width: 100%;">
+                            <span class="btn-text">Dự Đoán Giá Trị</span>
+                            <div class="spinner" style="display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite;"></div>
+                        </button>
+                    </form>
+
+                    <div id="result-container" class="result-container" style="display: none;">
+                        <p class="result-label">Giá ước tính</p>
+                        <h3 id="predicted-price" class="result-price">--</h3>
+                        <p id="result-message" class="body-md"></p>
+                        <button id="reset-btn" class="button-secondary" style="margin-top: 16px;">Thực hiện lại</button>
+
+                        <div id="similar-properties-container" style="display: none; margin-top: 24px; text-align: left;">
+                            <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--colors-ink);">Tham khảo nhà tương tự</h4>
+                            <div id="similar-list" style="display: grid; grid-template-columns: 1fr; gap: 12px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    {% include '_footer.html' %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Result container visibility classes toggled by script.js */
+        .result-container.hidden { display: none !important; }
+        .similar-properties.hidden { display: none !important; }
+        
+        #submit-btn.loading .btn-text { display: none; }
+        #submit-btn.loading .spinner { display: block !important; }
+    </style>
+</body>
+</html>

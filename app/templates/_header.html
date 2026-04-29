@@ -1,0 +1,24 @@
+<!-- HEADER - CAL.COM STYLE -->
+<nav class="top-nav">
+    <a href="/" class="nav-brand">
+        🏠 ProphetEstate
+    </a>
+    
+    <div class="nav-menu">
+        <a href="/">Định giá AI</a>
+        <a href="/search">Tìm kiếm</a>
+        <a href="/analytics">Phân tích</a>
+        <a href="/news">Tin tức</a>
+        <a href="/about">Về chúng tôi</a>
+    </div>
+    
+    <div class="nav-actions">
+        {% if user %}
+            <span class="nav-user-greeting">Xin chào, <strong>{{ user.name }}</strong></span>
+            <a href="/logout" class="button-secondary">Đăng xuất</a>
+        {% else %}
+            <span class="nav-signin" onclick="openAuthModal('login')">Đăng nhập</span>
+            <button class="button-primary" onclick="openAuthModal('register')">Đăng ký</button>
+        {% endif %}
+    </div>
+</nav>
