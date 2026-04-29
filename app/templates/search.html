@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm Kiếm BĐS | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="description" content="Tìm kiếm bất động sản Hà Nội — lọc theo quận, giá, loại hình và diện tích.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
@@ -187,11 +189,11 @@
 <!-- SEARCH HERO -->
 <div class="search-hero">
     <div class="sh-inner">
-        <h1>🔍 Tìm Kiếm Bất Động Sản</h1>
+        <h1><i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm Bất Động Sản</h1>
         <div class="search-bar-wrap">
             <div class="search-bar">
                 <input type="text" id="q-input" placeholder="Tìm theo quận, phường, tên dự án..." autocomplete="off">
-                <button onclick="doSearch(1)">🔍 Tìm kiếm</button>
+                <button onclick="doSearch(1)"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
             </div>
             <div class="quick-filters">
                 <button class="qf active" onclick="setDistrict(this,'')">Tất cả</button>
@@ -214,8 +216,8 @@
             <h4>Loại hình</h4>
             <select id="f-type">
                 <option value="all">Tất cả</option>
-                <option value="chung_cu">🏢 Chung cư</option>
-                <option value="nha_dat">🏠 Nhà đất / Phố</option>
+                <option value="chung_cu"><i class="fa-solid fa-building"></i> Chung cư</option>
+                <option value="nha_dat"><i class="fa-solid fa-house"></i> Nhà đất / Phố</option>
             </select>
         </div>
         <div class="filter-box">
@@ -246,7 +248,7 @@
             </select>
         </div>
         <div class="filter-box">
-            <button class="apply-btn" onclick="doSearch(1)">✅ Áp dụng bộ lọc</button>
+            <button class="apply-btn" onclick="doSearch(1)"><i class="fa-solid fa-check"></i> Áp dụng bộ lọc</button>
             <button class="reset-btn" onclick="resetFilters()" style="margin-top:0.5rem">↺ Đặt lại</button>
         </div>
     </aside>
@@ -264,7 +266,7 @@
 
         <div id="results-container">
             <div class="state-box">
-                <span class="s-icon">🏘</span>
+                <span class="s-icon"><i class="fa-solid fa-house-chimney-window"></i></span>
                 <h3>Khám phá bất động sản</h3>
                 <p>Tìm theo quận, khoảng giá hoặc loại hình bất động sản bạn muốn.</p>
             </div>
@@ -296,7 +298,7 @@ function resetFilters() {
     document.getElementById('f-dist').value = '';
     activeDistrict = '';
     document.querySelectorAll('.qf').forEach((b,i) => b.classList.toggle('active', i===0));
-    document.getElementById('results-container').innerHTML = `<div class="state-box"><span class="s-icon">🏘</span><h3>Khám phá bất động sản</h3><p>Nhập từ khóa hoặc chọn bộ lọc.</p></div>`;
+    document.getElementById('results-container').innerHTML = `<div class="state-box"><span class="s-icon"><i class="fa-solid fa-house-chimney-window"></i></span><h3>Khám phá bất động sản</h3><p>Nhập từ khóa hoặc chọn bộ lọc.</p></div>`;
     document.getElementById('results-count').textContent = 'Nhập từ khóa hoặc chọn bộ lọc để tìm kiếm';
     document.getElementById('pagination').innerHTML = '';
 }
@@ -320,13 +322,13 @@ async function doSearch(page) {
     const data = await res.json();
     if (!res.ok) {
         countEl.textContent = data.error || 'Tham số tìm kiếm không hợp lệ';
-        container.innerHTML = `<div class="state-box"><span class="s-icon">⚠</span><h3>Không thể tìm kiếm</h3><p>${escapeHtml(data.error || 'Vui lòng kiểm tra lại bộ lọc.')}</p></div>`;
+        container.innerHTML = `<div class="state-box"><span class="s-icon"><i class="fa-solid fa-triangle-exclamation"></i></span><h3>Không thể tìm kiếm</h3><p>${escapeHtml(data.error || 'Vui lòng kiểm tra lại bộ lọc.')}</p></div>`;
         return;
     }
 
     if (data.total === 0) {
         countEl.textContent = 'Không tìm thấy kết quả phù hợp';
-        container.innerHTML = `<div class="state-box"><span class="s-icon">🔎</span><h3>Không có kết quả</h3><p>Thử thay đổi từ khóa hoặc bộ lọc.</p></div>`;
+        container.innerHTML = `<div class="state-box"><span class="s-icon"><i class="fa-solid fa-magnifying-glass"></i></span><h3>Không có kết quả</h3><p>Thử thay đổi từ khóa hoặc bộ lọc.</p></div>`;
         return;
     }
 
@@ -348,7 +350,7 @@ async function doSearch(page) {
 
 function renderCard(p) {
     const type = p.type === 'chung_cu' ? 'chung_cu' : 'nha_dat';
-    const typeLabel = type === 'chung_cu' ? '🏢 Chung cư' : '🏠 Nhà đất';
+    const typeLabel = type === 'chung_cu' ? '<i class="fa-solid fa-building"></i> Chung cư' : '<i class="fa-solid fa-house"></i> Nhà đất';
     const id = Number.isInteger(Number(p.id)) ? Number(p.id) : 0;
     const title = escapeHtml(p.title || '');
     const district = escapeHtml(p.district || '');
@@ -366,7 +368,7 @@ function renderCard(p) {
         'linear-gradient(135deg,#0d1a1f,#1a2d3a)',
     ];
     const pbg = placeholders[Math.abs(id) % placeholders.length];
-    const icon = type === 'chung_cu' ? '🏢' : '🏠';
+    const icon = type === 'chung_cu' ? '<i class="fa-solid fa-building"></i>' : '<i class="fa-solid fa-house"></i>';
     const imgHtml = image
         ? `<img src="${image}" alt="${title}" loading="lazy" referrerpolicy="no-referrer"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
@@ -383,9 +385,9 @@ function renderCard(p) {
             <div class="pc-price">${price} tỷ VNĐ</div>
             <div class="pc-title">${title}</div>
             <div class="pc-meta">
-                <span>📍 ${district}</span>
-                <span>📐 ${area} m²</span>
-                ${bedrooms ? `<span>🛏 ${bedrooms} PN</span>` : ''}
+                <span><i class="fa-solid fa-location-dot"></i> ${district}</span>
+                <span><i class="fa-solid fa-ruler-combined"></i> ${area} m²</span>
+                ${bedrooms ? `<span><i class="fa-solid fa-bed"></i> ${bedrooms} PN</span>` : ''}
             </div>
         </div>
         <div class="pc-footer">

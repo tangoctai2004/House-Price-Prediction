@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ prop.title[:60] }} | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
     <style>
@@ -338,20 +340,20 @@
             <div class="specs-section">
                 <h3>Đặc điểm bất động sản</h3>
                 <table class="specs-table">
-                    <tr><td>📐 Diện tích</td><td>{{ prop.area_m2 }} m²</td></tr>
-                    <tr><td>🛏 Số phòng ngủ</td><td>{{ prop.bedrooms_num | int }}</td></tr>
-                    <tr><td>🧭 Hướng nhà</td><td>{{ prop.direction }}</td></tr>
+                    <tr><td><i class="fa-solid fa-ruler-combined"></i> Diện tích</td><td>{{ prop.area_m2 }} m²</td></tr>
+                    <tr><td><i class="fa-solid fa-bed"></i> Số phòng ngủ</td><td>{{ prop.bedrooms_num | int }}</td></tr>
+                    <tr><td><i class="fa-regular fa-compass"></i> Hướng nhà</td><td>{{ prop.direction }}</td></tr>
                     {% if prop.type == 'chung_cu' %}
-                    <tr><td>🏠 Hướng ban công</td><td>{{ prop.balcony_direction }}</td></tr>
+                    <tr><td><i class="fa-solid fa-house"></i> Hướng ban công</td><td>{{ prop.balcony_direction }}</td></tr>
                     {% endif %}
                     {% if prop.type == 'nha_dat' %}
-                    <tr><td>🏢 Số tầng</td><td>{{ prop.floors_num | int }}</td></tr>
-                    <tr><td>📏 Mặt tiền</td><td>{{ prop.frontage_m }} m</td></tr>
-                    <tr><td>🛣 Đường vào</td><td>{{ prop.road_width_m }} m</td></tr>
+                    <tr><td><i class="fa-solid fa-building"></i> Số tầng</td><td>{{ prop.floors_num | int }}</td></tr>
+                    <tr><td><i class="fa-solid fa-ruler"></i> Mặt tiền</td><td>{{ prop.frontage_m }} m</td></tr>
+                    <tr><td><i class="fa-solid fa-road"></i> Đường vào</td><td>{{ prop.road_width_m }} m</td></tr>
                     {% endif %}
-                    <tr><td>🛋 Nội thất</td><td>{{ prop.furniture_std }}</td></tr>
-                    <tr><td>📜 Pháp lý</td><td>{{ prop.legal_std }}</td></tr>
-                    <tr><td>📍 Khu vực</td><td>{{ prop.district }}</td></tr>
+                    <tr><td><i class="fa-solid fa-couch"></i> Nội thất</td><td>{{ prop.furniture_std }}</td></tr>
+                    <tr><td><i class="fa-solid fa-scroll"></i> Pháp lý</td><td>{{ prop.legal_std }}</td></tr>
+                    <tr><td><i class="fa-solid fa-location-dot"></i> Khu vực</td><td>{{ prop.district }}</td></tr>
                 </table>
             </div>
 
@@ -374,15 +376,15 @@
                     {% if logged_in %}
                         <button class="phone-reveal-btn" onclick="revealPhone()">Hiện số</button>
                     {% else %}
-                        <a class="phone-login-inline" onclick="openAuthModal('login')">🔒 Đăng nhập để hiển thị đầy đủ</a>
+                        <a class="phone-login-inline" onclick="openAuthModal('login')"><i class="fa-solid fa-lock"></i> Đăng nhập để hiển thị đầy đủ</a>
                     {% endif %}
                 </div>
 
-                <a href="#" class="contact-btn" onclick="handleContact(event)">📞 Liên hệ ngay</a>
+                <a href="#" class="contact-btn" onclick="handleContact(event)"><i class="fa-solid fa-phone"></i> Liên hệ ngay</a>
             </div>
 
             <div class="sidebar-card" style="font-size:0.9rem; color:var(--colors-muted); line-height:1.7;">
-                <p>✅ <strong style="color:var(--colors-ink)">Dữ liệu từ batdongsan.com.vn</strong></p>
+                <p><i class="fa-solid fa-check"></i> <strong style="color:var(--colors-ink)">Dữ liệu từ batdongsan.com.vn</strong></p>
                 <p style="margin-top:0.4rem">Giá được định giá bởi AI Prophet Estate dựa trên thị trường thực tế.</p>
             </div>
         </div>

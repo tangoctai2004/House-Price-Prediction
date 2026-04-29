@@ -1,9 +1,10 @@
 <!-- HEADER - CAL.COM STYLE -->
 <nav class="top-nav">
     <a href="/" class="nav-brand">
-        🏠 ProphetEstate
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="ProphetEstate Logo"
+            style="height: 56px; width: auto;">
     </a>
-    
+
     <div class="nav-menu">
         <a href="/">Định giá AI</a>
         <a href="/search">Tìm kiếm</a>
@@ -11,14 +12,14 @@
         <a href="/news">Tin tức</a>
         <a href="/about">Về chúng tôi</a>
     </div>
-    
+
     <div class="nav-actions">
         {% if user %}
-            <span class="nav-user-greeting">Xin chào, <strong>{{ user.name }}</strong></span>
-            <a href="/logout" class="button-secondary">Đăng xuất</a>
+        <span class="nav-user-greeting">Xin chào, <strong>{{ user.name }}</strong></span>
+        <a href="/logout" class="button-secondary">Đăng xuất</a>
         {% else %}
-            <span class="nav-signin" onclick="openAuthModal('login')">Đăng nhập</span>
-            <button class="button-primary" onclick="openAuthModal('register')">Đăng ký</button>
+        <span class="nav-signin" onclick="openAuthModal('login')">Đăng nhập</span>
+        <button class="button-primary" onclick="openAuthModal('register')">Đăng ký</button>
         {% endif %}
     </div>
 </nav>
