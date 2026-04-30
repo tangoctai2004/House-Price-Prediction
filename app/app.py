@@ -37,8 +37,17 @@ GOOGLE_CONFIGURED = bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET)
 
 # Simple in-memory user store (demo)
 USERS = {
-    'admin@prophet.vn': {'password_hash': generate_password_hash('123456', method='pbkdf2:sha256'), 'name': 'Admin'},
+    'admin@prophet.vn': {
+        'password_hash': generate_password_hash('123456', method='pbkdf2:sha256'),
+        'name': 'Admin',
+        'phone': '0912 345 678',
+        'gender': 'Nam',
+        'dob': '2004-01-15',
+    },
 }
+
+PREDICTION_HISTORY = {}
+SAVED_PROPERTIES = {}
 
 def password_matches(user, password):
     password_hash = user.get('password_hash')
@@ -155,7 +164,7 @@ def login():
     password = data.get('password', '')
     user = USERS.get(email)
     if user and password_matches(user, password):
-        session['user'] = {'email': email, 'name': user['name']}
+        session['user'] = {'email': email, 'name': user['name'], 'avatar': user.get('avatar', '')}
         return jsonify({'success': True, 'name': user['name']})
     return jsonify({'success': False, 'error': 'Email hoặc mật khẩu không đúng.'}), 401
 
@@ -528,6 +537,24 @@ def predict():
                     prop["title"] = str(row.get('title', f"Bất động sản tại {row['district']}"))[:80]
                     similar_properties.append(prop)
 
+        # Save to prediction history
+        user = session.get('user')
+        if user:
+            from datetime import datetime
+            email = user['email']
+            PREDICTION_HISTORY.setdefault(email, []).insert(0, {
+                'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M'),
+                'property_type': property_type,
+                'district': data.get('district', 'Khác'),
+                'area': area,
+                'bedrooms': bedrooms,
+                'price_vnd': prediction_vnd,
+                'price_billion': round(prediction_billion, 2),
+                'input_data': {k: v for k, v in data.items() if k != 'property_type'},
+            })
+            if len(PREDICTION_HISTORY[email]) > 50:
+                PREDICTION_HISTORY[email] = PREDICTION_HISTORY[email][:50]
+
         return jsonify({
             'success': True,
             'predicted_price_vnd': prediction_vnd,
@@ -540,6 +567,159 @@ def predict():
             'success': False,
             'error': str(e)
         }), 400
+
+# ── Profile, History, Saved ─────────────────────────────────────────
+
+@app.route('/profile')
+def profile():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    stored = USERS.get(user['email'], {})
+    profile_data = {
+        **user,
+        'phone': stored.get('phone', ''),
+        'gender': stored.get('gender', ''),
+        'dob': stored.get('dob', ''),
+        'avatar': stored.get('avatar', ''),
+    }
+    return render_template('profile.html', user=user, profile=profile_data)
+
+@app.route('/api/upload-avatar', methods=['POST'])
+def upload_avatar():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    file = request.files.get('avatar')
+    if not file or not file.filename:
+        return jsonify({'success': False, 'error': 'Chưa chọn file.'}), 400
+    ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else ''
+    if ext not in ('jpg', 'jpeg', 'png', 'webp'):
+        return jsonify({'success': False, 'error': 'Chỉ hỗ trợ JPG, PNG, WEBP.'}), 400
+    import hashlib
+    filename = hashlib.md5(user['email'].encode()).hexdigest() + '.' + ext
+    save_path = os.path.join(app.static_folder, 'uploads', filename)
+    file.save(save_path)
+    avatar_url = f'/static/uploads/{filename}'
+    USERS[user['email']]['avatar'] = avatar_url
+    session['user'] = {**user, 'avatar': avatar_url}
+    return jsonify({'success': True, 'avatar': avatar_url})
+
+@app.route('/api/update-profile', methods=['POST'])
+def update_profile():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    email = user['email']
+    new_name = data.get('name', '').strip()
+    old_password = data.get('old_password', '')
+    new_password = data.get('new_password', '')
+
+    if new_name and new_name != user['name']:
+        USERS[email]['name'] = new_name
+        session['user'] = {**user, 'name': new_name}
+
+    for field in ('phone', 'gender', 'dob'):
+        val = data.get(field)
+        if val is not None:
+            USERS[email][field] = val.strip() if isinstance(val, str) else val
+
+    if new_password:
+        if len(new_password) < 6:
+            return jsonify({'success': False, 'error': 'Mật khẩu mới tối thiểu 6 ký tự.'}), 400
+        stored = USERS.get(email)
+        if stored and stored.get('password_hash') and not check_password_hash(stored['password_hash'], old_password):
+            return jsonify({'success': False, 'error': 'Mật khẩu cũ không đúng.'}), 400
+        USERS[email]['password_hash'] = generate_password_hash(new_password, method='pbkdf2:sha256')
+
+    return jsonify({'success': True, 'name': session['user']['name']})
+
+@app.route('/history')
+def history():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    items = PREDICTION_HISTORY.get(user['email'], [])
+    return render_template('history.html', user=user, items=items)
+
+@app.route('/api/history/clear', methods=['POST'])
+def clear_history():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False}), 401
+    PREDICTION_HISTORY.pop(user['email'], None)
+    return jsonify({'success': True})
+
+@app.route('/saved')
+def saved():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    saved_keys = SAVED_PROPERTIES.get(user['email'], [])
+    props = []
+    for key in saved_keys:
+        ptype, pid = key.split('/')
+        df = dataframes.get(ptype)
+        if df is not None and int(pid) in df.index:
+            row = df.loc[int(pid)]
+            import json as _json
+            imgs = []
+            try:
+                imgs = _json.loads(str(row.get('image_urls', '[]')))
+                imgs = [u for u in imgs if isinstance(u, str) and u.startswith('http')]
+            except Exception:
+                pass
+            props.append({
+                'id': int(pid),
+                'type': ptype,
+                'title': str(row.get('title', f"BĐS tại {row.get('district', '')}"))[:80],
+                'district': str(row.get('district', '')),
+                'price': round(float(row.get('price_billion', 0)), 2),
+                'area': float(row.get('area_m2', 0)),
+                'bedrooms': int(row.get('bedrooms_num', 0)) if pd.notna(row.get('bedrooms_num')) else 0,
+                'image': imgs[0] if imgs else '',
+            })
+    return render_template('saved.html', user=user, properties=props)
+
+@app.route('/api/save-property', methods=['POST'])
+def save_property():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    ptype = data.get('type', '')
+    pid = data.get('id', '')
+    if ptype not in ('chung_cu', 'nha_dat'):
+        return jsonify({'success': False, 'error': 'Loại BĐS không hợp lệ.'}), 400
+    key = f"{ptype}/{pid}"
+    email = user['email']
+    saved = SAVED_PROPERTIES.setdefault(email, [])
+    if key not in saved:
+        saved.insert(0, key)
+    return jsonify({'success': True, 'saved': True})
+
+@app.route('/api/unsave-property', methods=['POST'])
+def unsave_property():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    key = f"{data.get('type', '')}/{data.get('id', '')}"
+    email = user['email']
+    saved = SAVED_PROPERTIES.get(email, [])
+    if key in saved:
+        saved.remove(key)
+    return jsonify({'success': True, 'saved': False})
+
+@app.route('/api/is-saved')
+def is_saved():
+    user = session.get('user')
+    if not user:
+        return jsonify({'saved': False})
+    key = f"{request.args.get('type', '')}/{request.args.get('id', '')}"
+    saved = SAVED_PROPERTIES.get(user['email'], [])
+    return jsonify({'saved': key in saved})
 
 @app.route('/property/<property_type>/<int:prop_id>')
 def property_detail(property_type, prop_id):

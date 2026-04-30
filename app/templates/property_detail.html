@@ -370,6 +370,13 @@
                 <div class="sidebar-price">{{ prop.price_billion | round(2) }} Tỷ VNĐ</div>
                 <div class="sidebar-area">{{ prop.area_m2 }} m² · {{ prop.district }}</div>
 
+                {% if logged_in %}
+                <button class="save-btn" id="save-btn" onclick="toggleSave()" style="width:100%;justify-content:center;margin-bottom:12px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="save-icon"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+                    <span id="save-text">Lưu BĐS</span>
+                </button>
+                {% endif %}
+
                 <!-- Phone number -->
                 <div class="phone-row">
                     <span class="phone-number" id="phone-display">{{ prop.phone_masked }}</span>
@@ -426,6 +433,46 @@ function handleContact(e) {
     {% else %}
         openAuthModal('login');
     {% endif %}
+}
+
+// ── SAVE PROPERTY ──
+const PROP_TYPE = "{{ prop.type }}";
+const PROP_ID = {{ prop.id }};
+
+{% if logged_in %}
+(async function() {
+    try {
+        const res = await fetch(`/api/is-saved?type=${PROP_TYPE}&id=${PROP_ID}`);
+        const data = await res.json();
+        if (data.saved) updateSaveUI(true);
+    } catch(e) {}
+})();
+{% endif %}
+
+async function toggleSave() {
+    const btn = document.getElementById('save-btn');
+    const isSaved = btn.classList.contains('saved');
+    const url = isSaved ? '/api/unsave-property' : '/api/save-property';
+    try {
+        const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type: PROP_TYPE, id: PROP_ID}) });
+        const data = await res.json();
+        updateSaveUI(data.saved);
+    } catch(e) {}
+}
+
+function updateSaveUI(saved) {
+    const btn = document.getElementById('save-btn');
+    const icon = document.getElementById('save-icon');
+    const text = document.getElementById('save-text');
+    if (saved) {
+        btn.classList.add('saved');
+        icon.setAttribute('fill', 'currentColor');
+        text.textContent = 'Đã lưu';
+    } else {
+        btn.classList.remove('saved');
+        icon.setAttribute('fill', 'none');
+        text.textContent = 'Lưu BĐS';
+    }
 }
 
 // Smooth page transition
