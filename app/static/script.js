@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.success) {
                 // Hide form, show result
                 form.style.display = 'none';
-                resultContainer.classList.remove('hidden');
+                resultContainer.style.display = 'block';
                 
                 // Animate price
                 const finalPrice = result.predicted_price_vnd;
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 similarList.innerHTML = ''; // Clear old
 
                 if (result.similar_properties && result.similar_properties.length > 0) {
-                    similarContainer.classList.remove('hidden');
+                    similarContainer.style.display = 'block';
                     result.similar_properties.forEach(prop => {
                         const card = document.createElement('a');
                         const type = prop.property_type === 'nha_dat' ? 'nha_dat' : 'chung_cu';
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         similarList.appendChild(card);
                     });
                 } else {
-                    similarContainer.classList.add('hidden');
+                    similarContainer.style.display = 'none';
                 }
             } else {
                 errorEl.textContent = result.error || 'Có lỗi xảy ra khi dự đoán.';
@@ -169,7 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reset button
     resetBtn.addEventListener('click', () => {
-        resultContainer.classList.add('hidden');
+        resultContainer.style.display = 'none';
+        document.getElementById('similar-properties-container').style.display = 'none';
         form.style.display = 'block';
         form.reset();
         errorEl.textContent = '';
