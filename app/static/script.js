@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultMessageEl = document.getElementById('result-message');
     const errorEl = document.getElementById('error-message');
     const submitBtn = document.getElementById('submit-btn');
+    if (!form || !submitBtn) {
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (link && link.href && link.target !== '_blank' && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+                e.preventDefault();
+                document.body.classList.add('page-transitioning');
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 250);
+            }
+        });
+        return;
+    }
     const btnText = submitBtn.querySelector('.btn-text');
     const spinner = submitBtn.querySelector('.spinner');
     const resetBtn = document.getElementById('reset-btn');
