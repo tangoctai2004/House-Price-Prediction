@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dự Đoán Giá Bất Động Sản Hà Nội</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">🏠</span>
+      <div>
+        <div class="logo-title">BĐS Predict</div>
+        <div class="logo-sub">AI Dự Đoán Giá Nhà</div>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      XGBoost · R² = 77.6%
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<main class="main">
+  <div class="container">
+
+    <!-- Left: Form -->
+    <div class="card form-card">
+      <h2 class="card-title">Thông tin căn nhà</h2>
+      <p class="card-sub">Nhập thông số để AI dự đoán giá chính xác nhất</p>
+
+      <!-- Tab chọn loại BĐS -->
+      <div class="tab-group" id="tabGroup">
+        <button class="tab active" data-type="chung_cu" onclick="setTab(this)">🏢 Chung Cư</button>
+        <button class="tab"        data-type="nha_dat"  onclick="setTab(this)">🏡 Nhà Đất</button>
+      </div>
+
+      <form id="predictForm" autocomplete="off">
+        <input type="hidden" id="loai_bds" value="chung_cu"/>
+
+        <!-- Row 1 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Diện tích (m²) <span class="req">*</span></label>
+            <input type="number" id="area_m2" placeholder="VD: 75" min="10" max="1000" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Số phòng ngủ <span class="req">*</span></label>
+            <input type="number" id="bedrooms_num" placeholder="VD: 2" min="1" max="20"/>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Quận/Huyện <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select id="district">
+                {% for d in districts %}
+                <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Hướng nhà</label>
+            <div class="select-wrap">
+              <select id="direction">
+                {% for d in directions %}
+                <option value="{{ d }}" {% if d == 'Không rõ' %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 — chỉ hiện với chung cư -->
+        <div class="form-row" id="row-balcony">
+          <div class="form-group">
+            <label>Hướng ban công</label>
+            <div class="select-wrap">
+              <select id="balcony_direction">
+                <option value="Không rõ">Không rõ</option>
+                <option value="Đông">Đông</option>
+                <option value="Tây">Tây</option>
+                <option value="Nam">Nam</option>
+                <option value="Bắc">Bắc</option>
+                <option value="Đông - Nam">Đông - Nam</option>
+                <option value="Tây - Bắc">Tây - Bắc</option>
+                <option value="Đông - Bắc">Đông - Bắc</option>
+                <option value="Tây - Nam">Tây - Nam</option>
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nội thất</label>
+            <div class="select-wrap">
+              <select id="furniture_std">
+                {% for f in furniture %}
+                <option value="{{ f }}" {% if f == 'Đầy đủ' %}selected{% endif %}>{{ f }}</option>
+                {% endfor %}
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pháp lý -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pháp lý</label>
+            <div class="select-wrap">
+              <select id="legal_std">
+                {% for l in legal %}
+                <option value="{{ l }}" {% if l == 'Sổ đỏ/Sổ hồng' %}selected{% endif %}>{{ l }}</option>
+                {% endfor %}
+              </select>
+              <span class="select-arrow">▾</span>
+            </div>
+          </div>
+          <div class="form-group"></div>
+        </div>
+
+        <!-- Nhà đất fields -->
+        <div id="nha-dat-fields" style="display:none">
+          <div class="section-label">Thông tin nhà đất</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Số tầng</label>
+              <input type="number" id="floors_num" placeholder="VD: 4" min="1" max="30"/>
+            </div>
+            <div class="form-group">
+              <label>Mặt tiền (m)</label>
+              <input type="number" id="frontage_m" placeholder="VD: 4.5" min="1" max="50" step="0.1"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Đường rộng (m)</label>
+              <input type="number" id="road_width_m" placeholder="VD: 6" min="1" max="50" step="0.1"/>
+            </div>
+            <div class="form-group"></div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-predict" onclick="predict()" id="btnPredict">
+          <span id="btnText">Dự Đoán Giá Trị</span>
+          <span id="btnLoader" class="loader" style="display:none"></span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Right: Result + Info -->
+    <div class="right-col">
+
+      <!-- Result card -->
+      <div class="card result-card" id="resultCard">
+        <div class="result-idle" id="resultIdle">
+          <div class="idle-icon">🤖</div>
+          <div class="idle-text">Nhập thông tin và bấm<br/><strong>Dự Đoán Giá Trị</strong></div>
+        </div>
+
+        <div class="result-data" id="resultData" style="display:none">
+          <div class="result-label">Giá dự đoán</div>
+          <div class="result-price">
+            <span id="priceValue">--</span>
+            <span class="price-unit">tỷ VNĐ</span>
+          </div>
+          <div class="result-detail" id="priceDetail"></div>
+          <div class="result-per-m2" id="pricePerM2"></div>
+
+          <div class="result-range" id="resultRange">
+            <div class="range-item low">
+              <span class="range-label">Thấp nhất</span>
+              <span class="range-val" id="rangeLow">--</span>
+            </div>
+            <div class="range-divider"></div>
+            <div class="range-item high">
+              <span class="range-label">Cao nhất</span>
+              <span class="range-val" id="rangeHigh">--</span>
+            </div>
+          </div>
+
+          <div class="model-tag">
+            Dự đoán bởi <strong id="modelName">XGBoost</strong>
+            · Độ chính xác <strong id="r2Score">--</strong>
+          </div>
+        </div>
+
+        <div class="result-error" id="resultError" style="display:none">
+          <div class="error-icon">⚠️</div>
+          <div class="error-text" id="errorText"></div>
+        </div>
+      </div>
+
+      <!-- Model stats -->
+      <div class="card stats-card">
+        <h3 class="stats-title">Kết quả so sánh 4 mô hình</h3>
+        <div class="model-list">
+          <div class="model-item">
+            <div class="model-name">XGBoost <span class="tag-best">Tốt nhất</span></div>
+            <div class="model-bar-wrap">
+              <div class="model-bar" style="width:77.6%"></div>
+            </div>
+            <div class="model-r2">R² 77.6%</div>
+          </div>
+          <div class="model-item">
+            <div class="model-name">Random Forest</div>
+            <div class="model-bar-wrap">
+              <div class="model-bar rf" style="width:73.1%"></div>
+            </div>
+            <div class="model-r2">R² 73.1%</div>
+          </div>
+          <div class="model-item">
+            <div class="model-name">Linear Regression</div>
+            <div class="model-bar-wrap">
+              <div class="model-bar lr" style="width:68.5%"></div>
+            </div>
+            <div class="model-r2">R² 68.5%</div>
+          </div>
+          <div class="model-item">
+            <div class="model-name">Decision Tree</div>
+            <div class="model-bar-wrap">
+              <div class="model-bar dt" style="width:44.7%"></div>
+            </div>
+            <div class="model-r2">R² 44.7%</div>
+          </div>
+        </div>
+        <div class="stats-note">Dữ liệu: 2,581 căn · Hà Nội · 2024-2025</div>
+      </div>
+
+    </div><!-- right-col -->
+  </div><!-- container -->
+</main>
+
+<footer class="footer">
+  Nhóm 5 · PTIT · Phát triển Hệ thống Thông minh · 2026
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

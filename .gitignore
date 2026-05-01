@@ -1,0 +1,16 @@
+@"
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+# Jupyter checkpoint
+.ipynb_checkpoints/
+# IDE
+.vscode/
+.idea/
+# Model files lớn (optional - bỏ comment nếu muốn push model)
+# models/*.pkl
+"@ | Out-File -Encoding utf8 .gitignore
