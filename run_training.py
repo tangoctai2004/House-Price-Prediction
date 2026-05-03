@@ -106,19 +106,27 @@ train_eval('XGBoost',           XGBRegressor(n_estimators=300, learning_rate=0.0
 best_name = max(results, key=lambda x: results[x]['R2'])
 print(f"\nModel tốt nhất: {best_name}  (R² = {results[best_name]['R2']:.4f})")
 
-# ---- 6. Xuất file ----
+# ---- 6. Xuất model và kết quả ----
 print("\n[6/6] Xuất model và kết quả...")
 os.makedirs('models', exist_ok=True)
 best_pipeline = results[best_name]['pipeline']
 
 with open('models/best_model_pipeline.pkl', 'wb') as f: pickle.dump(best_pipeline, f)
 
+# Lấy Feature Importance để dùng cho XAI (Giải thích AI) trên Web
+base_model = best_pipeline.named_steps['model']
+ohe_cols = best_pipeline.named_steps['preprocessor'].named_transformers_['cat'].get_feature_names_out(categorical_features)
+all_features_names = numeric_features + list(ohe_cols)
+fi = base_model.feature_importances_
+fi_dict = dict(zip(all_features_names, fi))
+
 model_meta = {
     'best_model_name': best_name,
     'features': FEATURES,
     'target': TARGET,
     'metrics': {k: v for k, v in results[best_name].items() if k in ['RMSE','MAE','R2']},
-    'all_results': {n: {k: v for k, v in d.items() if k in ['RMSE','MAE','R2']} for n, d in results.items()}
+    'all_results': {n: {k: v for k, v in d.items() if k in ['RMSE','MAE','R2']} for n, d in results.items()},
+    'feature_importance': fi_dict
 }
 with open('models/model_meta.pkl', 'wb') as f: pickle.dump(model_meta, f)
 print(" Đã lưu: models/best_model_pipeline.pkl")

@@ -309,18 +309,8 @@ function subscribeNL() {
     const el = document.getElementById('nl-email');
     if (!el.value || !el.value.includes('@')) { el.focus(); return; }
     el.value = ''; 
-    alert('<i class="fa-solid fa-check"></i> Cảm ơn bạn đã đăng ký nhận bản tin Prophet Estate!');
+    alert('Cảm ơn bạn đã đăng ký nhận bản tin Prophet Estate!');
 }
-
-document.addEventListener('click', e => {
-    const link = e.target.closest('a[href]');
-    if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank') {
-        e.preventDefault();
-        document.body.style.transition = 'opacity 0.25s';
-        document.body.style.opacity = '0';
-        setTimeout(() => location.href = link.href, 250);
-    }
-});
 </script>
 </body>
 </html>

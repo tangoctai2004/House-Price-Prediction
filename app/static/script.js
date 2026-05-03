@@ -3,28 +3,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const chungCuFields = document.querySelectorAll('.chung-cu-only');
     const nhaDatFields = document.querySelectorAll('.nha-dat-only');
     const form = document.getElementById('prediction-form');
-    const resultContainer = document.getElementById('result-container');
+    const predictionModal = document.getElementById('prediction-modal');
     const predictedPriceEl = document.getElementById('predicted-price');
     const resultMessageEl = document.getElementById('result-message');
     const errorEl = document.getElementById('error-message');
     const submitBtn = document.getElementById('submit-btn');
-    if (!form || !submitBtn) {
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            if (link && link.href && link.target !== '_blank' && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
-                e.preventDefault();
-                document.body.classList.add('page-transitioning');
-                setTimeout(() => {
-                    window.location.href = link.href;
-                }, 250);
-            }
-        });
-        return;
+    // Fix white screen on back button (bfcache)
+    window.addEventListener('pageshow', (event) => {
+        document.body.classList.remove('page-transitioning');
+    });
+
+    // Helper for smooth transitions
+    function handleLinkClick(e) {
+        const link = e.target.closest('a');
+        if (link && link.href && link.target !== '_blank' && 
+            !link.href.startsWith('#') && !link.href.startsWith('javascript:') && 
+            !link.getAttribute('onclick') && !link.classList.contains('auth-modal-close')) {
+            
+            // Don't transition for logout or external
+            if (link.href.includes('/logout') || !link.href.includes(window.location.host)) return;
+
+            e.preventDefault();
+            document.body.classList.add('page-transitioning');
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 250);
+        }
     }
+
+    document.addEventListener('click', handleLinkClick);
+
+    if (!form || !submitBtn) return;
     const btnText = submitBtn.querySelector('.btn-text');
     const spinner = submitBtn.querySelector('.spinner');
-    const resetBtn = document.getElementById('reset-btn');
-
+    const modalCloseBtn = document.getElementById('prediction-modal-close');
+    const modalOverlay = document.querySelector('.prediction-modal-overlay');
     // Toggle fields based on property type
     function updateFields() {
         const isNhaDat = document.getElementById('type-nha-dat').checked;
@@ -115,6 +128,28 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errorEl.textContent = '';
+
+        // C1: Validation trực quan
+        const areaInput = document.getElementById('area');
+        const bedroomsInput = document.getElementById('bedrooms');
+        let hasError = false;
+
+        // Reset previous validation states
+        form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+        if (!areaInput.value || parseFloat(areaInput.value) <= 0) {
+            areaInput.classList.add('input-error');
+            hasError = true;
+        }
+        if (!bedroomsInput.value || parseInt(bedroomsInput.value) <= 0) {
+            bedroomsInput.classList.add('input-error');
+            hasError = true;
+        }
+
+        if (hasError) {
+            errorEl.textContent = 'Vui lòng nhập đầy đủ Diện tích và Số phòng ngủ.';
+            return;
+        }
         
         // UI Loading state
         btnText.style.display = 'none';
@@ -137,15 +172,79 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (result.success) {
-                // Hide form, show result
-                form.style.display = 'none';
-                resultContainer.style.display = 'block';
+                // Show modal
+                if (predictionModal) predictionModal.classList.add('active');
                 
                 // Animate price
                 const finalPrice = result.predicted_price_vnd;
                 animateValue(predictedPriceEl, 0, finalPrice, 2000);
+
+                // 1. Render Confidence Interval
+                const ciEl = document.getElementById('confidence-interval');
+                if (ciEl) {
+                    ciEl.innerHTML = `Khoảng ước tính: ${result.price_low} — ${result.price_high} tỷ (±${result.mae})`;
+                }
+
+                // 2. Render Explanation (XAI)
+                const explainContainer = document.getElementById('explanation-container');
+                const explainList = document.getElementById('explanation-list');
+                if (explainContainer && explainList && result.contributions) {
+                    explainContainer.style.display = 'block';
+                    explainList.innerHTML = '';
+                    
+                    const maxImpact = Math.max(...result.contributions.map(c => c.impact));
+                    
+                    result.contributions.forEach(c => {
+                        const pct = (c.impact / maxImpact) * 100;
+                        const item = document.createElement('div');
+                        item.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+                                <span style="color: var(--colors-ink); font-weight: 500;">${c.feature}</span>
+                                <span style="color: var(--colors-primary); font-weight: 600;">+${c.impact} ${c.unit}</span>
+                            </div>
+                            <div style="height: 6px; background: var(--colors-surface-soft); border-radius: 3px; overflow: hidden;">
+                                <div style="width: 0%; height: 100%; background: var(--colors-primary); transition: width 1s ease-out; border-radius: 3px;" class="impact-bar" data-pct="${pct}"></div>
+                            </div>
+                        `;
+                        explainList.appendChild(item);
+                    });
+                    
+                    setTimeout(() => {
+                        document.querySelectorAll('.impact-bar').forEach(bar => {
+                            bar.style.width = bar.getAttribute('data-pct') + '%';
+                        });
+                    }, 150);
+                }
                 
-                resultMessageEl.textContent = result.message;
+                resultMessageEl.textContent = result.message || 'Mô hình AI đã phân tích thành công đặc điểm của bất động sản này.';
+
+                // Render Price per m2 and District Comparison
+                const pricePerM2El = document.getElementById('price-per-m2');
+                if (pricePerM2El && result.price_per_m2) {
+                    pricePerM2El.textContent = `(~ ${result.price_per_m2} Triệu/m²)`;
+                }
+
+                const badgeEl = document.getElementById('district-comparison-badge');
+                if (badgeEl && result.district_avg_m2) {
+                    badgeEl.style.display = 'inline-block';
+                    const diff = result.price_per_m2 - result.district_avg_m2;
+                    const pct = Math.abs(diff / result.district_avg_m2) * 100;
+                    if (pct < 5) {
+                        badgeEl.textContent = 'Tương đương mặt bằng chung';
+                        badgeEl.style.background = 'var(--colors-surface-alt)';
+                        badgeEl.style.color = 'var(--colors-ink)';
+                    } else if (diff > 0) {
+                        badgeEl.textContent = `Cao hơn khu vực ${pct.toFixed(0)}%`;
+                        badgeEl.style.background = '#fee2e2'; // Light red
+                        badgeEl.style.color = '#b91c1c'; // Dark red
+                    } else {
+                        badgeEl.textContent = `Thấp hơn khu vực ${pct.toFixed(0)}%`;
+                        badgeEl.style.background = '#dcfce7'; // Light green
+                        badgeEl.style.color = '#15803d'; // Dark green
+                    }
+                } else if (badgeEl) {
+                    badgeEl.style.display = 'none';
+                }
 
                 // Render similar properties
                 const similarContainer = document.getElementById('similar-properties-container');
@@ -153,34 +252,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 similarList.innerHTML = ''; // Clear old
 
                 if (result.similar_properties && result.similar_properties.length > 0) {
-                    similarContainer.style.display = 'block';
+                    similarContainer.style.display = 'flex';
                     result.similar_properties.forEach(prop => {
                         const card = document.createElement('a');
                         const type = prop.property_type === 'nha_dat' ? 'nha_dat' : 'chung_cu';
-                        const id = Number.isInteger(Number(prop.id)) ? Number(prop.id) : 0;
-                        const image = safeImageUrl(prop.image);
-                        const title = escapeHtml(prop.title || prop.district || '');
-                        const district = escapeHtml(prop.district || '');
-                        const price = Number.isFinite(Number(prop.price_billion)) ? Number(prop.price_billion) : 0;
-                        const area = Number.isFinite(Number(prop.area_m2)) ? Number(prop.area_m2) : 0;
-                        const desc = escapeHtml(prop.desc || '');
-                        card.href = `/property/${type}/${id}`;
-                        card.className = 'similar-card';
+                        const id = prop.id;
+                        const image = prop.image;
+                        const title = escapeHtml(prop.title);
+                        const district = escapeHtml(prop.district);
+                        const price = prop.price_billion;
+                        const area = prop.area_m2;
 
-                        const imgHtml = image
-                            ? `<img class="card-thumbnail" src="${image}" alt="${district}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card-thumbnail-placeholder" style="display:none">🏠</div>`
-                            : `<div class="card-thumbnail-placeholder">🏠</div>`;
+                        card.href = `/property/${type}/${id}`;
+                        card.target = '_blank';
+                        card.style.cssText = 'display: flex; gap: 12px; padding: 12px; border: 1px solid var(--colors-hairline); border-radius: 8px; text-decoration: none; color: inherit; transition: border-color 0.2s; background: white; margin-bottom: 2px; flex-shrink: 0;';
+                        card.onmouseover = () => card.style.borderColor = 'var(--colors-primary)';
+                        card.onmouseout = () => card.style.borderColor = 'var(--colors-hairline)';
+
+                        const imgHtml = image 
+                            ? `<img src="${image}" alt="House" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #f0f0f0;">` 
+                            : `<div style="width: 80px; height: 80px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px;">🏠</div>`;
 
                         card.innerHTML = `
                             ${imgHtml}
-                            <div class="card-body">
-                                <p class="card-title">${title}</p>
-                                <p class="card-price">${price} Tỷ VNĐ</p>
-                                <div class="card-meta">
-                                    <span>📐 ${area} m²</span>
-                                    <span>📍 ${district}</span>
+                            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
+                                <h5 style="margin: 0; font-size: 0.9rem; line-height: 1.4; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--colors-ink); text-align: left;">${title}</h5>
+                                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8px;">
+                                    <span style="color: var(--colors-primary); font-weight: 600; font-size: 1.05rem;">${price} Tỷ</span>
+                                    <span style="color: var(--colors-muted); font-size: 0.8rem; white-space: nowrap;">📐 ${area}m² &nbsp; 📍 ${district}</span>
                                 </div>
-                                <p class="card-meta">${desc}</p>
                             </div>
                         `;
                         similarList.appendChild(card);
@@ -202,27 +302,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Reset button
-    resetBtn.addEventListener('click', () => {
-        resultContainer.style.display = 'none';
-        document.getElementById('similar-properties-container').style.display = 'none';
-        form.style.display = 'block';
-        form.reset();
-        errorEl.textContent = '';
-        updateFields();
-    });
-
-    // Smooth page transitions
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (link && link.href && link.target !== '_blank' && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
-            e.preventDefault();
-            document.body.classList.add('page-transitioning');
-            setTimeout(() => {
-                window.location.href = link.href;
-            }, 250);
+    // Close modal logic
+    function closeModal() {
+        if (predictionModal) {
+            predictionModal.classList.remove('active');
         }
-    });
+        // Reset form slightly if needed, but keeping input values is better UX
+        // form.reset(); 
+        // updateFields();
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeModal);
+    }
+    
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeModal);
+    }
+
 });
 
 function escapeHtml(value) {

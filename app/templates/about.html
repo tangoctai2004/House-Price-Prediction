@@ -717,17 +717,6 @@
 
     {% include '_footer.html' %}
 
-    <script>
-        document.addEventListener('click', e => {
-            const link = e.target.closest('a[href]');
-            if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank') {
-                e.preventDefault();
-                document.body.style.transition = 'opacity 0.25s';
-                document.body.style.opacity = '0';
-                setTimeout(() => location.href = link.href, 250);
-            }
-        });
-    </script>
 </body>
 
 </html>

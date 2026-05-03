@@ -474,17 +474,6 @@ function updateSaveUI(saved) {
         text.textContent = 'Lưu BĐS';
     }
 }
-
-// Smooth page transition
-document.addEventListener('click', e => {
-    const link = e.target.closest('a[href]');
-    if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank' && !link.href.startsWith('javascript:')) {
-        e.preventDefault();
-        document.body.style.transition = 'opacity 0.25s';
-        document.body.style.opacity = '0';
-        setTimeout(() => location.href = link.href, 250);
-    }
-});
 </script>
 </body>
 </html>

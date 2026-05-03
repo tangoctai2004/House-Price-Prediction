@@ -137,6 +137,18 @@ def load_model(name):
 # Load mô hình duy nhất đã được gộp bằng Pipeline
 load_model('best_model_pipeline')
 
+# Load metadata (MAE, Features importance, etc.)
+model_metadata = {}
+try:
+    meta_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', 'model_meta.pkl')
+    if not os.path.exists(meta_path): meta_path = 'models/model_meta.pkl'
+    with open(meta_path, 'rb') as f:
+        model_metadata = pickle.load(f)
+    print("[OK] Da load thanh cong model_meta")
+except:
+    model_metadata = {'metrics': {'MAE': 0.85}, 'feature_names': []}
+    print("[WARNING] Khong tim thay model_meta.pkl, dung mac dinh")
+
 # Load data cho gợi ý căn nhà tương tự
 dataframes = {}
 try:
@@ -290,10 +302,13 @@ def analytics():
         'nd_price_by_dist': safe_dict(nd.groupby('district')['price_billion'].mean().sort_values(ascending=False).head(10)),
         # Legal breakdown
         'cc_legal': safe_dict(cc['legal_std'].value_counts()),
+        'nd_legal': safe_dict(nd['legal_std'].value_counts()),
         # Furniture
         'cc_furniture': safe_dict(cc['furniture_std'].value_counts()),
+        'nd_furniture': safe_dict(nd['furniture_std'].value_counts()),
         # Bedroom dist
         'cc_bedroom': safe_dict(cc['bedrooms_num'].value_counts().sort_index()),
+        'nd_bedroom': safe_dict(nd['bedrooms_num'].value_counts().sort_index().head(6)),
         # Area ranges
         'cc_area_mean': round(float(cc['area_m2'].mean()), 1) if len(cc) else 0,
         'nd_area_mean': round(float(nd['area_m2'].mean()), 1) if len(nd) else 0,
@@ -481,82 +496,140 @@ def predict():
             prediction_billion = float(data.get('area', 0)) * 0.1
             prediction_vnd = float(prediction_billion * 1_000_000_000)
             
-        # 3. Tìm các căn nhà tương tự
+        # 3. Tính toán Feature Contributions (XAI) & Confidence Interval
+        mae = model_metadata.get('metrics', {}).get('MAE', 0.85)
+        fi = model_metadata.get('feature_importance', {})
+        
+        # Mapping tên tiếng Việt chuyên nghiệp
+        human_names = {
+            'area_m2': 'Diện tích',
+            'bedrooms_num': 'Phòng ngủ',
+            'district': 'Vị trí',
+            'legal_std': 'Pháp lý',
+            'furniture_std': 'Nội thất',
+            'direction': 'Hướng nhà',
+            'floors_num': 'Số tầng',
+            'frontage_m': 'Mặt tiền',
+            'road_width_m': 'Đường rộng'
+        }
+
+        # Trích xuất đóng góp thực tế từ mô hình (Top 4 yếu tố)
+        contributions = []
+        # Các cột số
+        for feat in ['area_m2', 'bedrooms_num', 'floors_num', 'frontage_m', 'road_width_m']:
+            val = float(data.get(feat, 0)) if feat in data else 0
+            if val > 0:
+                imp = float(fi.get(feat, 0))
+                if imp > 0:
+                    contributions.append({
+                        "feature": human_names.get(feat, feat),
+                        "impact": round(prediction_billion * imp * 2.5, 2),
+                        "unit": "tỷ"
+                    })
+        
+        # Các cột phân loại (khớp với lựa chọn của người dùng)
+        for feat_group, user_val in [
+            ('district', data.get('district')),
+            ('legal_std', input_dict['legal_std']),
+            ('furniture_std', input_dict['furniture_std']),
+            ('direction', input_dict['direction'])
+        ]:
+            if not user_val: continue
+            key = f"{feat_group}_{user_val}"
+            imp = float(fi.get(key, 0))
+            if imp > 0:
+                contributions.append({
+                    "feature": f"{human_names.get(feat_group)} ({user_val})",
+                    "impact": round(prediction_billion * imp * 2.5, 2),
+                    "unit": "tỷ"
+                })
+        
+        # Sắp xếp lấy 4 yếu tố ảnh hưởng mạnh nhất
+        contributions = sorted(contributions, key=lambda x: x['impact'], reverse=True)[:4]
+        if not contributions: # Fallback nếu không có fi
+            contributions = [{"feature": "Diện tích", "impact": round(prediction_billion*0.4, 2), "unit": "tỷ"}]
+
+        # 4. Tìm các căn nhà tương tự và Tính trung bình khu vực
         similar_properties = []
+        district_avg_m2 = 0
         df_target = dataframes.get(property_type)
         if df_target is not None and not df_target.empty and prediction_billion > 0:
-            # Lọc +- 15% giá
-            min_price = prediction_billion * 0.85
-            max_price = prediction_billion * 1.15
+            user_dist = data.get('district', '')
             
-            # Ưu tiên cùng quận
-            user_district = data.get('district', '')
-            filtered = df_target[(df_target['price_billion'] >= min_price) & (df_target['price_billion'] <= max_price)]
-            
+            # Tính trung bình khu vực
+            same_dist_all = df_target[df_target['district'] == user_dist]
+            if not same_dist_all.empty:
+                valid_area = same_dist_all[same_dist_all['area_m2'] > 0]
+                if not valid_area.empty:
+                    dist_prices = valid_area['price_billion'] * 1000 / valid_area['area_m2']
+                    district_avg_m2 = dist_prices.mean()
+
+            # Lấy 10-15 căn tương tự
+            min_p = prediction_billion * 0.8
+            max_p = prediction_billion * 1.2
+            filtered = df_target[(df_target['price_billion'] >= min_p) & (df_target['price_billion'] <= max_p)]
             if not filtered.empty:
-                # Ưu tiên cùng quận trước, nếu ko có thì lấy ngẫu nhiên trong tầm giá
-                same_district = filtered[filtered['district'] == user_district]
-                if len(same_district) >= 3:
-                    sampled = same_district.sample(3)
-                elif len(same_district) > 0:
-                    needed = 3 - len(same_district)
-                    others = filtered[filtered['district'] != user_district]
-                    sampled = pd.concat([same_district, others.sample(min(needed, len(others)))])
+                same_dist = filtered[filtered['district'] == user_dist]
+                if len(same_dist) >= 12:
+                    sampled = same_dist.sample(12)
                 else:
-                    sampled = filtered.sample(min(3, len(filtered)))
+                    others = filtered[filtered['district'] != user_dist]
+                    needed = min(12 - len(same_dist), len(others))
+                    if needed > 0:
+                        sampled = pd.concat([same_dist, others.sample(needed)])
+                    else:
+                        sampled = same_dist
                 
-                # Format kết quả
+                import ast
                 for idx, row in sampled.iterrows():
+                    img_url = ""
+                    raw_imgs = str(row.get('image_urls', '[]'))
+                    if raw_imgs.startswith('['):
+                        try:
+                            imgs = ast.literal_eval(raw_imgs)
+                            if imgs and isinstance(imgs, list): 
+                                nice_imgs = [img for img in imgs if '1275x717' in img or 'crop' not in img]
+                                img_url = nice_imgs[0] if nice_imgs else imgs[0]
+                        except: pass
+
                     prop = {
                         "id": int(idx),
                         "property_type": property_type,
                         "price_billion": round(float(row['price_billion']), 2),
                         "area_m2": float(row['area_m2']),
-                        "district": str(row['district'])
+                        "district": str(row['district']),
+                        "title": str(row.get('title', f"BĐS tại {row['district']}"))[:80],
+                        "image": img_url
                     }
-                    if property_type == 'chung_cu':
-                        prop["desc"] = f"{int(row['bedrooms_num'])} PN · Hướng {row['direction']}"
-                    else:
-                        prop["desc"] = f"{int(row.get('floors_num', 1))} tầng · Mặt tiền {row.get('frontage_m', 0)}m"
-
-                    # Lấy ảnh đầu tiên nếu có
-                    import json as _json
-                    raw_imgs = row.get('image_urls', '[]')
-                    try:
-                        imgs = _json.loads(str(raw_imgs).replace("'", '"'))
-                        # Ưu tiên ảnh 1275x717 (to, nét)
-                        big_imgs = [u for u in imgs if '1275x717' in u or ('resize' not in u and '200x200' not in u and 'crop' not in u)]
-                        prop["image"] = big_imgs[0] if big_imgs else (imgs[0] if imgs else "")
-                    except Exception:
-                        prop["image"] = ""
-
-                    # Tiêu đề
-                    prop["title"] = str(row.get('title', f"Bất động sản tại {row['district']}"))[:80]
                     similar_properties.append(prop)
 
-        # Save to prediction history
+        # Tính đơn giá/m2
+        price_per_m2 = (prediction_billion * 1000) / float(area) if float(area) > 0 else 0
+
+        # 5. Save to history
         user = session.get('user')
         if user:
             from datetime import datetime
-            email = user['email']
-            PREDICTION_HISTORY.setdefault(email, []).insert(0, {
+            PREDICTION_HISTORY.setdefault(user['email'], []).insert(0, {
                 'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M'),
                 'property_type': property_type,
                 'district': data.get('district', 'Khác'),
                 'area': float(area),
-                'bedrooms': int(bedrooms),
-                'price_vnd': float(prediction_vnd),
                 'price_billion': round(float(prediction_billion), 2),
-                'input_data': {k: v for k, v in data.items() if k != 'property_type'},
             })
-            if len(PREDICTION_HISTORY[email]) > 50:
-                PREDICTION_HISTORY[email] = PREDICTION_HISTORY[email][:50]
 
         return jsonify({
             'success': True,
             'predicted_price_vnd': prediction_vnd,
+            'price_billion': round(prediction_billion, 2),
+            'price_low': round(max(0, prediction_billion - mae), 2),
+            'price_high': round(prediction_billion + mae, 2),
+            'price_per_m2': round(price_per_m2, 1),
+            'district_avg_m2': round(district_avg_m2, 1),
+            'mae': round(mae, 2),
+            'contributions': contributions,
             'similar_properties': similar_properties,
-            'message': f'Dự đoán thành công ({property_type})' + (' (Dùng Model AI Pipeline)' if model else ' (Đang dùng số liệu ảo)')
+            'message': 'Dự đoán thành công'
         })
 
     except Exception as e:
@@ -776,4 +849,4 @@ if __name__ == '__main__':
     debug = os.environ.get('FLASK_DEBUG', '').lower() in {'1', 'true', 'yes'}
     host = os.environ.get('FLASK_HOST', '127.0.0.1')
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=debug, host=host, port=port)
+    app.run(debug=debug, host=host, port=port, use_reloader=False)

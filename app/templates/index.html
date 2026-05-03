@@ -95,30 +95,19 @@
                             <div class="input-group">
                                 <label for="direction">Hướng nhà</label>
                                 <select id="direction" name="direction" class="select-input">
+                                    <option value="Không rõ" selected>-- Chọn --</option>
                                     <option value="Đông">Đông</option>
                                     <option value="Tây">Tây</option>
                                     <option value="Nam">Nam</option>
                                     <option value="Bắc">Bắc</option>
-                                    <option value="Đông Nam">Đông Nam</option>
-                                    <option value="Tây Bắc">Tây Bắc</option>
-                                    <option value="Đông Bắc">Đông Bắc</option>
-                                    <option value="Tây Nam">Tây Nam</option>
+                                    <option value="Đông - Nam">Đông - Nam</option>
+                                    <option value="Tây - Bắc">Tây - Bắc</option>
+                                    <option value="Đông - Bắc">Đông - Bắc</option>
+                                    <option value="Tây - Nam">Tây - Nam</option>
                                     <option value="Không rõ">Không rõ</option>
                                 </select>
                             </div>
 
-                            <!-- Chung Cư only -->
-                            <div class="input-group chung-cu-only">
-                                <label for="balcony_direction">Hướng ban công</label>
-                                <select id="balcony_direction" name="balcony_direction" class="select-input">
-                                    <option value="Đông">Đông</option>
-                                    <option value="Tây">Tây</option>
-                                    <option value="Nam">Nam</option>
-                                    <option value="Bắc">Bắc</option>
-                                    <option value="Đông Nam">Đông Nam</option>
-                                    <option value="Không rõ">Không rõ</option>
-                                </select>
-                            </div>
 
                             <!-- Nhà Đất only -->
                             <div class="input-group nha-dat-only" style="display:none">
@@ -137,6 +126,7 @@
                             <div class="input-group">
                                 <label for="furniture">Nội thất</label>
                                 <select id="furniture" name="furniture" class="select-input">
+                                    <option value="Không rõ" selected>-- Chọn --</option>
                                     <option value="Đầy đủ">Đầy đủ</option>
                                     <option value="Cơ bản">Cơ bản</option>
                                     <option value="Không nội thất">Không nội thất</option>
@@ -146,6 +136,7 @@
                             <div class="input-group">
                                 <label for="legal">Pháp lý</label>
                                 <select id="legal" name="legal" class="select-input">
+                                    <option value="Không rõ" selected>-- Chọn --</option>
                                     <option value="Sổ đỏ">Sổ đỏ/Sổ hồng</option>
                                     <option value="Hợp đồng mua bán">HĐMB</option>
                                     <option value="Không rõ">Không rõ</option>
@@ -163,25 +154,56 @@
                         </button>
                     </form>
 
-                    <div id="result-container" class="result-container" style="display: none;">
-                        <div style="margin-bottom: 16px;">
-                            <div style="width: 48px; height: 48px; background: var(--colors-surface-soft); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 8px;">💰</div>
-                            <p class="result-label">Giá ước tính</p>
-                        </div>
-                        <h3 id="predicted-price" class="result-price">--</h3>
-                        <p id="result-message" class="body-md"></p>
-                        <button id="reset-btn" class="button-secondary" style="margin-top: 16px;">Thực hiện lại</button>
 
-                        <div id="similar-properties-container" style="display: none; margin-top: 20px; text-align: left;">
-                            <h4>Tham khảo nhà tương tự</h4>
-                            <div id="similar-list" style="display: grid; grid-template-columns: 1fr; gap: 10px;"></div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
         </section>
     </main>
+
+    <!-- PREDICTION MODAL -->
+    <div id="prediction-modal" class="prediction-modal">
+        <div class="prediction-modal-overlay"></div>
+        <div class="prediction-modal-content">
+            <button class="prediction-modal-close" id="prediction-modal-close">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div class="prediction-modal-header">
+                <h2>Kết Quả Dự Đoán</h2>
+                <p>Phân tích chi tiết từ mô hình AI của ProphetEstate</p>
+            </div>
+            <div class="prediction-modal-body">
+                <div class="prediction-modal-left">
+                    <div class="prediction-price-box">
+                        <div style="font-size: 32px; margin-bottom: 8px;">💰</div>
+                        <p class="result-label" style="color: var(--colors-ink); font-weight: 500;">Giá ước tính</p>
+                        <h3 id="predicted-price" class="result-price" style="font-size: 2.5rem; margin-top: 8px; color: var(--colors-primary); margin-bottom: 4px;">--</h3>
+                        <div id="price-per-m2" style="font-size: 1.1rem; font-weight: 500; color: var(--colors-ink); margin-bottom: 6px;"></div>
+                        <div id="district-comparison-badge" style="display: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; width: fit-content;"></div>
+                        <div id="confidence-interval" style="font-size: 0.9rem; color: var(--colors-muted); font-weight: 500;"></div>
+                        <p id="result-message" class="body-md" style="margin-top: 16px; color: var(--colors-muted); font-size: 0.9rem;"></p>
+                    </div>
+
+                    <div id="explanation-container" class="explanation-box" style="display: none; margin-top: 24px; background: var(--colors-surface-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline);">
+                        <h4 style="font-size: 1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px;">
+                            <i class="fa-solid fa-chart-bar" style="color: var(--colors-primary);"></i>
+                            Phân tích mức độ ảnh hưởng
+                        </h4>
+                        <div id="explanation-list" style="display: flex; flex-direction: column; gap: 14px;"></div>
+                    </div>
+                </div>
+                
+                <div class="prediction-modal-right">
+                    <div id="similar-properties-container" style="display: none; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline); height: 100%; display: flex; flex-direction: column;">
+                        <h4 style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px; flex-shrink: 0;">
+                            <i class="fa-solid fa-house-chimney" style="color: var(--colors-primary); margin-right: 8px;"></i>Tham khảo nhà tương tự
+                        </h4>
+                        <div id="similar-list" class="similar-list-scrollable" style="flex-grow: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 12px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {% include '_footer.html' %}
 

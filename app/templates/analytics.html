@@ -7,7 +7,7 @@
     <title>Phân tích dữ liệu BĐS | Prophet Estate</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
     <meta name="description"
-        content="Phân tích chi tiết dữ liệu thị trường bất động sản Hà Nội — giá theo quận, phân phối diện tích, pháp lý và nội thất.">
+        content="Phân tích chi tiết dữ liệu thị trường bất động sản Việt Nam — giá theo quận, phân phối diện tích, pháp lý và nội thất.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -382,7 +382,7 @@
         <div class="hero-content">
             <div class="hero-badge">📡 Dữ liệu thực · batdongsan.com.vn</div>
             <h1>Phân tích Thị trường BĐS</h1>
-            <p>Tổng quan chi tiết thị trường bất động sản Hà Nội dựa trên {{ stats.total }} bất động sản thực tế</p>
+            <p>Tổng quan chi tiết thị trường bất động sản Việt Nam dựa trên {{ stats.total }} bất động sản thực tế</p>
             <div class="hero-stats-row">
                 <div class="hero-stat">
                     <div class="hero-stat-val">{{ stats.total_cc }}</div>
@@ -460,20 +460,37 @@
             </div>
         </div>
 
-        <!-- BREAKDOWNS -->
+        <!-- BREAKDOWNS CHUNG CƯ -->
         <p class="section-title">📋 Đặc điểm Chung Cư</p>
         <div class="charts-row col3">
             <div class="chart-card">
-                <h3>📜 Tỷ lệ Pháp Lý</h3>
+                <h3>📜 Tỷ lệ Pháp Lý (CC)</h3>
                 <canvas id="legalChart" height="210"></canvas>
             </div>
             <div class="chart-card">
-                <h3>🛋 Tỷ lệ Nội Thất</h3>
+                <h3>🛋 Tỷ lệ Nội Thất (CC)</h3>
                 <canvas id="furnitureChart" height="210"></canvas>
             </div>
             <div class="chart-card">
-                <h3>🛏 Số Phòng Ngủ</h3>
+                <h3>🛏 Số Phòng Ngủ (CC)</h3>
                 <canvas id="bedroomChart" height="210"></canvas>
+            </div>
+        </div>
+
+        <!-- BREAKDOWNS NHÀ ĐẤT -->
+        <p class="section-title">📋 Đặc điểm Nhà Đất</p>
+        <div class="charts-row col3">
+            <div class="chart-card">
+                <h3>📜 Tỷ lệ Pháp Lý (NĐ)</h3>
+                <canvas id="ndLegalChart" height="210"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>🛋 Tỷ lệ Nội Thất (NĐ)</h3>
+                <canvas id="ndFurnitureChart" height="210"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>🛏 Số Phòng Ngủ (NĐ)</h3>
+                <canvas id="ndBedroomChart" height="210"></canvas>
             </div>
         </div>
 
@@ -584,24 +601,22 @@
         barChart('ccPriceDistChart', Object.keys(S.cc_price_by_dist), Object.values(S.cc_price_by_dist), COLORS, true);
         barChart('ndPriceDistChart', Object.keys(S.nd_price_by_dist), Object.values(S.nd_price_by_dist), COLORS, true);
 
-        // Doughnuts
+        // Doughnuts CC
         doughnutChart('legalChart', Object.keys(S.cc_legal), Object.values(S.cc_legal));
         doughnutChart('furnitureChart', Object.keys(S.cc_furniture), Object.values(S.cc_furniture));
 
-        // Bedroom bar
+        // Bedroom bar CC
         const bedLabels = Object.keys(S.cc_bedroom).map(k => k + ' PN');
         barChart('bedroomChart', bedLabels, Object.values(S.cc_bedroom), GOLD, false);
 
-        // Smooth page transition
-        document.addEventListener('click', e => {
-            const link = e.target.closest('a[href]');
-            if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank') {
-                e.preventDefault();
-                document.body.style.transition = 'opacity 0.25s';
-                document.body.style.opacity = '0';
-                setTimeout(() => location.href = link.href, 250);
-            }
-        });
+        // Doughnuts ND
+        doughnutChart('ndLegalChart', Object.keys(S.nd_legal), Object.values(S.nd_legal));
+        doughnutChart('ndFurnitureChart', Object.keys(S.nd_furniture), Object.values(S.nd_furniture));
+
+        // Bedroom bar ND
+        const ndBedLabels = Object.keys(S.nd_bedroom).map(k => k + ' PN');
+        barChart('ndBedroomChart', ndBedLabels, Object.values(S.nd_bedroom), BLUE, false);
+
     </script>
 </body>
 

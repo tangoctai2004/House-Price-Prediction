@@ -458,11 +458,6 @@ function safeImageUrl(value) {
     return /^https?:\/\//i.test(url) ? escapeHtml(url) : '';
 }
 
-// Allow Enter key search
-document.getElementById('q-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doSearch(1);
-});
-
 // Load all on page start
 doSearch(1);
 

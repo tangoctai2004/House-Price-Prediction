@@ -12,7 +12,7 @@
 Xây dựng một hệ thống web cho phép người dùng nhập thông số căn nhà (diện tích, số phòng ngủ, tỉnh/thành, quận/huyện, hướng nhà...) và nhận về **giá dự đoán bằng VNĐ** từ mô hình Machine Learning.
 
 ### Điểm nổi bật (so với các nhóm khác)
-- **Tự crawl dữ liệu thực** từ batdongsan.com.vn (gần 12.000 bản ghi, không dùng dataset có sẵn).
+- **Tự crawl dữ liệu thực** từ batdongsan.com.vn (11.831 bản ghi, không dùng dataset có sẵn).
 - **Hệ thống AI Pipeline hiện đại:** Tích hợp bộ chuẩn hóa (StandardScaler) và mã hóa (OneHotEncoder) vào cùng 1 Pipeline duy nhất, giúp web hoạt động cực kỳ mượt mà và không bao giờ bị lỗi khi gặp dữ liệu mới.
 - So sánh **4 thuật toán ML** và chọn ra mô hình tốt nhất (XGBoost).
 - Giao diện web **hiển thị chi tiết từng căn nhà**, bộ lọc tìm kiếm nâng cao nhiều lớp, UI/UX hiện đại chuẩn doanh nghiệp.
@@ -48,7 +48,7 @@ Xây dựng một hệ thống web cho phép người dùng nhập thông số c
 **Cách hoạt động:**
 - Dùng thư viện `curl_cffi` (Python) giả lập trình duyệt Chrome để vượt tường lửa.
 - Mỗi căn nhà cào xong → ghi ngay 1 dòng vào file CSV.
-- Đã thu thập gần **12.000 bản ghi**.
+- Đã thu thập **11.831 bản ghi** (5.452 Chung cư + 6.379 Nhà đất).
 
 ---
 
@@ -148,7 +148,7 @@ house-price-prediction/
 ## 5. TIMELINE CHI TIẾT CẬP NHẬT (14 NGÀY)
 
 ### TUẦN 1: DATA + ML (23/4 → 29/4) ✅ (Đã xong)
-- Hoàn thành Crawl data 12.000 căn.
+- Hoàn thành Crawl data 11.831 căn (5.452 Chung cư + 6.379 Nhà đất).
 - Tiền xử lý và tạo biểu đồ EDA.
 - Thiết kế UI HTML/CSS bản Alpha.
 - Hoàn thành bản nháp 4 thuật toán Machine Learning.
