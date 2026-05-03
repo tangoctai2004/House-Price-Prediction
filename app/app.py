@@ -458,9 +458,9 @@ def predict():
         }
         
         if property_type == 'nha_dat':
-            input_dict['floors_num'] = int(data.get('floors', 1))
-            input_dict['frontage_m'] = float(data.get('frontage', 0))
-            input_dict['road_width_m'] = float(data.get('road_width', 0))
+            input_dict['floors_num'] = floors
+            input_dict['frontage_m'] = frontage
+            input_dict['road_width_m'] = road_width
         elif property_type != 'chung_cu':
             return jsonify({'success': False, 'error': 'Loại bất động sản không hợp lệ (chỉ nhận chung_cu hoặc nha_dat)'}), 400
 
