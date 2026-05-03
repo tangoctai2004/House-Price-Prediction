@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultMessageEl = document.getElementById('result-message');
     const errorEl = document.getElementById('error-message');
     const submitBtn = document.getElementById('submit-btn');
+    if (!form || !submitBtn) {
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (link && link.href && link.target !== '_blank' && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+                e.preventDefault();
+                document.body.classList.add('page-transitioning');
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 250);
+            }
+        });
+        return;
+    }
     const btnText = submitBtn.querySelector('.btn-text');
     const spinner = submitBtn.querySelector('.spinner');
     const resetBtn = document.getElementById('reset-btn');
@@ -104,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.success) {
                 // Hide form, show result
                 form.style.display = 'none';
-                resultContainer.classList.remove('hidden');
+                resultContainer.style.display = 'block';
                 
                 // Animate price
                 const finalPrice = result.predicted_price_vnd;
@@ -118,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 similarList.innerHTML = ''; // Clear old
 
                 if (result.similar_properties && result.similar_properties.length > 0) {
-                    similarContainer.classList.remove('hidden');
+                    similarContainer.style.display = 'block';
                     result.similar_properties.forEach(prop => {
                         const card = document.createElement('a');
                         const type = prop.property_type === 'nha_dat' ? 'nha_dat' : 'chung_cu';
@@ -151,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         similarList.appendChild(card);
                     });
                 } else {
-                    similarContainer.classList.add('hidden');
+                    similarContainer.style.display = 'none';
                 }
             } else {
                 errorEl.textContent = result.error || 'Có lỗi xảy ra khi dự đoán.';
@@ -169,7 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reset button
     resetBtn.addEventListener('click', () => {
-        resultContainer.classList.add('hidden');
+        resultContainer.style.display = 'none';
+        document.getElementById('similar-properties-container').style.display = 'none';
         form.style.display = 'block';
         form.reset();
         errorEl.textContent = '';

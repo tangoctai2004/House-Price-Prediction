@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
+</head>
+<body>
+
+{% include '_header.html' %}
+{% set active_tab = 'profile' %}
+{% include '_account_tabs.html' %}
+
+<main>
+    <div class="account-content">
+        <div class="profile-layout">
+
+            <!-- LEFT: Sidebar -->
+            <aside class="profile-sidebar">
+                <div class="profile-sidebar-avatar">
+                    <div class="avatar-upload" onclick="document.getElementById('avatar-input').click()">
+                        {% if profile.avatar %}
+                        <img class="account-avatar-lg account-avatar-img" id="avatar-preview" src="{{ profile.avatar }}" alt="{{ user.name }}">
+                        {% else %}
+                        <div class="account-avatar-lg" id="avatar-preview">{{ user.name[0] | upper }}</div>
+                        {% endif %}
+                        <div class="avatar-upload-overlay">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        </div>
+                        <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp" style="display:none" onchange="uploadAvatar(this)">
+                    </div>
+                    <div class="account-avatar-name">{{ user.name }}</div>
+                    <div class="account-avatar-email">{{ user.email }}</div>
+                </div>
+                <nav class="profile-sidebar-nav">
+                    <a href="#section-info" class="profile-sidebar-link active" onclick="switchSection('info', this)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Thông tin cơ bản
+                    </a>
+                    <a href="#section-password" class="profile-sidebar-link" onclick="switchSection('password', this)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        Đổi mật khẩu
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- RIGHT: Content -->
+            <div class="profile-main">
+
+                <!-- Section: Thông tin cơ bản -->
+                <div id="section-info" class="profile-section active">
+                    <div class="profile-card">
+                        <h3 class="profile-card-title">Thông tin cơ bản</h3>
+                        <div class="profile-form-grid">
+                            <div class="auth-field">
+                                <label>Họ và tên</label>
+                                <input type="text" id="profile-name" class="text-input" value="{{ profile.name }}">
+                            </div>
+                            <div class="auth-field">
+                                <label>Email</label>
+                                <input type="email" class="text-input" value="{{ profile.email }}" disabled style="opacity:0.5;cursor:not-allowed;">
+                            </div>
+                            <div class="auth-field">
+                                <label>Số điện thoại</label>
+                                <input type="tel" id="profile-phone" class="text-input" value="{{ profile.phone }}" placeholder="0912 345 678">
+                            </div>
+                            <div class="auth-field">
+                                <label>Giới tính</label>
+                                <select id="profile-gender" class="select-input">
+                                    <option value="" {% if not profile.gender %}selected{% endif %}>Chưa cập nhật</option>
+                                    <option value="Nam" {% if profile.gender == 'Nam' %}selected{% endif %}>Nam</option>
+                                    <option value="Nữ" {% if profile.gender == 'Nữ' %}selected{% endif %}>Nữ</option>
+                                    <option value="Khác" {% if profile.gender == 'Khác' %}selected{% endif %}>Khác</option>
+                                </select>
+                            </div>
+                            <div class="auth-field">
+                                <label>Ngày sinh</label>
+                                <input type="date" id="profile-dob" class="text-input" value="{{ profile.dob }}">
+                            </div>
+                        </div>
+                        <div id="profile-msg" class="profile-msg"></div>
+                        <button class="button-primary" onclick="updateProfile()">Lưu thay đổi</button>
+                    </div>
+                </div>
+
+                <!-- Section: Đổi mật khẩu -->
+                <div id="section-password" class="profile-section">
+                    <div class="profile-card">
+                        <h3 class="profile-card-title">Đổi mật khẩu</h3>
+                        <div class="profile-form-grid" style="grid-template-columns: 1fr;">
+                            <div class="auth-field">
+                                <label>Mật khẩu hiện tại</label>
+                                <input type="password" id="old-pass" class="text-input" placeholder="••••••••">
+                            </div>
+                            <div class="auth-field">
+                                <label>Mật khẩu mới</label>
+                                <input type="password" id="new-pass" class="text-input" placeholder="Tối thiểu 6 ký tự">
+                            </div>
+                            <div class="auth-field">
+                                <label>Xác nhận mật khẩu mới</label>
+                                <input type="password" id="confirm-pass" class="text-input" placeholder="Nhập lại mật khẩu mới">
+                            </div>
+                        </div>
+                        <div id="pass-msg" class="profile-msg"></div>
+                        <button class="button-primary" onclick="changePassword()">Đổi mật khẩu</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include '_footer.html' %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+function switchSection(id, el) {
+    document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.profile-sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    el.classList.add('active');
+}
+
+async function uploadAvatar(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert('Ảnh tối đa 5MB.'); return; }
+    const formData = new FormData();
+    formData.append('avatar', file);
+    try {
+        const res = await fetch('/api/upload-avatar', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            location.reload();
+        } else {
+            alert(data.error);
+        }
+    } catch(e) { alert('Lỗi kết nối.'); }
+}
+
+async function updateProfile() {
+    const name = document.getElementById('profile-name').value.trim();
+    const phone = document.getElementById('profile-phone').value.trim();
+    const gender = document.getElementById('profile-gender').value;
+    const dob = document.getElementById('profile-dob').value;
+    const msg = document.getElementById('profile-msg');
+    if (!name) { msg.textContent = 'Tên không được để trống.'; msg.className = 'profile-msg error'; return; }
+    try {
+        const res = await fetch('/api/update-profile', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, phone, gender, dob}) });
+        const data = await res.json();
+        if (data.success) { msg.textContent = 'Đã cập nhật thành công!'; msg.className = 'profile-msg success'; setTimeout(() => location.reload(), 800); }
+        else { msg.textContent = data.error; msg.className = 'profile-msg error'; }
+    } catch(e) { msg.textContent = 'Lỗi kết nối.'; msg.className = 'profile-msg error'; }
+}
+
+async function changePassword() {
+    const oldPass = document.getElementById('old-pass').value;
+    const newPass = document.getElementById('new-pass').value;
+    const confirmPass = document.getElementById('confirm-pass').value;
+    const msg = document.getElementById('pass-msg');
+    if (!oldPass || !newPass) { msg.textContent = 'Vui lòng nhập đầy đủ.'; msg.className = 'profile-msg error'; return; }
+    if (newPass !== confirmPass) { msg.textContent = 'Mật khẩu xác nhận không khớp.'; msg.className = 'profile-msg error'; return; }
+    try {
+        const res = await fetch('/api/update-profile', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({old_password: oldPass, new_password: newPass}) });
+        const data = await res.json();
+        if (data.success) { msg.textContent = 'Đổi mật khẩu thành công!'; msg.className = 'profile-msg success'; document.getElementById('old-pass').value = ''; document.getElementById('new-pass').value = ''; document.getElementById('confirm-pass').value = ''; }
+        else { msg.textContent = data.error; msg.className = 'profile-msg error'; }
+    } catch(e) { msg.textContent = 'Lỗi kết nối.'; msg.className = 'profile-msg error'; }
+}
+</script>
+</body>
+</html>
