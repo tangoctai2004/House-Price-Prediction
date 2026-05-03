@@ -131,12 +131,11 @@ def load_model(name):
             models[name] = pickle.load(f)
         print(f"[OK] Da load thanh cong {name}")
     except FileNotFoundError:
-        print(f"[ERROR] Chua tim thay model {name}. Vui long chay file train_pipeline.py truoc!")
+        print(f"[ERROR] Chua tim thay model {name}. Vui long chay file run_training.py truoc!")
         models[name] = None
 
-# Load cả 2 model cho Chung cư và Nhà đất
-load_model('model_chung_cu_pipeline')
-load_model('model_nha_dat_pipeline')
+# Load mô hình duy nhất đã được gộp bằng Pipeline
+load_model('best_model_pipeline')
 
 # Load data cho gợi ý căn nhà tương tự
 dataframes = {}
@@ -442,40 +441,35 @@ def predict():
         
         # 1. Chỉ cần tạo thẳng 1 DataFrame 1 dòng từ input của Frontend
         # Chú ý: Các key của dictionary phải khớp Y HỆT tên cột lúc Thái train
-        if property_type == 'chung_cu':
-            input_dict = {
-                'area_m2': area,
-                'bedrooms_num': bedrooms,
-                'district': data.get('district', 'Khác'),
-                'direction': data.get('direction', 'Không rõ'),
-                'balcony_direction': data.get('balcony_direction', 'Không rõ'),
-                'furniture_std': data.get('furniture', 'Không rõ'),
-                'legal_std': data.get('legal', 'Không rõ')
-            }
-            model_key = 'model_chung_cu_pipeline'
-            
-        elif property_type == 'nha_dat':
-            input_dict = {
-                'area_m2': area,
-                'bedrooms_num': bedrooms,
-                'district': data.get('district', 'Khác'),
-                'direction': data.get('direction', 'Không rõ'),
-                'furniture_std': data.get('furniture', 'Không rõ'),
-                'legal_std': data.get('legal', 'Không rõ'),
-                'floors_num': int(data.get('floors', 1)),
-                'frontage_m': float(data.get('frontage', 0)),
-                'road_width_m': float(data.get('road_width', 0))
-            }
-            model_key = 'model_nha_dat_pipeline'
-            
-        else:
+        input_dict = {
+            'area_m2': area,
+            'bedrooms_num': bedrooms,
+            'district': data.get('district', 'Khác'),
+            'direction': data.get('direction', 'Không rõ'),
+            'furniture_std': data.get('furniture', 'Không rõ'),
+            'legal_std': data.get('legal', 'Không rõ'),
+            'floors_num': 0,
+            'frontage_m': 0.0,
+            'road_width_m': 0.0,
+            'loai_bds': property_type
+        }
+        
+        if property_type == 'nha_dat':
+            input_dict['floors_num'] = int(data.get('floors', 1))
+            input_dict['frontage_m'] = float(data.get('frontage', 0))
+            input_dict['road_width_m'] = float(data.get('road_width', 0))
+        elif property_type != 'chung_cu':
             return jsonify({'success': False, 'error': 'Loại bất động sản không hợp lệ (chỉ nhận chung_cu hoặc nha_dat)'}), 400
 
         # Chuyển Dictionary thành DataFrame (chỉ có 1 dòng dữ liệu)
         input_data = pd.DataFrame([input_dict])
         
+        # Đảm bảo các cột categorical là kiểu chuỗi giống lúc train
+        for c in ['district', 'direction', 'furniture_std', 'legal_std', 'loai_bds']:
+            input_data[c] = input_data[c].astype(str)
+        
         # 2. Đưa thẳng DataFrame vào model dự đoán
-        model = models.get(model_key)
+        model = models.get('best_model_pipeline')
         prediction_billion = 0
         if model:
             prediction_billion = model.predict(input_data)[0]
