@@ -416,25 +416,25 @@ def predict():
         # Nhận diện loại bất động sản cần dự đoán (mặc định chung_cu nếu Frontend không gửi)
         property_type = data.get('property_type', 'chung_cu')
         
-        # --- VALIDATION ĐẦU VÀO (CHẶN DỮ LIỆU VÔ LÝ) ---
-        area = float(data.get('area', 0))
-        if area <= 0 or area > 50000:
-            return jsonify({'success': False, 'error': f'Diện tích {area}m2 không hợp lệ! Vui lòng nhập số > 0.'}), 400
+        # --- VALIDATION ĐẦU VÀO (cho phép bỏ trống, gán giá trị mặc định) ---
+        area = float(data.get('area', '') or 60)  # Mặc định 60m² nếu bỏ trống
+        if area < 0 or area > 50000:
+            return jsonify({'success': False, 'error': f'Diện tích {area}m2 không hợp lệ!'}), 400
             
-        bedrooms = int(data.get('bedrooms', 0))
+        bedrooms = int(data.get('bedrooms', '') or 2)  # Mặc định 2 phòng ngủ
         if bedrooms < 0 or bedrooms > 100:
-            return jsonify({'success': False, 'error': f'Số phòng ngủ {bedrooms} không hợp lệ! Vui lòng nhập số từ 0 đến 100.'}), 400
+            return jsonify({'success': False, 'error': f'Số phòng ngủ {bedrooms} không hợp lệ!'}), 400
 
         if property_type == 'nha_dat':
-            floors = int(data.get('floors', 1))
-            if floors <= 0 or floors > 200:
-                return jsonify({'success': False, 'error': f'Số tầng {floors} không hợp lệ! Vui lòng nhập số > 0.'}), 400
+            floors = int(data.get('floors', '') or 1)
+            if floors < 0 or floors > 200:
+                return jsonify({'success': False, 'error': f'Số tầng {floors} không hợp lệ!'}), 400
             
-            frontage = float(data.get('frontage', 0))
+            frontage = float(data.get('frontage', '') or 0)
             if frontage < 0 or frontage > 1000:
                 return jsonify({'success': False, 'error': f'Mặt tiền {frontage}m không hợp lệ!'}), 400
                 
-            road_width = float(data.get('road_width', 0))
+            road_width = float(data.get('road_width', '') or 0)
             if road_width < 0 or road_width > 1000:
                 return jsonify({'success': False, 'error': f'Đường vào {road_width}m không hợp lệ!'}), 400
         # ------------------------------------------------
@@ -472,11 +472,11 @@ def predict():
         model = models.get('best_model_pipeline')
         prediction_billion = 0
         if model:
-            prediction_billion = model.predict(input_data)[0]
-            prediction_vnd = prediction_billion * 1_000_000_000
+            prediction_billion = float(model.predict(input_data)[0])
+            prediction_vnd = float(prediction_billion * 1_000_000_000)
         else:
             prediction_billion = float(data.get('area', 0)) * 0.1
-            prediction_vnd = prediction_billion * 1_000_000_000
+            prediction_vnd = float(prediction_billion * 1_000_000_000)
             
         # 3. Tìm các căn nhà tương tự
         similar_properties = []
@@ -507,9 +507,9 @@ def predict():
                     prop = {
                         "id": int(idx),
                         "property_type": property_type,
-                        "price_billion": round(row['price_billion'], 2),
-                        "area_m2": row['area_m2'],
-                        "district": row['district']
+                        "price_billion": round(float(row['price_billion']), 2),
+                        "area_m2": float(row['area_m2']),
+                        "district": str(row['district'])
                     }
                     if property_type == 'chung_cu':
                         prop["desc"] = f"{int(row['bedrooms_num'])} PN · Hướng {row['direction']}"
@@ -540,10 +540,10 @@ def predict():
                 'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M'),
                 'property_type': property_type,
                 'district': data.get('district', 'Khác'),
-                'area': area,
-                'bedrooms': bedrooms,
-                'price_vnd': prediction_vnd,
-                'price_billion': round(prediction_billion, 2),
+                'area': float(area),
+                'bedrooms': int(bedrooms),
+                'price_vnd': float(prediction_vnd),
+                'price_billion': round(float(prediction_billion), 2),
                 'input_data': {k: v for k, v in data.items() if k != 'property_type'},
             })
             if len(PREDICTION_HISTORY[email]) > 50:

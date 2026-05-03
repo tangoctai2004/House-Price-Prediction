@@ -32,24 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNhaDat) {
             chungCuFields.forEach(el => {
                 el.style.display = 'none';
-                const input = el.querySelector('input, select');
-                if(input) input.required = false;
             });
             nhaDatFields.forEach(el => {
                 el.style.display = 'block';
-                const input = el.querySelector('input, select');
-                if(input) input.required = true;
             });
         } else {
             chungCuFields.forEach(el => {
                 el.style.display = 'block';
-                const input = el.querySelector('input, select');
-                if(input) input.required = true;
             });
             nhaDatFields.forEach(el => {
                 el.style.display = 'none';
-                const input = el.querySelector('input, select');
-                if(input) input.required = false;
             });
         }
     }
