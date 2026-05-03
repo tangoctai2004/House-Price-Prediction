@@ -42,3 +42,4 @@ Thumbs.db
 
 # Data (Giữ lại .csv nhỏ, bỏ qua các file log hoặc temp nếu có)
 *.log
+data/raw/raw_data.csv
