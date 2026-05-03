@@ -53,6 +53,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     updateFields();
 
+    // Mapping Tỉnh -> Quận/Huyện
+    const locationData = {
+        "Hà Nội": ["Cầu Giấy", "Nam Từ Liêm", "Bắc Từ Liêm", "Tây Hồ", "Thanh Xuân", "Hà Đông", "Đống Đa", "Hoàng Mai", "Long Biên", "Ba Đình", "Hai Bà Trưng", "Gia Lâm", "Đông Anh", "Thanh Trì", "Hoài Đức"],
+        "TP. Hồ Chí Minh": ["Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 5", "Quận 6", "Quận 7", "Quận 8", "Quận 9", "Quận 10", "Quận 11", "Quận 12", "Bình Tân", "Bình Thạnh", "Tân Phú", "Bình Chánh", "Thủ Đức", "Tân Bình", "Phú Nhuận", "Nhà Bè", "Hóc Môn", "Gò Vấp"],
+        "Đà Nẵng": ["Ngũ Hành Sơn", "Sơn Trà", "Cẩm Lệ", "Liên Chiểu", "Hải Châu"],
+        "Khác": ["Khác"]
+    };
+
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+
+    function updateDistrictSelect() {
+        if (!provinceSelect || !districtSelect) return;
+        const selectedProvince = provinceSelect.value;
+        const districts = locationData[selectedProvince] || [];
+        
+        districtSelect.innerHTML = '';
+        districts.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            districtSelect.appendChild(opt);
+        });
+    }
+
+    if (provinceSelect) {
+        provinceSelect.addEventListener('change', updateDistrictSelect);
+        updateDistrictSelect(); // init
+    }
+
     // Format currency
     function formatCurrency(value) {
         if (value >= 1000000000) {

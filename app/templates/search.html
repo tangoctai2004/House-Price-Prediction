@@ -229,22 +229,33 @@
             </div>
         </div>
         <div class="filter-box">
+            <h4>Tỉnh/Thành phố</h4>
+            <select id="f-prov" onchange="updateSearchDistricts()">
+                <option value="">Tất cả</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+        <div class="filter-box">
             <h4>Quận/Huyện</h4>
             <select id="f-dist">
                 <option value="">Tất cả quận</option>
-                <option>Cầu Giấy</option>
-                <option>Nam Từ Liêm</option>
-                <option>Đống Đa</option>
-                <option>Tây Hồ</option>
-                <option>Thanh Xuân</option>
-                <option>Hoàng Mai</option>
-                <option>Hà Đông</option>
-                <option>Long Biên</option>
-                <option>Gia Lâm</option>
-                <option>Bắc Từ Liêm</option>
-                <option>Hoài Đức</option>
-                <option>Hai Bà Trưng</option>
-                <option>Ba Đình</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            <h4>Hướng nhà</h4>
+            <select id="f-dir">
+                <option value="">Tất cả</option>
+                <option value="Đông">Đông</option>
+                <option value="Tây">Tây</option>
+                <option value="Nam">Nam</option>
+                <option value="Bắc">Bắc</option>
+                <option value="Đông - Nam">Đông - Nam</option>
+                <option value="Tây - Nam">Tây - Nam</option>
+                <option value="Tây - Bắc">Tây - Bắc</option>
+                <option value="Đông - Bắc">Đông - Bắc</option>
             </select>
         </div>
         <div class="filter-box">
@@ -282,10 +293,41 @@
 let currentPage = 1;
 let activeDistrict = '';
 
+const locationDataSearch = {
+    "Hà Nội": ["Cầu Giấy", "Nam Từ Liêm", "Bắc Từ Liêm", "Tây Hồ", "Thanh Xuân", "Hà Đông", "Đống Đa", "Hoàng Mai", "Long Biên", "Ba Đình", "Hai Bà Trưng", "Gia Lâm", "Đông Anh", "Thanh Trì", "Hoài Đức"],
+    "TP. Hồ Chí Minh": ["Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 5", "Quận 6", "Quận 7", "Quận 8", "Quận 9", "Quận 10", "Quận 11", "Quận 12", "Bình Tân", "Bình Thạnh", "Tân Phú", "Bình Chánh", "Thủ Đức", "Tân Bình", "Phú Nhuận", "Nhà Bè", "Hóc Môn", "Gò Vấp"],
+    "Đà Nẵng": ["Ngũ Hành Sơn", "Sơn Trà", "Cẩm Lệ", "Liên Chiểu", "Hải Châu"],
+    "Khác": ["Khác"]
+};
+
+function updateSearchDistricts() {
+    const prov = document.getElementById('f-prov').value;
+    const distSelect = document.getElementById('f-dist');
+    distSelect.innerHTML = '<option value="">Tất cả quận</option>';
+    if (prov && locationDataSearch[prov]) {
+        locationDataSearch[prov].forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            distSelect.appendChild(opt);
+        });
+    }
+}
+
 function setDistrict(btn, dist) {
     activeDistrict = dist;
     document.querySelectorAll('.qf').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    
+    // Auto set province to Hanoi if it's a quick filter district (which are all Hanoi)
+    if(dist) {
+        document.getElementById('f-prov').value = "Hà Nội";
+        updateSearchDistricts();
+    } else {
+        document.getElementById('f-prov').value = "";
+        updateSearchDistricts();
+    }
+    
     document.getElementById('f-dist').value = dist;
     doSearch(1);
 }
@@ -295,7 +337,10 @@ function resetFilters() {
     document.getElementById('f-type').value = 'all';
     document.getElementById('f-pmin').value = '';
     document.getElementById('f-pmax').value = '';
+    document.getElementById('f-prov').value = '';
+    updateSearchDistricts();
     document.getElementById('f-dist').value = '';
+    document.getElementById('f-dir').value = '';
     activeDistrict = '';
     document.querySelectorAll('.qf').forEach((b,i) => b.classList.toggle('active', i===0));
     document.getElementById('results-container').innerHTML = `<div class="state-box"><span class="s-icon"><i class="fa-solid fa-house-chimney-window"></i></span><h3>Khám phá bất động sản</h3><p>Nhập từ khóa hoặc chọn bộ lọc.</p></div>`;
@@ -310,6 +355,7 @@ async function doSearch(page) {
     const pmin     = document.getElementById('f-pmin').value || 0;
     const pmax     = document.getElementById('f-pmax').value || 9999;
     const dist     = document.getElementById('f-dist').value;
+    const dir      = document.getElementById('f-dir').value;
 
     const container = document.getElementById('results-container');
     const countEl = document.getElementById('results-count');
@@ -317,7 +363,7 @@ async function doSearch(page) {
     document.getElementById('pagination').innerHTML = '';
 
     const sort = document.getElementById('sort-sel').value;
-    const params = new URLSearchParams({ q, type, price_min: pmin, price_max: pmax, district: dist, page, sort });
+    const params = new URLSearchParams({ q, type, price_min: pmin, price_max: pmax, district: dist, direction: dir, page, sort });
     const res = await fetch(`/api/search?${params}`);
     const data = await res.json();
     if (!res.ok) {

@@ -324,6 +324,7 @@ def api_search():
     ptype    = request.args.get('type', 'all')       # all / chung_cu / nha_dat
     sort     = request.args.get('sort', 'default')
     district  = request.args.get('district', '').strip()
+    direction = request.args.get('direction', '').strip()
     per_page  = 12
 
     if ptype not in {'all', 'chung_cu', 'nha_dat'}:
@@ -355,6 +356,8 @@ def api_search():
             mask &= text_mask
         if district:
             mask &= df['district'].astype(str).str.lower() == district.lower()
+        if direction:
+            mask &= df['direction'].astype(str).str.lower() == direction.lower()
         mask &= (df['price_billion'] >= price_min) & (df['price_billion'] <= price_max)
         sub = df[mask].copy()
         sub['_type'] = dtype
