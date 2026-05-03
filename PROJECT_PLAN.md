@@ -9,19 +9,20 @@
 ## 1. TỔNG QUAN ĐỀ TÀI
 
 ### Mục tiêu
-Xây dựng một hệ thống web cho phép người dùng nhập thông số căn nhà (diện tích, số phòng ngủ, quận/huyện, hướng nhà...) và nhận về **giá dự đoán bằng VNĐ** từ mô hình Machine Learning.
+Xây dựng một hệ thống web cho phép người dùng nhập thông số căn nhà (diện tích, số phòng ngủ, tỉnh/thành, quận/huyện, hướng nhà...) và nhận về **giá dự đoán bằng VNĐ** từ mô hình Machine Learning.
 
 ### Điểm nổi bật (so với các nhóm khác)
-- **Tự crawl dữ liệu thực** từ batdongsan.com.vn (không dùng dataset có sẵn)
-- **Kiến trúc Multi-Model:** Tách riêng model Chung cư và Nhà đất (thay vì 1 model chung) — cải thiện độ chính xác đáng kể
-- So sánh **4 thuật toán ML** và chọn ra mô hình tốt nhất cho từng loại BĐS
-- Giao diện web **hiển thị chi tiết từng căn nhà** như trang BĐS thật
+- **Tự crawl dữ liệu thực** từ batdongsan.com.vn (gần 12.000 bản ghi, không dùng dataset có sẵn).
+- **Hệ thống AI Pipeline hiện đại:** Tích hợp bộ chuẩn hóa (StandardScaler) và mã hóa (OneHotEncoder) vào cùng 1 Pipeline duy nhất, giúp web hoạt động cực kỳ mượt mà và không bao giờ bị lỗi khi gặp dữ liệu mới.
+- So sánh **4 thuật toán ML** và chọn ra mô hình tốt nhất (XGBoost).
+- Giao diện web **hiển thị chi tiết từng căn nhà**, bộ lọc tìm kiếm nâng cao nhiều lớp, UI/UX hiện đại chuẩn doanh nghiệp.
+- **Tích hợp Cơ sở dữ liệu thật (Database)** quản lý người dùng và lịch sử thay vì chỉ lưu tạm thời.
 
 ### Quy trình tổng thể (End-to-End Pipeline)
 
-```
-[1. CRAWL] → [2. CLEAN & EDA] → [3. TRAIN AI] → [4. TESTING/VALIDATION] → [5. WEB APP]
-   (Tài)        (Tài)           (Thái)            (Đức)              (Tài+Đông)
+```text
+[1. CRAWL] → [2. CLEAN & EDA] → [3. TRAIN AI & PIPELINE] → [4. DATABASE & WEB APP] → [5. ĐÁNH GIÁ & BÁO CÁO]
+   (Tài)          (Tài)                 (Thái)                 (Đông + Đức)                 (Đức + Mai Anh)
 ```
 
 ---
@@ -30,10 +31,10 @@ Xây dựng một hệ thống web cho phép người dùng nhập thông số c
 
 | Thành viên | Vai trò | Phụ trách chính |
 |---|---|---|
-| **Tài** | Leader / Full-stack | Crawl, Clean, EDA, Flask API, Tích hợp hệ thống |
-| **Thái** | ML Engineer | Huấn luyện mô hình (×2), Tuning tham số, Export .pkl |
-| **Đức** | Validation & Analyst| Kiểm thử mô hình, Phân tích sai số, Viết nội dung báo cáo |
-| **Đông** | Frontend Dev | Giao diện Web (HTML/CSS/JS), UI/UX |
+| **Tài** | Leader / Full-stack | Crawl, Clean, EDA, API, Quản lý tiến độ chung |
+| **Thái** | ML Engineer | Xây dựng AI Pipeline, Train 4 thuật toán, Export model |
+| **Đức** | Backend & Data Analyst | **Tích hợp Database (SQLite/SQLAlchemy)**, Kiểm thử mô hình |
+| **Đông** | Frontend Dev | Giao diện Web (HTML/CSS/JS), Tìm kiếm nâng cao, Lọc dữ liệu |
 | **Mai Anh** | Documentation | Tổng hợp báo cáo, Nghiên cứu lý thuyết, QA |
 
 ---
@@ -42,190 +43,131 @@ Xây dựng một hệ thống web cho phép người dùng nhập thông số c
 
 ### BƯỚC 1: CRAWL DỮ LIỆU ✅ (Tài — Hoàn thành)
 
-**Mục đích:** Thu thập dữ liệu thực về giá BĐS tại Hà Nội từ batdongsan.com.vn.
+**Mục đích:** Thu thập dữ liệu thực về giá BĐS tại Hà Nội, TP.HCM, Đà Nẵng từ batdongsan.com.vn.
 
 **Cách hoạt động:**
-- Dùng thư viện `curl_cffi` (Python) giả lập trình duyệt Chrome để truy cập trang web
-- Tự động lật qua từng trang danh sách, vào từng tin đăng, rút thông tin ra
-- Mỗi căn nhà cào xong → ghi ngay 1 dòng vào file CSV
-
-**Dữ liệu cào được (25 cột):**
-
-| Nhóm | Các trường | Dùng cho |
-|---|---|---|
-| **Cốt lõi** | Giá, Diện tích, Số PN | Train AI |
-| **Vị trí** | Địa chỉ, Quận/Huyện | Train AI |
-| **Kỹ thuật** | Hướng nhà, Hướng BC, Nội thất, Pháp lý, Số tầng, Mặt tiền, Đường vào | Train AI |
-| **Hiển thị** | Tiêu đề, Mô tả, Ảnh, Tên dự án, Loại BĐS, Mã tin | Hiện trên Web |
-
-**Kết quả:** 3000 bản ghi (Chung cư 44.3%, Nhà riêng 49.5%, Biệt thự 6.2%)  
-**File đầu ra:** `data/raw/raw_data.csv`
+- Dùng thư viện `curl_cffi` (Python) giả lập trình duyệt Chrome để vượt tường lửa.
+- Mỗi căn nhà cào xong → ghi ngay 1 dòng vào file CSV.
+- Đã thu thập gần **12.000 bản ghi**.
 
 ---
 
-### BƯỚC 2: LÀM SẠCH & PHÂN TÍCH DỮ LIỆU ✅ (Tài + Đức — Hoàn thành)
+### BƯỚC 2: LÀM SẠCH & PHÂN TÍCH DỮ LIỆU (EDA) ✅ (Tài — Hoàn thành)
 
 > Chi tiết kỹ thuật xem file `DATA_CLEANING_GUIDE.md`
 
-**Phát hiện quan trọng:** Dữ liệu là **Mixed Property Types** — Chung cư và Nhà đất có đặc điểm định giá hoàn toàn khác nhau.
-
-**Quyết định thiết kế:** Tách thành 2 pipeline riêng biệt:
-- **Chung cư:** 8 features (area, bedrooms, district, direction, balcony, furniture, legal)
-- **Nhà đất:** 10 features (thêm floors, frontage, road_width — không có balcony)
+**Quyết định thiết kế:** Dữ liệu có 2 loại BĐS (Chung cư và Nhà riêng). Chúng ta gom chung vào 1 tập dữ liệu và thêm cột `loai_bds` làm một feature đặc trưng để mô hình tự học sự khác biệt thay vì phải chia đôi model.
 
 **Các xử lý đã thực hiện:**
-1. Dedup bằng `listing_id`
-2. Swap 107 dòng lỗi scraper (price ↔ price_per_m2 bị đảo)
-3. Parse giá: tỷ, triệu, triệu/m², nghìn (lỗi scraper)
-4. Fill bedrooms NaN bằng median theo quận
-5. Gom quận hiếm (<30 tin) thành "Khác"
-6. Chuẩn hóa nội thất (4 nhóm) và pháp lý (4 nhóm)
-7. Fill frontage/road_width/floors bằng median theo quận (chỉ Nhà đất)
-8. Lọc outlier: road_width ≤ 50m, bedrooms ≤ 25 (Nhà đất), ≤ 6 (Chung cư)
-
-**File đầu ra:**
-- `data/processed/cleaned_chung_cu.csv` — ~1031 dòng × 8 features
-- `data/processed/cleaned_nha_dat.csv` — ~1551 dòng × 10 features
-- `data/processed/cleaned_full_web.csv` — Tất cả cột, cho web hiển thị
-- `notebooks/02_preprocessing.ipynb` — Code tiền xử lý
-- `notebooks/01_eda.ipynb` — 5 biểu đồ EDA
+1. Lọc outlier (giữ các nhà 1-200 tỷ, 10-1000m2).
+2. Xử lý Missing Values theo Median của từng Quận/Huyện.
+3. Chuẩn hóa text cho Nội thất, Pháp lý, Hướng nhà.
 
 ---
 
-### BƯỚC 3: HUẤN LUYỆN MÔ HÌNH AI (Thái phụ trách)
+### BƯỚC 3: HUẤN LUYỆN MÔ HÌNH AI & PIPELINE ✅ (Thái — Hoàn thành)
 
-**Mục đích:** Train 2 model riêng biệt cho Chung cư và Nhà đất.
+**Mục đích:** Train 1 hệ thống AI đồng nhất cho mọi loại BĐS bằng `sklearn.Pipeline`.
 
-**Quy trình:**
-1. Đọc file CSV sạch tương ứng (`cleaned_chung_cu.csv` hoặc `cleaned_nha_dat.csv`)
-2. Chia dữ liệu: 80% train, 20% test
-3. One-Hot Encode các cột categorical: `district`, `direction`, `balcony_direction`, `furniture_std`, `legal_std`
-4. Train 4 thuật toán cho **MỖI** loại BĐS:
-
-| # | Thuật toán | Đặc điểm |
-|---|---|---|
-| 1 | **Linear Regression** | Baseline đơn giản nhất |
-| 2 | **Decision Tree** | Chia dữ liệu theo cây quyết định |
-| 3 | **Random Forest** | Tập hợp nhiều cây → chính xác hơn |
-| 4 | **XGBoost** | Thuật toán mạnh nhất cho bài toán bảng |
-
-5. So sánh bằng: **RMSE**, **MAE**, **R² Score**
-6. Chọn model tốt nhất → xuất `.pkl`
-
-> **Lưu ý:** Kiểm tra skewness từ EDA. Nếu skew > 1 → nên dùng `log(price)` khi train.
+**Quy trình Pipeline v2:**
+1. Đọc file CSV tổng hợp đã làm sạch.
+2. Dùng `ColumnTransformer`:
+   - `StandardScaler` cho biến số (diện tích, phòng ngủ, số tầng...).
+   - `OneHotEncoder(handle_unknown='ignore')` cho biến phân loại (quận, hướng, nội thất...).
+3. Train 4 thuật toán: **Linear Regression, Decision Tree, Random Forest, XGBoost**.
+4. So sánh bằng **RMSE, MAE, R² Score** → Chọn **XGBoost**.
+5. Gói toàn bộ Preprocessor và XGBoost vào **1 Pipeline duy nhất** và xuất ra file.
 
 **File đầu ra:**
-- `models/model_chung_cu.pkl` + `models/scaler_chung_cu.pkl`
-- `models/model_nha_dat.pkl` + `models/scaler_nha_dat.pkl`
-- `notebooks/03_training.ipynb`
+- `models/best_model_pipeline.pkl` (Chỉ cần 1 file duy nhất này để chạy Web).
+- `notebooks/03_training.ipynb` và `notebooks/04_evaluation.ipynb`.
 
 ---
 
-### BƯỚC 4: XÂY DỰNG WEB (Tài + Đông phụ trách)
+### BƯỚC 4: XÂY DỰNG WEB & DATABASE 🔄 (Đông + Đức — Đang thực hiện)
 
-**Kiến trúc:**
-```
-Người dùng (Chrome)
-    ↓ Chọn loại BĐS + Nhập thông số
+**Kiến trúc Hệ thống:**
+```text
+Người dùng (Trình duyệt)
+    ↓ Chọn Tỉnh/Thành → Quận/Huyện + Nhập thông số
     ↓
-[Frontend - HTML/CSS/JS]  ←→  [Backend - Flask API]
+[Frontend (Đông)]  ←→  [Backend Flask + Database (Đức + Tài)]
                                     ↓
-                          Loại = Chung cư? → Load model_chung_cu.pkl
-                          Loại = Nhà đất?  → Load model_nha_dat.pkl
+                       Đưa dữ liệu vào best_model_pipeline.pkl
                                     ↓
-                          Trả về: Giá dự đoán (tỷ VNĐ)
+                          Lưu Lịch sử vào Database
+                                    ↓
+                       Trả về: Giá dự đoán (tỷ VNĐ)
 ```
 
-**Phân công:**
-
-| Người | Làm gì |
-|---|---|
-| **Đông** | Code HTML/CSS giao diện (form nhập, trang kết quả, biểu đồ Chart.js) |
-| **Tài** | Code Flask API (`/predict`), load model, điều hướng đúng model theo loại BĐS |
-
-**Các trang web:**
-- Trang chủ: Form nhập thông số + hiển thị kết quả dự đoán
-- Dashboard: Biểu đồ phân tích dữ liệu (giá theo quận, phân phối giá...)
-- About: Giới thiệu nhóm và đề tài
+**Phân công chi tiết:**
+- **Đông (FE):** Làm giao diện đẹp mắt, hiệu ứng Glassmorphism, bộ lọc nâng cao (chọn Tỉnh tự động nhảy ra Quận), tích hợp Chart.js cho Analytics.
+- **Đức (BE/DB):** **(MỚI)** Chuyển đổi bộ nhớ In-Memory sang Cơ sở dữ liệu thật (SQLite). Tạo các bảng `Users`, `PredictionHistory`, `SavedProperties` bằng SQLAlchemy.
 
 ---
 
-### BƯỚC 5: BÁO CÁO (Mai Anh phụ trách chính, Tài review)
+### BƯỚC 5: BÁO CÁO 🔄 (Mai Anh — Đang thực hiện)
 
 **Cấu trúc báo cáo 7 chương:**
-
 | Chương | Nội dung | Ai viết |
 |---|---|---|
 | 1 | Tổng quan: Đặt vấn đề, mục tiêu, phân công | Mai Anh |
 | 2 | Cơ sở lý thuyết: ML, Regression, 4 thuật toán | Mai Anh |
-| 3 | Thu thập & Tiền xử lý dữ liệu (kèm biểu đồ EDA) | Đức → Mai Anh tổng hợp |
-| 4 | Xây dựng & Đánh giá mô hình (bảng so sánh) | Thái → Mai Anh tổng hợp |
-| 5 | Phát triển hệ thống Web | Đông + Tài → Mai Anh tổng hợp |
+| 3 | Thu thập & Tiền xử lý dữ liệu (EDA) | Mai Anh tổng hợp |
+| 4 | Xây dựng & Đánh giá mô hình AI | Mai Anh tổng hợp |
+| 5 | Phát triển Web & Cơ sở dữ liệu | Đức + Đông + Tài |
 | 6 | Kết quả & Demo (screenshot) | Mai Anh |
 | 7 | Kết luận & Hướng phát triển | Tài + Mai Anh |
 
 ---
 
-## 4. CẤU TRÚC THƯ MỤC DỰ ÁN
+## 4. CẤU TRÚC THƯ MỤC DỰ ÁN MỚI NHẤT
 
-```
+```text
 house-price-prediction/
-├── PROJECT_PLAN.md             # File này — Kế hoạch tổng thể
-├── DATA_CLEANING_GUIDE.md      # Hướng dẫn kỹ thuật tiền xử lý
+├── PROJECT_PLAN.md             # Kế hoạch tổng thể (File này)
+├── DATA_CLEANING_GUIDE.md      # Hướng dẫn làm sạch data
 ├── requirements.txt            # Thư viện Python cần cài
-├── data/
-│   ├── crawl/crawler.py        # Code cào dữ liệu (Tài)
-│   ├── raw/raw_data.csv        # Dữ liệu thô (3000 dòng)
-│   └── processed/              # Dữ liệu đã làm sạch
-│       ├── cleaned_chung_cu.csv
-│       ├── cleaned_nha_dat.csv
-│       └── cleaned_full_web.csv
-├── notebooks/
-│   ├── 01_eda.ipynb            # Phân tích EDA (5 biểu đồ)
-│   ├── 02_preprocessing.ipynb  # Code tiền xử lý (chạy để tạo CSV)
-│   └── 03_training.ipynb       # Train model (Thái)
-├── models/                     # Model AI đã train
-│   ├── model_chung_cu.pkl
-│   ├── model_nha_dat.pkl
-│   ├── scaler_chung_cu.pkl
-│   └── scaler_nha_dat.pkl
-├── app/app.py                  # Flask Backend (Tài)
-├── templates/                  # HTML (Đông)
-├── static/css/ js/ images/     # CSS/JS (Đông)
-└── docs/report.pdf             # Báo cáo (Mai Anh)
+├── data/                       # Chứa dữ liệu raw và processed
+├── notebooks/                  
+│   ├── 01_eda.ipynb            # Phân tích EDA
+│   ├── 02_preprocessing.ipynb  # Code tiền xử lý
+│   ├── 03_training.ipynb       # Code train AI bằng Pipeline (Mới)
+│   └── 04_evaluation.ipynb     # Đánh giá, vẽ biểu đồ sai số (Mới)
+├── models/                     
+│   ├── best_model_pipeline.pkl # "Não bộ" AI duy nhất đang dùng
+│   ├── model_meta.pkl          # Thông số config model
+│   └── *.png                   # Biểu đồ đánh giá
+├── app/app.py                  # Flask Backend
+├── app/templates/              # Các trang HTML (Giao diện)
+└── app/static/                 # CSS/JS và Hình ảnh
 ```
 
 ---
 
-## 5. TIMELINE CHI TIẾT (14 NGÀY)
+## 5. TIMELINE CHI TIẾT CẬP NHẬT (14 NGÀY)
 
-### TUẦN 1: DATA + ML (23/4 → 29/4)
+### TUẦN 1: DATA + ML (23/4 → 29/4) ✅ (Đã xong)
+- Hoàn thành Crawl data 12.000 căn.
+- Tiền xử lý và tạo biểu đồ EDA.
+- Thiết kế UI HTML/CSS bản Alpha.
+- Hoàn thành bản nháp 4 thuật toán Machine Learning.
 
-| Ngày | Tài (Leader) | Thái (ML) | Đức (Data) | Đông (FE) | Mai Anh (Docs) |
+### TUẦN 2: TỐI ƯU HÓA, DATABASE + BÁO CÁO (30/4 → 6/5) 🔄 (Hiện tại)
+
+| Ngày | Tài (Leader) | Thái (ML) | Đức (DB & Test) | Đông (FE) | Mai Anh (Docs) |
 |---|---|---|---|---|---|
-| **T5 23/4** | ✅ Setup GitHub, crawl | Setup môi trường Python | Clone repo | Phác thảo wireframe UI | Tạo Google Docs, viết mục lục |
-| **T6 24/4** | ✅ Crawl 3000 tin, Clean, EDA | Review data | Tìm hiểu cách test model | Code layout HTML/CSS | Viết Chương 1 |
-| **T7 25/4** | Review & hỗ trợ | Bắt đầu train model CC | Chuẩn bị kịch bản test | Code form nhập liệu | Viết Chương 2 (2.1, 2.2) |
-| **CN 26/4** | Setup Flask API cơ bản | Train model NĐ | Nghiên cứu Error Analysis | Code JS gọi API | Viết Chương 2 (thuật toán) |
-| **T2 27/4** | Review code team | ✅ Train xong 4 algo × 2 model | **Bắt đầu Test Model** | Thêm Chart.js | Viết Chương 3 |
-| **T3 28/4** | ✅ Tích hợp 2 model vào web | ✅ Export .pkl | **Báo cáo kết quả Test** | Polish UI | Viết Chương 4 |
-| **T4 29/4** | ✅ Web chạy E2E, demo | Fix bugs model | Viết phân tích cho báo cáo | Responsive design | Tổng hợp feedback |
-
-### TUẦN 2: TÍCH HỢP + BÁO CÁO (30/4 → 6/5)
-
-| Ngày | Tài | Thái | Đức | Đông | Mai Anh |
-|---|---|---|---|---|---|
-| **T5 30/4** | Fix bugs web | Thêm comments notebook | Export biểu đồ PNG | Dashboard page | Viết Chương 5 |
-| **T6 1/5** | Chụp screenshot gửi MA | Viết nội dung ML cho báo cáo | Viết nội dung data cho báo cáo | Polish cuối | ✅ Bản nháp 7 chương |
-| **T7 2/5** | Sửa báo cáo + format | Viết README.md | Kiểm tra biểu đồ | — | Format báo cáo đẹp |
-| **CN 3/5** | Testing toàn diện | Test 10 trường hợp | Test 10 trường hợp | Test 10 trường hợp | Ghi kết quả test |
-| **T2 4/5** | ✅ Báo cáo final PDF | Clean code | — | — | ✅ Export PDF |
-| **T3 5/5** | Chuẩn bị Q&A | Ôn phần ML | Ôn phần Data | Ôn phần Web | Ôn phần lý thuyết |
+| **T5 30/4** | Cấu hình Git, review code | Refactor: Đổi sang Pipeline v2 | Nghiên cứu Flask-SQLAlchemy | Thêm bộ lọc Tỉnh/Quận | Viết lý thuyết ML |
+| **T6 1/5** | Hỗ trợ fix UI bugs | Update NB 03 & 04 khớp với Pipeline | **Setup DB, viết code ORM** | CSS hoàn thiện các nút | Tổng hợp Chương 3+4 |
+| **T7 2/5** | Review tính năng Search | Viết feature importance | **Chuyển Login/Reg sang DB** | Tinh chỉnh Analytics | Viết Chương 5 |
+| **CN 3/5** | Testing End-to-End | Test file .pkl | **Lưu Prediction History vô DB**| Responsive Mobile | Hoàn thiện bản nháp |
+| **T2 4/5** | ✅ Chốt chức năng | Hỗ trợ viết báo cáo | Sửa bug DB nếu có | Sửa bug UI | ✅ Sinh file PDF cuối |
+| **T3 5/5** | Chuẩn bị Q&A | Ôn kiến thức Pipeline | Ôn phần DB & Data | Ôn kiến thức Web | Đọc lại toàn bộ |
 | **T4 6/5** | ✅ Tổng duyệt cả nhóm | Tổng duyệt | Tổng duyệt | Tổng duyệt | Tổng duyệt |
 
-### 🎯 THỨ 5, 7/5: BÁO CÁO
-- **Sáng:** Cả nhóm review lần cuối
-- **Chiều:** Báo cáo trước giảng viên
+### 🎯 THỨ 5, 7/5: BÁO CÁO (DEADLINE)
+- **Sáng:** Cả nhóm review lần cuối trước giờ G.
+- **Chiều:** Báo cáo trước giảng viên (Chuẩn bị demo Web mượt mà nhất).
 
 ---
 
@@ -234,35 +176,23 @@ house-price-prediction/
 | Layer | Công nghệ |
 |---|---|
 | Crawl Data | Python, curl_cffi, BeautifulSoup |
-| ML / AI | scikit-learn, XGBoost, pandas, numpy |
-| Visualization | matplotlib, seaborn, Chart.js |
-| Backend | Flask (Python) |
-| Frontend | HTML, CSS, JavaScript |
-| Notebook | Jupyter |
+| ML / AI | scikit-learn (`Pipeline`, `ColumnTransformer`), XGBoost |
+| Backend & DB | Flask, **SQLite / SQLAlchemy** |
+| Frontend | HTML, CSS (Glassmorphism), Vanilla JS |
 | Version Control | Git + GitHub |
 
 ---
 
-## 7. CÂU HỎI GIẢNG VIÊN CÓ THỂ HỎI
+## 7. CÂU HỎI GIẢNG VIÊN CÓ THỂ HỎI (CẬP NHẬT)
 
-| Câu hỏi | Ai trả lời |
-|---|---|
-| Tại sao chọn đề tài giá nhà? | Tài |
-| Dữ liệu lấy từ đâu, crawl thế nào? | Tài |
-| Tại sao phải tách 2 model riêng biệt? | Tài / Đức (dùng biểu đồ EDA chứng minh) |
-| Tiền xử lý dữ liệu ra sao? Missing values? | Đức |
-| Tại sao XGBoost tốt hơn Linear Regression? | Thái |
-| R² Score, RMSE nghĩa là gì? | Mai Anh |
-| Feature nào quan trọng nhất? | Thái hoặc Đức |
-| Hạn chế của hệ thống? Hướng phát triển? | Tài |
-| Web dùng công nghệ gì? | Đông |
+1. **Tại sao không dùng 2 model riêng cho Chung cư / Nhà đất nữa?** → (Thái/Tài): Vì dữ liệu đã lớn hơn (12K bản ghi), việc gom chung và dùng `loai_bds` làm Feature + sử dụng XGBoost giúp mô hình tự học tương quan tốt hơn, quản lý 1 file `pipeline.pkl` gọn nhẹ và ít rủi ro hơn trên Web.
+2. **Dữ liệu lưu ở đâu? Web có dùng Database không?** → (Đức): Hệ thống dùng SQLite kết hợp SQLAlchemy để lưu trữ tài khoản người dùng và lịch sử dự đoán vĩnh viễn, khắc phục nhược điểm mất dữ liệu của bộ nhớ RAM (In-Memory).
+3. **Tại sao dùng OneHotEncoder trong Pipeline thay vì LabelEncoder?** → (Thái): Vì LabelEncoder sinh ra số nguyên có tính phân bậc (0 < 1 < 2), làm mô hình hiểu sai về Quận/Huyện. OneHotEncoder sinh biến giả chuẩn xác hơn cho các biến danh mục không có thứ tự.
+4. **Lọc theo tỉnh và quận hoạt động thế nào?** → (Đông): Dùng JavaScript bắt sự kiện thay đổi của Select Box Tỉnh, từ đó linh động đổi các option trong Select Box Quận tương ứng mà không cần tải lại trang.
 
 ---
 
 ## 8. QUY TẮC LÀM VIỆC NHÓM
-
-1. **Commit code lên GitHub mỗi ngày** — Tài check hàng ngày
-2. **Ai bị stuck phải báo group chat NGAY** — không tự ôm
-3. **Họp nhanh 15 phút mỗi tối** — check tiến độ
-4. **Deadline nội bộ sớm hơn 2 ngày** — có buffer sửa lỗi
-5. **Mỗi người phải hiểu phần mình** — sẵn sàng trả lời GV
+1. **Commit code lên GitHub mỗi ngày** — Chống mất source.
+2. **Ai bị stuck phải báo group chat NGAY** — Tránh "nước đến chân mới nhảy".
+3. **Mỗi người phải hiểu phần mình** — Sẵn sàng trả lời GV.
