@@ -123,7 +123,7 @@ models = {}
 
 def load_model(name):
     # Lấy đường dẫn an toàn cho dù chạy từ root hay thư mục app/
-    model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', f'{name}.pkl')
+    model_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', f'{name}.pkl')
     if not os.path.exists(model_path): # Fallback
         model_path = f'models/{name}.pkl'
     try:
@@ -140,7 +140,7 @@ load_model('best_model_pipeline')
 # Load metadata (MAE, Features importance, etc.)
 model_metadata = {}
 try:
-    meta_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', 'model_meta.pkl')
+    meta_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', 'model_meta.pkl')
     if not os.path.exists(meta_path): meta_path = 'models/model_meta.pkl'
     with open(meta_path, 'rb') as f:
         model_metadata = pickle.load(f)
@@ -152,8 +152,8 @@ except:
 # Load data cho gợi ý căn nhà tương tự
 dataframes = {}
 try:
-    csv_chung_cu = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'processed', 'cleaned_chung_cu.csv')
-    csv_nha_dat = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'processed', 'cleaned_nha_dat.csv')
+    csv_chung_cu = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'processed', 'cleaned_chung_cu.csv')
+    csv_nha_dat = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'processed', 'cleaned_nha_dat.csv')
     if not os.path.exists(csv_chung_cu): csv_chung_cu = 'data/processed/cleaned_chung_cu.csv'
     if not os.path.exists(csv_nha_dat): csv_nha_dat = 'data/processed/cleaned_nha_dat.csv'
     
@@ -499,6 +499,7 @@ def predict():
         # 3. Tính toán Feature Contributions (XAI) & Confidence Interval
         mae = model_metadata.get('metrics', {}).get('MAE', 0.85)
         fi = model_metadata.get('feature_importance', {})
+        total_importance = model_metadata.get('total_importance', 1.0)  # Tổng importance từ training
         
         # Mapping tên tiếng Việt chuyên nghiệp
         human_names = {
@@ -514,6 +515,8 @@ def predict():
         }
 
         # Trích xuất đóng góp thực tế từ mô hình (Top 4 yếu tố)
+        # Công thức: impact = prediction × (feature_importance / total_importance)
+        # → Mỗi feature đóng góp tỷ lệ % thực sự vào giá dự đoán
         contributions = []
         # Các cột số
         for feat in ['area_m2', 'bedrooms_num', 'floors_num', 'frontage_m', 'road_width_m']:
@@ -521,9 +524,10 @@ def predict():
             if val > 0:
                 imp = float(fi.get(feat, 0))
                 if imp > 0:
+                    ratio = imp / total_importance if total_importance > 0 else 0
                     contributions.append({
                         "feature": human_names.get(feat, feat),
-                        "impact": round(prediction_billion * imp * 2.5, 2),
+                        "impact": round(prediction_billion * ratio, 2),
                         "unit": "tỷ"
                     })
         
@@ -538,9 +542,10 @@ def predict():
             key = f"{feat_group}_{user_val}"
             imp = float(fi.get(key, 0))
             if imp > 0:
+                ratio = imp / total_importance if total_importance > 0 else 0
                 contributions.append({
                     "feature": f"{human_names.get(feat_group)} ({user_val})",
-                    "impact": round(prediction_billion * imp * 2.5, 2),
+                    "impact": round(prediction_billion * ratio, 2),
                     "unit": "tỷ"
                 })
         
@@ -848,5 +853,5 @@ if __name__ == '__main__':
     # Chạy server ở port 5000
     debug = os.environ.get('FLASK_DEBUG', '').lower() in {'1', 'true', 'yes'}
     host = os.environ.get('FLASK_HOST', '127.0.0.1')
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5001))
     app.run(debug=debug, host=host, port=port, use_reloader=False)
