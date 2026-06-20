@@ -3,6 +3,7 @@ pandas>=2.0
 numpy>=1.24
 scikit-learn>=1.4
 xgboost>=2.0
+torch>=2.2
 
 # Web Scraping
 curl_cffi>=0.7

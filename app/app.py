@@ -4,6 +4,7 @@ import json
 import time
 import urllib.parse
 import urllib.request
+import sys
 from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 from flask_cors import CORS
 import pickle
@@ -136,6 +137,73 @@ def load_model(name):
 
 # Load mô hình duy nhất đã được gộp bằng Pipeline
 load_model('best_model_pipeline')
+
+transformer_bundle = {}
+
+def load_transformer_model():
+    """Load optional Transformer experiment model without breaking the main web app."""
+    transformer_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'transformer')
+    output_dir = os.path.join(transformer_dir, 'outputs')
+    checkpoint_path = os.path.join(output_dir, 'transformer_model.pt')
+    preprocessing_path = os.path.join(output_dir, 'preprocessing.pkl')
+
+    if not (os.path.exists(checkpoint_path) and os.path.exists(preprocessing_path)):
+        print("[WARNING] Chua tim thay Transformer outputs, bo qua model Transformer")
+        return
+
+    try:
+        if transformer_dir not in sys.path:
+            sys.path.insert(0, transformer_dir)
+        import torch
+        from transformer_model import HousePriceTransformer
+
+        torch.set_num_threads(1)
+
+        with open(preprocessing_path, 'rb') as f:
+            preprocessing = pickle.load(f)
+
+        checkpoint = torch.load(checkpoint_path, map_location='cpu')
+        model = HousePriceTransformer(**checkpoint['model_params'])
+        model.load_state_dict(checkpoint['state_dict'])
+        model.eval()
+
+        transformer_bundle.update({
+            'torch': torch,
+            'model': model,
+            'preprocessing': preprocessing,
+        })
+        print("[OK] Da load thanh cong Transformer model")
+    except Exception as e:
+        transformer_bundle.clear()
+        print("[WARNING] Khong load duoc Transformer model:", e)
+
+def predict_with_transformer(input_data):
+    if not transformer_bundle:
+        return None
+
+    torch = transformer_bundle['torch']
+    model = transformer_bundle['model']
+    preprocessing = transformer_bundle['preprocessing']
+
+    numeric_features = preprocessing['numeric_features']
+    categorical_features = preprocessing['categorical_features']
+
+    numeric = preprocessing['scaler'].transform(input_data[numeric_features])
+
+    cat_ids = []
+    row = input_data.iloc[0]
+    for col in categorical_features:
+        mapping = preprocessing['category_mappings'][col]
+        cat_ids.append(mapping.get(str(row[col]), 0))
+
+    with torch.no_grad():
+        output = model(
+            torch.tensor(numeric, dtype=torch.float32),
+            torch.tensor([cat_ids], dtype=torch.long),
+        )
+    return float(output.item())
+
+load_transformer_model()
 
 # Load metadata (MAE, Features importance, etc.)
 model_metadata = {}
@@ -495,6 +563,19 @@ def predict():
         else:
             prediction_billion = float(data.get('area', 0)) * 0.1
             prediction_vnd = float(prediction_billion * 1_000_000_000)
+
+        # Tạo DataFrame riêng cho Transformer có thêm tinh_thanh
+        input_data_transformer = input_data.copy()
+        input_data_transformer['tinh_thanh'] = str(data.get('province', 'Khác'))
+
+        transformer_prediction_billion = predict_with_transformer(input_data_transformer)
+        transformer_result = None
+        if transformer_prediction_billion is not None:
+            transformer_result = {
+                'price_billion': round(transformer_prediction_billion, 2),
+                'predicted_price_vnd': float(transformer_prediction_billion * 1_000_000_000),
+                'difference_billion': round(transformer_prediction_billion - prediction_billion, 2),
+            }
             
         # 3. Tính toán Feature Contributions (XAI) & Confidence Interval
         mae = model_metadata.get('metrics', {}).get('MAE', 0.85)
@@ -632,6 +713,7 @@ def predict():
             'price_per_m2': round(price_per_m2, 1),
             'district_avg_m2': round(district_avg_m2, 1),
             'mae': round(mae, 2),
+            'transformer_prediction': transformer_result,
             'contributions': contributions,
             'similar_properties': similar_properties,
             'message': 'Dự đoán thành công'

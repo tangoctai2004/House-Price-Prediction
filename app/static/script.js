@@ -185,6 +185,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     ciEl.innerHTML = `Khoảng ước tính: ${result.price_low} — ${result.price_high} tỷ (±${result.mae})`;
                 }
 
+                const transformerBox = document.getElementById('transformer-comparison');
+                const transformerPrice = document.getElementById('transformer-price');
+                const transformerDiff = document.getElementById('transformer-diff');
+                if (transformerBox && transformerPrice && transformerDiff && result.transformer_prediction) {
+                    const t = result.transformer_prediction;
+                    transformerBox.style.display = 'grid';
+                    transformerPrice.textContent = `${Number(t.price_billion).toFixed(2)} tỷ VNĐ`;
+                    const diff = Number(t.difference_billion);
+                    const diffLabel = diff >= 0 ? `cao hơn XGBoost ${diff.toFixed(2)} tỷ` : `thấp hơn XGBoost ${Math.abs(diff).toFixed(2)} tỷ`;
+                    transformerDiff.textContent = diffLabel;
+                } else if (transformerBox) {
+                    transformerBox.style.display = 'none';
+                }
+
                 // 2. Render Explanation (XAI)
                 const explainContainer = document.getElementById('explanation-container');
                 const explainList = document.getElementById('explanation-list');
