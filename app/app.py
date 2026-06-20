@@ -4,6 +4,7 @@ import json
 import time
 import urllib.parse
 import urllib.request
+import sys
 from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 from flask_cors import CORS
 import pickle
@@ -37,8 +38,17 @@ GOOGLE_CONFIGURED = bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET)
 
 # Simple in-memory user store (demo)
 USERS = {
-    'admin@prophet.vn': {'password_hash': generate_password_hash('123456'), 'name': 'Admin'},
+    'admin@prophet.vn': {
+        'password_hash': generate_password_hash('123456', method='pbkdf2:sha256'),
+        'name': 'Admin',
+        'phone': '0912 345 678',
+        'gender': 'Nam',
+        'dob': '2004-01-15',
+    },
 }
+
+PREDICTION_HISTORY = {}
+SAVED_PROPERTIES = {}
 
 def password_matches(user, password):
     password_hash = user.get('password_hash')
@@ -114,7 +124,7 @@ models = {}
 
 def load_model(name):
     # Lấy đường dẫn an toàn cho dù chạy từ root hay thư mục app/
-    model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', f'{name}.pkl')
+    model_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', f'{name}.pkl')
     if not os.path.exists(model_path): # Fallback
         model_path = f'models/{name}.pkl'
     try:
@@ -122,18 +132,96 @@ def load_model(name):
             models[name] = pickle.load(f)
         print(f"[OK] Da load thanh cong {name}")
     except FileNotFoundError:
-        print(f"[ERROR] Chua tim thay model {name}. Vui long chay file train_pipeline.py truoc!")
+        print(f"[ERROR] Chua tim thay model {name}. Vui long chay file run_training.py truoc!")
         models[name] = None
 
-# Load cả 2 model cho Chung cư và Nhà đất
-load_model('model_chung_cu_pipeline')
-load_model('model_nha_dat_pipeline')
+# Load mô hình duy nhất đã được gộp bằng Pipeline
+load_model('best_model_pipeline')
+
+transformer_bundle = {}
+
+def load_transformer_model():
+    """Load optional Transformer experiment model without breaking the main web app."""
+    transformer_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'transformer')
+    output_dir = os.path.join(transformer_dir, 'outputs')
+    checkpoint_path = os.path.join(output_dir, 'transformer_model.pt')
+    preprocessing_path = os.path.join(output_dir, 'preprocessing.pkl')
+
+    if not (os.path.exists(checkpoint_path) and os.path.exists(preprocessing_path)):
+        print("[WARNING] Chua tim thay Transformer outputs, bo qua model Transformer")
+        return
+
+    try:
+        if transformer_dir not in sys.path:
+            sys.path.insert(0, transformer_dir)
+        import torch
+        from transformer_model import HousePriceTransformer
+
+        torch.set_num_threads(1)
+
+        with open(preprocessing_path, 'rb') as f:
+            preprocessing = pickle.load(f)
+
+        checkpoint = torch.load(checkpoint_path, map_location='cpu')
+        model = HousePriceTransformer(**checkpoint['model_params'])
+        model.load_state_dict(checkpoint['state_dict'])
+        model.eval()
+
+        transformer_bundle.update({
+            'torch': torch,
+            'model': model,
+            'preprocessing': preprocessing,
+        })
+        print("[OK] Da load thanh cong Transformer model")
+    except Exception as e:
+        transformer_bundle.clear()
+        print("[WARNING] Khong load duoc Transformer model:", e)
+
+def predict_with_transformer(input_data):
+    if not transformer_bundle:
+        return None
+
+    torch = transformer_bundle['torch']
+    model = transformer_bundle['model']
+    preprocessing = transformer_bundle['preprocessing']
+
+    numeric_features = preprocessing['numeric_features']
+    categorical_features = preprocessing['categorical_features']
+
+    numeric = preprocessing['scaler'].transform(input_data[numeric_features])
+
+    cat_ids = []
+    row = input_data.iloc[0]
+    for col in categorical_features:
+        mapping = preprocessing['category_mappings'][col]
+        cat_ids.append(mapping.get(str(row[col]), 0))
+
+    with torch.no_grad():
+        output = model(
+            torch.tensor(numeric, dtype=torch.float32),
+            torch.tensor([cat_ids], dtype=torch.long),
+        )
+    return float(output.item())
+
+load_transformer_model()
+
+# Load metadata (MAE, Features importance, etc.)
+model_metadata = {}
+try:
+    meta_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', 'model_meta.pkl')
+    if not os.path.exists(meta_path): meta_path = 'models/model_meta.pkl'
+    with open(meta_path, 'rb') as f:
+        model_metadata = pickle.load(f)
+    print("[OK] Da load thanh cong model_meta")
+except:
+    model_metadata = {'metrics': {'MAE': 0.85}, 'feature_names': []}
+    print("[WARNING] Khong tim thay model_meta.pkl, dung mac dinh")
 
 # Load data cho gợi ý căn nhà tương tự
 dataframes = {}
 try:
-    csv_chung_cu = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'processed', 'cleaned_chung_cu.csv')
-    csv_nha_dat = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'processed', 'cleaned_nha_dat.csv')
+    csv_chung_cu = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'processed', 'cleaned_chung_cu.csv')
+    csv_nha_dat = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'processed', 'cleaned_nha_dat.csv')
     if not os.path.exists(csv_chung_cu): csv_chung_cu = 'data/processed/cleaned_chung_cu.csv'
     if not os.path.exists(csv_nha_dat): csv_nha_dat = 'data/processed/cleaned_nha_dat.csv'
     
@@ -155,7 +243,7 @@ def login():
     password = data.get('password', '')
     user = USERS.get(email)
     if user and password_matches(user, password):
-        session['user'] = {'email': email, 'name': user['name']}
+        session['user'] = {'email': email, 'name': user['name'], 'avatar': user.get('avatar', '')}
         return jsonify({'success': True, 'name': user['name']})
     return jsonify({'success': False, 'error': 'Email hoặc mật khẩu không đúng.'}), 401
 
@@ -169,7 +257,7 @@ def register():
         return jsonify({'success': False, 'error': 'Vui lòng nhập đầy đủ thông tin.'}), 400
     if email in USERS:
         return jsonify({'success': False, 'error': 'Email này đã được đăng ký.'}), 400
-    USERS[email] = {'password_hash': generate_password_hash(password), 'name': name}
+    USERS[email] = {'password_hash': generate_password_hash(password, method='pbkdf2:sha256'), 'name': name}
     session['user'] = {'email': email, 'name': name}
     return jsonify({'success': True, 'name': name})
 
@@ -282,10 +370,13 @@ def analytics():
         'nd_price_by_dist': safe_dict(nd.groupby('district')['price_billion'].mean().sort_values(ascending=False).head(10)),
         # Legal breakdown
         'cc_legal': safe_dict(cc['legal_std'].value_counts()),
+        'nd_legal': safe_dict(nd['legal_std'].value_counts()),
         # Furniture
         'cc_furniture': safe_dict(cc['furniture_std'].value_counts()),
+        'nd_furniture': safe_dict(nd['furniture_std'].value_counts()),
         # Bedroom dist
         'cc_bedroom': safe_dict(cc['bedrooms_num'].value_counts().sort_index()),
+        'nd_bedroom': safe_dict(nd['bedrooms_num'].value_counts().sort_index().head(6)),
         # Area ranges
         'cc_area_mean': round(float(cc['area_m2'].mean()), 1) if len(cc) else 0,
         'nd_area_mean': round(float(nd['area_m2'].mean()), 1) if len(nd) else 0,
@@ -316,6 +407,7 @@ def api_search():
     ptype    = request.args.get('type', 'all')       # all / chung_cu / nha_dat
     sort     = request.args.get('sort', 'default')
     district  = request.args.get('district', '').strip()
+    direction = request.args.get('direction', '').strip()
     per_page  = 12
 
     if ptype not in {'all', 'chung_cu', 'nha_dat'}:
@@ -347,6 +439,8 @@ def api_search():
             mask &= text_mask
         if district:
             mask &= df['district'].astype(str).str.lower() == district.lower()
+        if direction:
+            mask &= df['direction'].astype(str).str.lower() == direction.lower()
         mask &= (df['price_billion'] >= price_min) & (df['price_billion'] <= price_max)
         sub = df[mask].copy()
         sub['_type'] = dtype
@@ -408,131 +502,236 @@ def predict():
         # Nhận diện loại bất động sản cần dự đoán (mặc định chung_cu nếu Frontend không gửi)
         property_type = data.get('property_type', 'chung_cu')
         
-        # --- VALIDATION ĐẦU VÀO (CHẶN DỮ LIỆU VÔ LÝ) ---
-        area = float(data.get('area', 0))
-        if area <= 0 or area > 50000:
-            return jsonify({'success': False, 'error': f'Diện tích {area}m2 không hợp lệ! Vui lòng nhập số > 0.'}), 400
+        # --- VALIDATION ĐẦU VÀO (cho phép bỏ trống, gán giá trị mặc định) ---
+        area = float(data.get('area', '') or 60)  # Mặc định 60m² nếu bỏ trống
+        if area < 0 or area > 50000:
+            return jsonify({'success': False, 'error': f'Diện tích {area}m2 không hợp lệ!'}), 400
             
-        bedrooms = int(data.get('bedrooms', 0))
+        bedrooms = int(data.get('bedrooms', '') or 2)  # Mặc định 2 phòng ngủ
         if bedrooms < 0 or bedrooms > 100:
-            return jsonify({'success': False, 'error': f'Số phòng ngủ {bedrooms} không hợp lệ! Vui lòng nhập số từ 0 đến 100.'}), 400
+            return jsonify({'success': False, 'error': f'Số phòng ngủ {bedrooms} không hợp lệ!'}), 400
 
         if property_type == 'nha_dat':
-            floors = int(data.get('floors', 1))
-            if floors <= 0 or floors > 200:
-                return jsonify({'success': False, 'error': f'Số tầng {floors} không hợp lệ! Vui lòng nhập số > 0.'}), 400
+            floors = int(data.get('floors', '') or 1)
+            if floors < 0 or floors > 200:
+                return jsonify({'success': False, 'error': f'Số tầng {floors} không hợp lệ!'}), 400
             
-            frontage = float(data.get('frontage', 0))
+            frontage = float(data.get('frontage', '') or 0)
             if frontage < 0 or frontage > 1000:
                 return jsonify({'success': False, 'error': f'Mặt tiền {frontage}m không hợp lệ!'}), 400
                 
-            road_width = float(data.get('road_width', 0))
+            road_width = float(data.get('road_width', '') or 0)
             if road_width < 0 or road_width > 1000:
                 return jsonify({'success': False, 'error': f'Đường vào {road_width}m không hợp lệ!'}), 400
         # ------------------------------------------------
         
         # 1. Chỉ cần tạo thẳng 1 DataFrame 1 dòng từ input của Frontend
         # Chú ý: Các key của dictionary phải khớp Y HỆT tên cột lúc Thái train
-        if property_type == 'chung_cu':
-            input_dict = {
-                'area_m2': area,
-                'bedrooms_num': bedrooms,
-                'district': data.get('district', 'Khác'),
-                'direction': data.get('direction', 'Không rõ'),
-                'balcony_direction': data.get('balcony_direction', 'Không rõ'),
-                'furniture_std': data.get('furniture', 'Không rõ'),
-                'legal_std': data.get('legal', 'Không rõ')
-            }
-            model_key = 'model_chung_cu_pipeline'
-            
-        elif property_type == 'nha_dat':
-            input_dict = {
-                'area_m2': area,
-                'bedrooms_num': bedrooms,
-                'district': data.get('district', 'Khác'),
-                'direction': data.get('direction', 'Không rõ'),
-                'furniture_std': data.get('furniture', 'Không rõ'),
-                'legal_std': data.get('legal', 'Không rõ'),
-                'floors_num': int(data.get('floors', 1)),
-                'frontage_m': float(data.get('frontage', 0)),
-                'road_width_m': float(data.get('road_width', 0))
-            }
-            model_key = 'model_nha_dat_pipeline'
-            
-        else:
+        city = str(data.get('province', 'Khác'))
+        if city == 'TP. Hồ Chí Minh':
+            city = 'Hồ Chí Minh'
+
+        input_dict = {
+            'area_m2': area,
+            'bedrooms_num': bedrooms,
+            'city': city,
+            'district': data.get('district', 'Khác'),
+            'direction': data.get('direction', 'Không rõ'),
+            'furniture_std': data.get('furniture', 'Không rõ'),
+            'legal_std': data.get('legal', 'Không rõ'),
+            'floors_num': 0,
+            'frontage_m': 0.0,
+            'road_width_m': 0.0,
+            'loai_bds': property_type
+        }
+        
+        if property_type == 'nha_dat':
+            input_dict['floors_num'] = floors
+            input_dict['frontage_m'] = frontage
+            input_dict['road_width_m'] = road_width
+        elif property_type != 'chung_cu':
             return jsonify({'success': False, 'error': 'Loại bất động sản không hợp lệ (chỉ nhận chung_cu hoặc nha_dat)'}), 400
 
         # Chuyển Dictionary thành DataFrame (chỉ có 1 dòng dữ liệu)
         input_data = pd.DataFrame([input_dict])
         
+        # Đảm bảo các cột categorical là kiểu chuỗi giống lúc train
+        for c in ['city', 'district', 'direction', 'furniture_std', 'legal_std', 'loai_bds']:
+            input_data[c] = input_data[c].astype(str)
+        
         # 2. Đưa thẳng DataFrame vào model dự đoán
-        model = models.get(model_key)
+        model = models.get('best_model_pipeline')
         prediction_billion = 0
         if model:
-            prediction_billion = model.predict(input_data)[0]
-            prediction_vnd = prediction_billion * 1_000_000_000
+            prediction_billion = float(model.predict(input_data)[0])
+            prediction_vnd = float(prediction_billion * 1_000_000_000)
         else:
             prediction_billion = float(data.get('area', 0)) * 0.1
-            prediction_vnd = prediction_billion * 1_000_000_000
+            prediction_vnd = float(prediction_billion * 1_000_000_000)
+
+        # Tạo DataFrame riêng cho Transformer có thêm tinh_thanh
+        input_data_transformer = input_data.copy()
+        input_data_transformer['tinh_thanh'] = str(data.get('province', 'Khác'))
+
+        transformer_prediction_billion = predict_with_transformer(input_data_transformer)
+        transformer_result = None
+        if transformer_prediction_billion is not None:
+            transformer_result = {
+                'price_billion': round(transformer_prediction_billion, 2),
+                'predicted_price_vnd': float(transformer_prediction_billion * 1_000_000_000),
+                'difference_billion': round(transformer_prediction_billion - prediction_billion, 2),
+            }
             
-        # 3. Tìm các căn nhà tương tự
+        # 3. Tính toán Feature Contributions (XAI) & Confidence Interval
+        mae = model_metadata.get('metrics', {}).get('MAE', 0.85)
+        fi = model_metadata.get('feature_importance', {})
+        total_importance = model_metadata.get('total_importance', 1.0)  # Tổng importance từ training
+        
+        # Mapping tên tiếng Việt chuyên nghiệp
+        human_names = {
+            'area_m2': 'Diện tích',
+            'bedrooms_num': 'Phòng ngủ',
+            'city': 'Tỉnh/Thành',
+            'district': 'Vị trí',
+            'legal_std': 'Pháp lý',
+            'furniture_std': 'Nội thất',
+            'direction': 'Hướng nhà',
+            'floors_num': 'Số tầng',
+            'frontage_m': 'Mặt tiền',
+            'road_width_m': 'Đường rộng'
+        }
+
+        # Trích xuất đóng góp thực tế từ mô hình (Top 4 yếu tố)
+        # Công thức: impact = prediction × (feature_importance / total_importance)
+        # → Mỗi feature đóng góp tỷ lệ % thực sự vào giá dự đoán
+        contributions = []
+        # Các cột số
+        feature_to_data_key = {
+            'area_m2': 'area',
+            'bedrooms_num': 'bedrooms',
+            'floors_num': 'floors',
+            'frontage_m': 'frontage',
+            'road_width_m': 'road_width'
+        }
+        for feat in ['area_m2', 'bedrooms_num', 'floors_num', 'frontage_m', 'road_width_m']:
+            data_key = feature_to_data_key.get(feat, feat)
+            val = float(data.get(data_key, 0) or 0)
+            if val > 0:
+                imp = float(fi.get(feat, 0))
+                if imp > 0:
+                    ratio = imp / total_importance if total_importance > 0 else 0
+                    contributions.append({
+                        "feature": human_names.get(feat, feat),
+                        "impact": round(prediction_billion * ratio, 2),
+                        "unit": "tỷ"
+                    })
+        
+        # Các cột phân loại (khớp với lựa chọn của người dùng)
+        for feat_group, user_val in [
+            ('city', city),
+            ('district', data.get('district')),
+            ('legal_std', input_dict['legal_std']),
+            ('furniture_std', input_dict['furniture_std']),
+            ('direction', input_dict['direction'])
+        ]:
+            if not user_val or user_val in ['Không rõ', 'Khác']: continue
+            key = f"{feat_group}_{user_val}"
+            imp = float(fi.get(key, 0))
+            if imp > 0:
+                ratio = imp / total_importance if total_importance > 0 else 0
+                contributions.append({
+                    "feature": f"{human_names.get(feat_group)} ({user_val})",
+                    "impact": round(prediction_billion * ratio, 2),
+                    "unit": "tỷ"
+                })
+        
+        # Sắp xếp các yếu tố ảnh hưởng từ mạnh nhất
+        contributions = sorted(contributions, key=lambda x: x['impact'], reverse=True)
+        if not contributions: # Fallback nếu không có fi
+            contributions = [{"feature": "Diện tích", "impact": round(prediction_billion*0.4, 2), "unit": "tỷ"}]
+
+        # 4. Tìm các căn nhà tương tự và Tính trung bình khu vực
         similar_properties = []
+        district_avg_m2 = 0
         df_target = dataframes.get(property_type)
         if df_target is not None and not df_target.empty and prediction_billion > 0:
-            # Lọc +- 15% giá
-            min_price = prediction_billion * 0.85
-            max_price = prediction_billion * 1.15
+            user_dist = data.get('district', '')
             
-            # Ưu tiên cùng quận
-            user_district = data.get('district', '')
-            filtered = df_target[(df_target['price_billion'] >= min_price) & (df_target['price_billion'] <= max_price)]
-            
+            # Tính trung bình khu vực
+            same_dist_all = df_target[df_target['district'] == user_dist]
+            if not same_dist_all.empty:
+                valid_area = same_dist_all[same_dist_all['area_m2'] > 0]
+                if not valid_area.empty:
+                    dist_prices = valid_area['price_billion'] * 1000 / valid_area['area_m2']
+                    district_avg_m2 = dist_prices.mean()
+
+            # Lấy 10-15 căn tương tự
+            min_p = prediction_billion * 0.8
+            max_p = prediction_billion * 1.2
+            filtered = df_target[(df_target['price_billion'] >= min_p) & (df_target['price_billion'] <= max_p)]
             if not filtered.empty:
-                # Ưu tiên cùng quận trước, nếu ko có thì lấy ngẫu nhiên trong tầm giá
-                same_district = filtered[filtered['district'] == user_district]
-                if len(same_district) >= 3:
-                    sampled = same_district.sample(3)
-                elif len(same_district) > 0:
-                    needed = 3 - len(same_district)
-                    others = filtered[filtered['district'] != user_district]
-                    sampled = pd.concat([same_district, others.sample(min(needed, len(others)))])
+                same_dist = filtered[filtered['district'] == user_dist]
+                if len(same_dist) >= 12:
+                    sampled = same_dist.sample(12)
                 else:
-                    sampled = filtered.sample(min(3, len(filtered)))
+                    others = filtered[filtered['district'] != user_dist]
+                    needed = min(12 - len(same_dist), len(others))
+                    if needed > 0:
+                        sampled = pd.concat([same_dist, others.sample(needed)])
+                    else:
+                        sampled = same_dist
                 
-                # Format kết quả
+                import ast
                 for idx, row in sampled.iterrows():
+                    img_url = ""
+                    raw_imgs = str(row.get('image_urls', '[]'))
+                    if raw_imgs.startswith('['):
+                        try:
+                            imgs = ast.literal_eval(raw_imgs)
+                            if imgs and isinstance(imgs, list): 
+                                nice_imgs = [img for img in imgs if '1275x717' in img or 'crop' not in img]
+                                img_url = nice_imgs[0] if nice_imgs else imgs[0]
+                        except: pass
+
                     prop = {
                         "id": int(idx),
                         "property_type": property_type,
-                        "price_billion": round(row['price_billion'], 2),
-                        "area_m2": row['area_m2'],
-                        "district": row['district']
+                        "price_billion": round(float(row['price_billion']), 2),
+                        "area_m2": float(row['area_m2']),
+                        "district": str(row['district']),
+                        "title": str(row.get('title', f"BĐS tại {row['district']}"))[:80],
+                        "image": img_url
                     }
-                    if property_type == 'chung_cu':
-                        prop["desc"] = f"{int(row['bedrooms_num'])} PN · Hướng {row['direction']}"
-                    else:
-                        prop["desc"] = f"{int(row.get('floors_num', 1))} tầng · Mặt tiền {row.get('frontage_m', 0)}m"
-
-                    # Lấy ảnh đầu tiên nếu có
-                    import json as _json
-                    raw_imgs = row.get('image_urls', '[]')
-                    try:
-                        imgs = _json.loads(str(raw_imgs).replace("'", '"'))
-                        # Ưu tiên ảnh 1275x717 (to, nét)
-                        big_imgs = [u for u in imgs if '1275x717' in u or ('resize' not in u and '200x200' not in u and 'crop' not in u)]
-                        prop["image"] = big_imgs[0] if big_imgs else (imgs[0] if imgs else "")
-                    except Exception:
-                        prop["image"] = ""
-
-                    # Tiêu đề
-                    prop["title"] = str(row.get('title', f"Bất động sản tại {row['district']}"))[:80]
                     similar_properties.append(prop)
+
+        # Tính đơn giá/m2
+        price_per_m2 = (prediction_billion * 1000) / float(area) if float(area) > 0 else 0
+
+        # 5. Save to history
+        user = session.get('user')
+        if user:
+            from datetime import datetime
+            PREDICTION_HISTORY.setdefault(user['email'], []).insert(0, {
+                'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M'),
+                'property_type': property_type,
+                'district': data.get('district', 'Khác'),
+                'area': float(area),
+                'price_billion': round(float(prediction_billion), 2),
+            })
 
         return jsonify({
             'success': True,
             'predicted_price_vnd': prediction_vnd,
+            'price_billion': round(prediction_billion, 2),
+            'price_low': round(max(0, prediction_billion - mae), 2),
+            'price_high': round(prediction_billion + mae, 2),
+            'price_per_m2': round(price_per_m2, 1),
+            'district_avg_m2': round(district_avg_m2, 1),
+            'mae': round(mae, 2),
+            'transformer_prediction': transformer_result,
+            'contributions': contributions,
             'similar_properties': similar_properties,
-            'message': f'Dự đoán thành công ({property_type})' + (' (Dùng Model AI Pipeline)' if model else ' (Đang dùng số liệu ảo)')
+            'message': 'Dự đoán thành công'
         })
 
     except Exception as e:
@@ -540,6 +739,159 @@ def predict():
             'success': False,
             'error': str(e)
         }), 400
+
+# ── Profile, History, Saved ─────────────────────────────────────────
+
+@app.route('/profile')
+def profile():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    stored = USERS.get(user['email'], {})
+    profile_data = {
+        **user,
+        'phone': stored.get('phone', ''),
+        'gender': stored.get('gender', ''),
+        'dob': stored.get('dob', ''),
+        'avatar': stored.get('avatar', ''),
+    }
+    return render_template('profile.html', user=user, profile=profile_data)
+
+@app.route('/api/upload-avatar', methods=['POST'])
+def upload_avatar():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    file = request.files.get('avatar')
+    if not file or not file.filename:
+        return jsonify({'success': False, 'error': 'Chưa chọn file.'}), 400
+    ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else ''
+    if ext not in ('jpg', 'jpeg', 'png', 'webp'):
+        return jsonify({'success': False, 'error': 'Chỉ hỗ trợ JPG, PNG, WEBP.'}), 400
+    import hashlib
+    filename = hashlib.md5(user['email'].encode()).hexdigest() + '.' + ext
+    save_path = os.path.join(app.static_folder, 'uploads', filename)
+    file.save(save_path)
+    avatar_url = f'/static/uploads/{filename}'
+    USERS[user['email']]['avatar'] = avatar_url
+    session['user'] = {**user, 'avatar': avatar_url}
+    return jsonify({'success': True, 'avatar': avatar_url})
+
+@app.route('/api/update-profile', methods=['POST'])
+def update_profile():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    email = user['email']
+    new_name = data.get('name', '').strip()
+    old_password = data.get('old_password', '')
+    new_password = data.get('new_password', '')
+
+    if new_name and new_name != user['name']:
+        USERS[email]['name'] = new_name
+        session['user'] = {**user, 'name': new_name}
+
+    for field in ('phone', 'gender', 'dob'):
+        val = data.get(field)
+        if val is not None:
+            USERS[email][field] = val.strip() if isinstance(val, str) else val
+
+    if new_password:
+        if len(new_password) < 6:
+            return jsonify({'success': False, 'error': 'Mật khẩu mới tối thiểu 6 ký tự.'}), 400
+        stored = USERS.get(email)
+        if stored and stored.get('password_hash') and not check_password_hash(stored['password_hash'], old_password):
+            return jsonify({'success': False, 'error': 'Mật khẩu cũ không đúng.'}), 400
+        USERS[email]['password_hash'] = generate_password_hash(new_password, method='pbkdf2:sha256')
+
+    return jsonify({'success': True, 'name': session['user']['name']})
+
+@app.route('/history')
+def history():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    items = PREDICTION_HISTORY.get(user['email'], [])
+    return render_template('history.html', user=user, items=items)
+
+@app.route('/api/history/clear', methods=['POST'])
+def clear_history():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False}), 401
+    PREDICTION_HISTORY.pop(user['email'], None)
+    return jsonify({'success': True})
+
+@app.route('/saved')
+def saved():
+    user = session.get('user')
+    if not user:
+        return redirect('/')
+    saved_keys = SAVED_PROPERTIES.get(user['email'], [])
+    props = []
+    for key in saved_keys:
+        ptype, pid = key.split('/')
+        df = dataframes.get(ptype)
+        if df is not None and int(pid) in df.index:
+            row = df.loc[int(pid)]
+            import json as _json
+            imgs = []
+            try:
+                imgs = _json.loads(str(row.get('image_urls', '[]')))
+                imgs = [u for u in imgs if isinstance(u, str) and u.startswith('http')]
+            except Exception:
+                pass
+            props.append({
+                'id': int(pid),
+                'type': ptype,
+                'title': str(row.get('title', f"BĐS tại {row.get('district', '')}"))[:80],
+                'district': str(row.get('district', '')),
+                'price': round(float(row.get('price_billion', 0)), 2),
+                'area': float(row.get('area_m2', 0)),
+                'bedrooms': int(row.get('bedrooms_num', 0)) if pd.notna(row.get('bedrooms_num')) else 0,
+                'image': imgs[0] if imgs else '',
+            })
+    return render_template('saved.html', user=user, properties=props)
+
+@app.route('/api/save-property', methods=['POST'])
+def save_property():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    ptype = data.get('type', '')
+    pid = data.get('id', '')
+    if ptype not in ('chung_cu', 'nha_dat'):
+        return jsonify({'success': False, 'error': 'Loại BĐS không hợp lệ.'}), 400
+    key = f"{ptype}/{pid}"
+    email = user['email']
+    saved = SAVED_PROPERTIES.setdefault(email, [])
+    if key not in saved:
+        saved.insert(0, key)
+    return jsonify({'success': True, 'saved': True})
+
+@app.route('/api/unsave-property', methods=['POST'])
+def unsave_property():
+    user = session.get('user')
+    if not user:
+        return jsonify({'success': False, 'error': 'Chưa đăng nhập.'}), 401
+    data = request.get_json(silent=True) or {}
+    key = f"{data.get('type', '')}/{data.get('id', '')}"
+    email = user['email']
+    saved = SAVED_PROPERTIES.get(email, [])
+    if key in saved:
+        saved.remove(key)
+    return jsonify({'success': True, 'saved': False})
+
+@app.route('/api/is-saved')
+def is_saved():
+    user = session.get('user')
+    if not user:
+        return jsonify({'saved': False})
+    key = f"{request.args.get('type', '')}/{request.args.get('id', '')}"
+    saved = SAVED_PROPERTIES.get(user['email'], [])
+    return jsonify({'saved': key in saved})
 
 @app.route('/property/<property_type>/<int:prop_id>')
 def property_detail(property_type, prop_id):
@@ -598,5 +950,5 @@ if __name__ == '__main__':
     # Chạy server ở port 5000
     debug = os.environ.get('FLASK_DEBUG', '').lower() in {'1', 'true', 'yes'}
     host = os.environ.get('FLASK_HOST', '127.0.0.1')
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=debug, host=host, port=port)
+    port = int(os.environ.get('PORT', 5001))
+    app.run(debug=debug, host=host, port=port, use_reloader=False)

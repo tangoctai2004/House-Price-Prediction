@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Về Chúng Tôi | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
     <meta name="description"
         content="Nhóm 1 — những sinh viên đam mê AI và bất động sản, xây dựng hệ thống định giá thông minh ProphetEstate.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
     <style>
         *,
         *::before,
@@ -21,8 +19,8 @@
 
         body {
             font-family: var(--font-body);
-            background: var(--bg-dark);
-            color: var(--text-light);
+            background: var(--colors-surface-soft);
+            color: var(--colors-ink);
             margin: 0;
         }
 
@@ -63,12 +61,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(192, 160, 98, 0.15);
-            border: 1px solid rgba(192, 160, 98, 0.4);
+            background: rgba(17, 17, 17, 0.15);
+            border: 1px solid rgba(17, 17, 17, 0.4);
             border-radius: 20px;
             padding: 5px 16px;
             font-size: 0.78rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             margin-bottom: 1.2rem;
             letter-spacing: 0.5px;
         }
@@ -77,7 +75,7 @@
             font-family: var(--font-display);
             font-size: 3rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #fff 40%, var(--accent-gold));
+            background: linear-gradient(135deg, var(--colors-canvas) 40%, var(--colors-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.15;
@@ -94,9 +92,9 @@
 
         /* ── STATS ROW ── */
         .stats-band {
-            background: var(--bg-panel);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border-top: 1px solid var(--colors-hairline);
+            border-bottom: 1px solid var(--colors-hairline);
         }
 
         .stats-inner {
@@ -110,7 +108,7 @@
         .stat-item {
             padding: 1.8rem 1rem;
             text-align: center;
-            border-right: 1px solid var(--border-color);
+            border-right: 1px solid var(--colors-hairline);
         }
 
         .stat-item:last-child {
@@ -121,13 +119,13 @@
             font-family: var(--font-display);
             font-size: 2.2rem;
             font-weight: 600;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             line-height: 1;
         }
 
         .stat-lbl {
             font-size: 0.82rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
             margin-top: 0.35rem;
         }
 
@@ -145,7 +143,7 @@
             gap: 4rem;
             align-items: center;
             padding: 4rem 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--colors-hairline);
         }
 
         .mission-text h2 {
@@ -155,14 +153,14 @@
         }
 
         .mission-text p {
-            color: var(--text-muted);
+            color: var(--colors-muted);
             line-height: 1.8;
             margin-bottom: 1rem;
             font-size: 0.95rem;
         }
 
         .mission-text p strong {
-            color: var(--text-light);
+            color: var(--colors-ink);
         }
 
         .mission-visual {
@@ -172,8 +170,8 @@
         }
 
         .mv-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border: 1px solid var(--colors-hairline);
             border-radius: 12px;
             padding: 1.25rem;
             text-align: center;
@@ -181,7 +179,7 @@
         }
 
         .mv-card:hover {
-            border-color: rgba(192, 160, 98, 0.4);
+            border-color: rgba(17, 17, 17, 0.4);
             transform: translateY(-3px);
         }
 
@@ -193,20 +191,20 @@
 
         .mv-label {
             font-size: 0.82rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
         }
 
         .mv-value {
             font-family: var(--font-display);
             font-size: 1.3rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             font-weight: 600;
         }
 
         /* Tech Stack */
         .tech-section {
             padding: 3.5rem 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--colors-hairline);
         }
 
         .section-title {
@@ -219,7 +217,7 @@
         }
 
         .section-sub {
-            color: var(--text-muted);
+            color: var(--colors-muted);
             font-size: 0.9rem;
             margin-bottom: 2rem;
         }
@@ -231,8 +229,8 @@
         }
 
         .tech-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border: 1px solid var(--colors-hairline);
             border-radius: 10px;
             padding: 1.1rem;
             display: flex;
@@ -242,7 +240,7 @@
         }
 
         .tech-card:hover {
-            border-color: rgba(192, 160, 98, 0.35);
+            border-color: rgba(17, 17, 17, 0.35);
             transform: translateY(-2px);
         }
 
@@ -258,7 +256,7 @@
 
         .tc-desc {
             font-size: 0.74rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
             margin-top: 1px;
         }
 
@@ -275,8 +273,8 @@
         }
 
         .member-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border: 1px solid var(--colors-hairline);
             border-radius: 16px;
             overflow: hidden;
             text-align: center;
@@ -291,7 +289,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-gold), transparent);
+            background: linear-gradient(90deg, var(--colors-primary), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -299,7 +297,7 @@
         .member-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(192, 160, 98, 0.3);
+            border-color: rgba(17, 17, 17, 0.3);
         }
 
         .member-card:hover::before {
@@ -316,12 +314,12 @@
             border-radius: 50%;
             object-fit: cover;
             object-position: top;
-            border: 3px solid var(--border-color);
+            border: 3px solid var(--colors-hairline);
             transition: border-color 0.3s;
         }
 
         .member-card:hover .member-avatar {
-            border-color: var(--accent-gold);
+            border-color: var(--colors-primary);
         }
 
         .member-body {
@@ -337,14 +335,14 @@
 
         .member-role {
             font-size: 0.78rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             font-weight: 500;
             margin-bottom: 0.6rem;
         }
 
         .member-desc {
             font-size: 0.78rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
             line-height: 1.5;
         }
 
@@ -357,9 +355,9 @@
         }
 
         .skill-tag {
-            background: rgba(192, 160, 98, 0.1);
-            border: 1px solid rgba(192, 160, 98, 0.2);
-            color: var(--accent-gold);
+            background: rgba(17, 17, 17, 0.1);
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            color: var(--colors-primary);
             font-size: 0.68rem;
             padding: 2px 8px;
             border-radius: 20px;
@@ -368,7 +366,7 @@
         /* ── TIMELINE ── */
         .timeline-section {
             padding: 3.5rem 0;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--colors-hairline);
         }
 
         .timeline {
@@ -383,7 +381,7 @@
             top: 8px;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(180deg, var(--accent-gold), transparent);
+            background: linear-gradient(180deg, var(--colors-primary), transparent);
         }
 
         .tl-item {
@@ -398,14 +396,14 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--accent-gold);
-            border: 2px solid var(--bg-dark);
-            box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.3);
+            background: var(--colors-primary);
+            border: 2px solid var(--colors-surface-soft);
+            box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.3);
         }
 
         .tl-date {
             font-size: 0.75rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             font-weight: 600;
             letter-spacing: 0.5px;
             margin-bottom: 0.25rem;
@@ -419,7 +417,7 @@
 
         .tl-desc {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
             line-height: 1.6;
         }
 
@@ -473,11 +471,11 @@
     <div class="stats-band">
         <div class="stats-inner">
             <div class="stat-item">
-                <div class="stat-num">2,582</div>
+                <div class="stat-num">11,831</div>
                 <div class="stat-lbl">Bất động sản trong dataset</div>
             </div>
             <div class="stat-item">
-                <div class="stat-num">13</div>
+                <div class="stat-num">43</div>
                 <div class="stat-lbl">Quận/Huyện được phân tích</div>
             </div>
             <div class="stat-item">
@@ -507,12 +505,12 @@
             <div class="mission-visual">
                 <div class="mv-card">
                     <span class="mv-icon">🏢</span>
-                    <div class="mv-value">1,031</div>
+                    <div class="mv-value">5,452</div>
                     <div class="mv-label">Chung cư</div>
                 </div>
                 <div class="mv-card">
                     <span class="mv-icon">🏠</span>
-                    <div class="mv-value">1,551</div>
+                    <div class="mv-value">6,379</div>
                     <div class="mv-label">Nhà đất</div>
                 </div>
                 <div class="mv-card">
@@ -542,7 +540,7 @@
                 <div class="tech-card"><span class="tc-icon">🤖</span>
                     <div>
                         <div class="tc-name">Scikit-learn</div>
-                        <div class="tc-desc">Random Forest, Pipeline</div>
+                        <div class="tc-desc">XGBoost, Pipeline</div>
                     </div>
                 </div>
                 <div class="tech-card"><span class="tc-icon">🌐</span>
@@ -614,13 +612,13 @@
                     </div>
                     <div class="member-body">
                         <div class="member-name">Mai Anh</div>
-                        <div class="member-role">🎨 Frontend & UI/UX</div>
-                        <div class="member-desc">Thiết kế giao diện người dùng, xây dựng các trang web và trải nghiệm
-                            trực quan.</div>
+                        <div class="member-role">📝 Tài liệu & QA</div>
+                        <div class="member-desc">Viết báo cáo, nghiên cứu lý thuyết, kiểm thử hệ thống và đảm bảo
+                            chất lượng.</div>
                         <div class="member-skills">
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">UI Design</span>
-                            <span class="skill-tag">JS</span>
+                            <span class="skill-tag">Báo cáo</span>
+                            <span class="skill-tag">Testing</span>
+                            <span class="skill-tag">QA</span>
                         </div>
                     </div>
                 </div>
@@ -649,7 +647,7 @@
                     <div class="member-body">
                         <div class="member-name">Đức</div>
                         <div class="member-role">📊 Data Engineer</div>
-                        <div class="member-desc">Thu thập, làm sạch và phân tích hơn 2.500 bất động sản từ
+                        <div class="member-desc">Thu thập, làm sạch và phân tích hơn 11.800 bất động sản từ
                             batdongsan.com.vn.</div>
                         <div class="member-skills">
                             <span class="skill-tag">Scraping</span>
@@ -665,13 +663,13 @@
                     </div>
                     <div class="member-body">
                         <div class="member-name">Đông</div>
-                        <div class="member-role">📈 Analytics & Chart</div>
-                        <div class="member-desc">Phát triển trang phân tích dữ liệu, biểu đồ tương tác và báo cáo thị
-                            trường.</div>
+                        <div class="member-role">🎨 Frontend Developer</div>
+                        <div class="member-desc">Xây dựng giao diện người dùng, phát triển các trang web và trải nghiệm
+                            tương tác.</div>
                         <div class="member-skills">
-                            <span class="skill-tag">Chart.js</span>
-                            <span class="skill-tag">Analytics</span>
-                            <span class="skill-tag">Viz</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">UI</span>
                         </div>
                     </div>
                 </div>
@@ -686,28 +684,28 @@
             <div class="timeline">
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-date">THÁNG 3 · 2025</div>
+                    <div class="tl-date">THÁNG 4 · 2026</div>
                     <div class="tl-title">Khởi động & Thu thập dữ liệu</div>
-                    <div class="tl-desc">Xây dựng web scraper thu thập 2.582 bất động sản từ batdongsan.com.vn, bao gồm
+                    <div class="tl-desc">Xây dựng web scraper thu thập 11.831 bất động sản từ batdongsan.com.vn, bao gồm
                         hình ảnh, mô tả, giá và các đặc điểm chi tiết.</div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-date">THÁNG 3–4 · 2025</div>
+                    <div class="tl-date">THÁNG 4 · 2026</div>
                     <div class="tl-title">Xây dựng ML Pipeline</div>
-                    <div class="tl-desc">Phân tích, làm sạch dữ liệu, Feature Engineering và huấn luyện 2 mô hình Random
-                        Forest riêng biệt cho Chung Cư và Nhà Đất.</div>
+                    <div class="tl-desc">Phân tích, làm sạch dữ liệu, Feature Engineering và huấn luyện mô hình XGBoost
+                        cùng chung một pipeline thông minh cho cả Chung Cư và Nhà Đất.</div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-date">THÁNG 4 · 2025</div>
+                    <div class="tl-date">THÁNG 4–5 · 2026</div>
                     <div class="tl-title">Phát triển Web App</div>
                     <div class="tl-desc">Xây dựng Flask API, thiết kế giao diện người dùng với tông màu sang trọng, tích
                         hợp hệ thống xác thực và trang chi tiết BĐS.</div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-date">THÁNG 4 · 2025</div>
+                    <div class="tl-date">THÁNG 4–5 · 2026</div>
                     <div class="tl-title">Hoàn thiện & Demo</div>
                     <div class="tl-desc">Thêm trang Phân tích dữ liệu với Chart.js, trang Tìm kiếm BĐS thời gian thực,
                         và chuẩn bị demo cuối kì.</div>
@@ -719,17 +717,6 @@
 
     {% include '_footer.html' %}
 
-    <script>
-        document.addEventListener('click', e => {
-            const link = e.target.closest('a[href]');
-            if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank') {
-                e.preventDefault();
-                document.body.style.transition = 'opacity 0.25s';
-                document.body.style.opacity = '0';
-                setTimeout(() => location.href = link.href, 250);
-            }
-        });
-    </script>
 </body>
 
 </html>

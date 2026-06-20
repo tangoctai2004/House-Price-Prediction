@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử định giá | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
+</head>
+<body>
+
+{% include '_header.html' %}
+{% set active_tab = 'history' %}
+{% include '_account_tabs.html' %}
+
+<main>
+    <div class="account-content">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <p class="body-md" style="color: var(--colors-muted);">{{ items | length }} lượt định giá</p>
+            {% if items %}
+            <button class="button-secondary" onclick="clearHistory()" style="font-size: 13px;">Xoá tất cả</button>
+            {% endif %}
+        </div>
+
+        {% if items %}
+        <div class="history-list">
+            {% for item in items %}
+            <div class="history-item">
+                <div class="history-item-icon">
+                    {% if item.property_type == 'chung_cu' %}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+                    {% else %}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    {% endif %}
+                </div>
+                <div class="history-item-body">
+                    <div class="history-item-top">
+                        <span class="history-item-type">{{ 'Chung cư' if item.property_type == 'chung_cu' else 'Nhà đất' }}</span>
+                        <span class="history-item-time">{{ item.timestamp }}</span>
+                    </div>
+                    <div class="history-item-price">{{ item.price_billion }} Tỷ VNĐ</div>
+                    <div class="history-item-details">
+                        <span>{{ item.district }}</span>
+                        <span>{{ item.area }} m²</span>
+                        <span>{{ item.bedrooms }} PN</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Chưa có lịch sử định giá</h3>
+            <p>Khi bạn sử dụng công cụ định giá AI, lịch sử sẽ hiển thị tại đây.</p>
+            <a href="/" class="button-primary" style="display: inline-block; margin-top: 12px;">Định giá ngay</a>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+{% include '_footer.html' %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+async function clearHistory() {
+    if (!confirm('Xoá toàn bộ lịch sử định giá?')) return;
+    try {
+        await fetch('/api/history/clear', { method: 'POST' });
+        location.reload();
+    } catch(e) { alert('Lỗi kết nối.'); }
+}
+</script>
+</body>
+</html>

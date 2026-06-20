@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BĐS đã lưu | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
+</head>
+<body>
+
+{% include '_header.html' %}
+{% set active_tab = 'saved' %}
+{% include '_account_tabs.html' %}
+
+<main>
+    <div class="account-content">
+        <div style="margin-bottom: 24px;">
+            <p class="body-md" style="color: var(--colors-muted);">{{ properties | length }} bất động sản</p>
+        </div>
+
+        {% if properties %}
+        <div class="saved-grid">
+            {% for p in properties %}
+            <a href="/property/{{ p.type }}/{{ p.id }}" class="saved-card" id="saved-{{ p.type }}-{{ p.id }}">
+                {% if p.image %}
+                <img class="saved-card-img" src="{{ p.image }}" alt="{{ p.district }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="saved-card-img-placeholder" style="display:none">🏠</div>
+                {% else %}
+                <div class="saved-card-img-placeholder">🏠</div>
+                {% endif %}
+                <div class="saved-card-body">
+                    <div class="saved-card-title">{{ p.title }}</div>
+                    <div class="saved-card-price">{{ p.price }} Tỷ VNĐ</div>
+                    <div class="saved-card-meta">
+                        <span>📐 {{ p.area }} m²</span>
+                        <span>🛏 {{ p.bedrooms }} PN</span>
+                        <span>📍 {{ p.district }}</span>
+                    </div>
+                    <span class="saved-card-type">{{ 'Chung cư' if p.type == 'chung_cu' else 'Nhà đất' }}</span>
+                </div>
+                <button class="saved-card-remove" onclick="event.preventDefault();event.stopPropagation();unsave('{{ p.type }}',{{ p.id }})" title="Bỏ lưu">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+            </div>
+            <h3>Chưa lưu BĐS nào</h3>
+            <p>Khi xem chi tiết một bất động sản, nhấn nút "Lưu" để thêm vào danh sách.</p>
+            <a href="/search" class="button-primary" style="display: inline-block; margin-top: 12px;">Tìm kiếm BĐS</a>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+{% include '_footer.html' %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+async function unsave(type, id) {
+    try {
+        await fetch('/api/unsave-property', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type, id}) });
+        const el = document.getElementById(`saved-${type}-${id}`);
+        if (el) { el.style.transition = 'opacity 0.3s, transform 0.3s'; el.style.opacity = '0'; el.style.transform = 'scale(0.95)'; setTimeout(() => { el.remove(); updateCount(); }, 300); }
+    } catch(e) { alert('Lỗi kết nối.'); }
+}
+function updateCount() {
+    const count = document.querySelectorAll('.saved-card').length;
+    document.querySelector('.body-md').textContent = count + ' bất động sản';
+    if (count === 0) location.reload();
+}
+</script>
+</body>
+</html>

@@ -1,9 +1,10 @@
 """
-CRAWLER BĐS v3 — batdongsan.com.vn
+CRAWLER BĐS v4 — batdongsan.com.vn
 - FIX: Chống trùng bằng Set lưu listing_id đã cào
-- FIX: Cào từ NHIỀU danh mục (chung cư, nhà riêng, biệt thự) để đủ 3000
+- FIX: Cào từ NHIỀU danh mục (chung cư, nhà riêng, biệt thự, đất nền) để đủ 15000
 - SPEED: Giảm sleep xuống 1.5-3s (vẫn an toàn)
 - RESUME: Đọc file cũ để biết đã cào những ID nào rồi
+- SCALE: Mở rộng nhiều tỉnh thành + loại BĐS để đủ 15000 mẫu
 """
 
 from curl_cffi import requests as cf_requests
@@ -22,18 +23,51 @@ import traceback
 # ============================================================
 # Cào từ NHIỀU danh mục khác nhau để tránh hết link
 CATEGORY_URLS = [
+    # === HÀ NỘI ===
     "https://batdongsan.com.vn/ban-can-ho-chung-cu-ha-noi/p{}",          # Chung cư HN
     "https://batdongsan.com.vn/ban-nha-rieng-ha-noi/p{}",               # Nhà riêng HN
     "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-ha-noi/p{}",    # Biệt thự HN
+    "https://batdongsan.com.vn/ban-dat-nen-ha-noi/p{}",                 # Đất nền HN
+    # === TP. HỒ CHÍ MINH ===
     "https://batdongsan.com.vn/ban-can-ho-chung-cu-tp-hcm/p{}",         # Chung cư HCM
     "https://batdongsan.com.vn/ban-nha-rieng-tp-hcm/p{}",               # Nhà riêng HCM
+    "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-tp-hcm/p{}",    # Biệt thự HCM
+    "https://batdongsan.com.vn/ban-dat-nen-tp-hcm/p{}",                 # Đất nền HCM
+    # === ĐÀ NẴNG ===
     "https://batdongsan.com.vn/ban-can-ho-chung-cu-da-nang/p{}",        # Chung cư Đà Nẵng
+    "https://batdongsan.com.vn/ban-nha-rieng-da-nang/p{}",              # Nhà riêng Đà Nẵng
+    "https://batdongsan.com.vn/ban-dat-nen-da-nang/p{}",                # Đất nền Đà Nẵng
+    # === BÌNH DƯƠNG ===
+    "https://batdongsan.com.vn/ban-can-ho-chung-cu-binh-duong/p{}",     # Chung cư Bình Dương
+    "https://batdongsan.com.vn/ban-nha-rieng-binh-duong/p{}",           # Nhà riêng Bình Dương
+    "https://batdongsan.com.vn/ban-dat-nen-binh-duong/p{}",             # Đất nền Bình Dương
+    # === HẢI PHÒNG ===
+    "https://batdongsan.com.vn/ban-can-ho-chung-cu-hai-phong/p{}",      # Chung cư Hải Phòng
+    "https://batdongsan.com.vn/ban-nha-rieng-hai-phong/p{}",            # Nhà riêng Hải Phòng
+    "https://batdongsan.com.vn/ban-dat-nen-hai-phong/p{}",              # Đất nền Hải Phòng
+    # === ĐỒNG NAI ===
+    "https://batdongsan.com.vn/ban-nha-rieng-dong-nai/p{}",             # Nhà riêng Đồng Nai
+    "https://batdongsan.com.vn/ban-dat-nen-dong-nai/p{}",               # Đất nền Đồng Nai
+    # === KHÁNH HÒA (Nha Trang) ===
+    "https://batdongsan.com.vn/ban-can-ho-chung-cu-khanh-hoa/p{}",     # Chung cư Khánh Hòa
+    "https://batdongsan.com.vn/ban-dat-nen-khanh-hoa/p{}",             # Đất nền Khánh Hòa
+    # === BẮC NINH ===
+    "https://batdongsan.com.vn/ban-nha-rieng-bac-ninh/p{}",            # Nhà riêng Bắc Ninh
+    "https://batdongsan.com.vn/ban-dat-nen-bac-ninh/p{}",              # Đất nền Bắc Ninh
+    # === LONG AN ===
+    "https://batdongsan.com.vn/ban-dat-nen-long-an/p{}",               # Đất nền Long An
+    # === THANH HÓA ===
+    "https://batdongsan.com.vn/ban-nha-rieng-thanh-hoa/p{}",           # Nhà riêng Thanh Hóa
+    "https://batdongsan.com.vn/ban-dat-nen-thanh-hoa/p{}",             # Đất nền Thanh Hóa
+    # === QUẢNG NINH ===
+    "https://batdongsan.com.vn/ban-can-ho-chung-cu-quang-ninh/p{}",    # Chung cư Quảng Ninh
+    "https://batdongsan.com.vn/ban-dat-nen-quang-ninh/p{}",            # Đất nền Quảng Ninh
 ]
 
-TARGET_TOTAL = 3000   # Mục tiêu tổng cộng (bao gồm cả dữ liệu cũ)
+TARGET_TOTAL = 15000  # Mục tiêu tổng cộng (bao gồm cả dữ liệu cũ)
 MIN_SLEEP = 1.5       # Giảm sleep: 1.5s
 MAX_SLEEP = 3.0       # Giảm sleep: 3.0s
-MAX_PAGES_PER_CATEGORY = 80
+MAX_PAGES_PER_CATEGORY = 250  # Tăng từ 80 → 250 để đủ dữ liệu
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'raw')

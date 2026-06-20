@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ prop.title[:60] }} | Prophet Estate</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: var(--font-body);
-            background: var(--bg-dark);
-            color: var(--text-light);
+            background: var(--colors-surface-soft);
+            color: var(--colors-ink);
         }
 
         /* ── TOP NAV ── */
@@ -22,8 +22,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--bg-panel);
-            border-bottom: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border-bottom: 1px solid var(--colors-hairline);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -33,7 +33,7 @@
         .nav-brand {
             font-family: var(--font-display);
             font-size: 1.4rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             text-decoration: none;
         }
         .nav-right { display: flex; align-items: center; gap: 0.8rem; }
@@ -44,20 +44,20 @@
             padding: 8px 18px;
             border-radius: 6px;
             cursor: pointer;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--colors-hairline);
             background: transparent;
-            color: var(--text-light);
+            color: var(--colors-ink);
             transition: all 0.2s;
         }
         .nav-btn.primary {
-            background: var(--text-light);
-            color: var(--bg-panel);
-            border-color: var(--text-light);
+            background: var(--colors-ink);
+            color: var(--colors-surface-card);
+            border-color: var(--colors-ink);
         }
         .nav-btn:hover { opacity: 0.85; }
-        .nav-user { font-size: 0.9rem; color: var(--text-muted); }
+        .nav-user { font-size: 0.9rem; color: var(--colors-muted); }
         .nav-back-link {
-            color: var(--text-muted);
+            color: var(--colors-muted);
             text-decoration: none;
             font-size: 0.9rem;
             display: flex;
@@ -65,7 +65,7 @@
             gap: 4px;
             transition: color 0.2s;
         }
-        .nav-back-link:hover { color: var(--text-light); }
+        .nav-back-link:hover { color: var(--colors-ink); }
 
         /* ── PAGE LAYOUT ── */
         .detail-page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -82,7 +82,7 @@
 
         .gallery-arrow {
             position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(0,0,0,0.45); color: #fff; border: none;
+            background: rgba(0,0,0,0.45); color: var(--colors-canvas); border: none;
             width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
             font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
             backdrop-filter: blur(4px); transition: background 0.2s; z-index: 5;
@@ -93,7 +93,7 @@
 
         .gallery-counter {
             position: absolute; bottom: 1rem; right: 1rem;
-            background: rgba(0,0,0,0.55); color: #fff; font-size: 0.8rem;
+            background: rgba(0,0,0,0.55); color: var(--colors-canvas); font-size: 0.8rem;
             padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);
         }
 
@@ -105,7 +105,7 @@
             cursor: pointer; opacity: 0.6; transition: opacity 0.2s; flex-shrink: 0;
             border: 2px solid transparent;
         }
-        .gallery-thumbs img.active { opacity: 1; border-color: var(--accent-gold); }
+        .gallery-thumbs img.active { opacity: 1; border-color: var(--colors-primary); }
         .gallery-thumbs img:hover { opacity: 0.9; }
 
         /* ── CONTENT GRID ── */
@@ -123,43 +123,43 @@
             font-weight: 600;
             line-height: 1.3;
             margin-bottom: 1rem;
-            color: var(--text-light);
+            color: var(--colors-ink);
         }
 
         .prop-price-row {
             display: flex; align-items: baseline; gap: 1.5rem;
-            padding: 1rem 0; border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem;
+            padding: 1rem 0; border-top: 1px solid var(--colors-hairline);
+            border-bottom: 1px solid var(--colors-hairline); margin-bottom: 1.5rem;
         }
         .prop-price {
             font-family: var(--font-display);
             font-size: 2rem; font-weight: 600;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
         }
-        .prop-area-info { color: var(--text-muted); font-size: 0.95rem; }
-        .prop-area-info strong { color: var(--text-light); font-weight: 600; }
+        .prop-area-info { color: var(--colors-muted); font-size: 0.95rem; }
+        .prop-area-info strong { color: var(--colors-ink); font-weight: 600; }
 
         /* Specs table */
         .specs-section { margin-bottom: 2rem; }
         .specs-section h3 {
             font-family: var(--font-display);
-            font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-light);
+            font-size: 1.3rem; margin-bottom: 1rem; color: var(--colors-ink);
         }
         .specs-table { width: 100%; border-collapse: collapse; }
-        .specs-table tr { border-bottom: 1px solid var(--border-color); }
+        .specs-table tr { border-bottom: 1px solid var(--colors-hairline); }
         .specs-table td { padding: 0.75rem 0.5rem; font-size: 0.95rem; }
-        .specs-table td:first-child { color: var(--text-muted); width: 50%; }
-        .specs-table td:last-child { font-weight: 500; color: var(--text-light); }
+        .specs-table td:first-child { color: var(--colors-muted); width: 50%; }
+        .specs-table td:last-child { font-weight: 500; color: var(--colors-ink); }
 
         /* Description */
         .desc-section { margin-bottom: 2rem; }
         .desc-section h3 {
             font-family: var(--font-display);
-            font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-light);
+            font-size: 1.3rem; margin-bottom: 1rem; color: var(--colors-ink);
         }
         .desc-text {
             white-space: pre-line; line-height: 1.9;
-            color: var(--text-muted); font-size: 0.95rem;
+            color: var(--colors-muted); font-size: 0.95rem;
         }
 
         /* ── RIGHT COLUMN / SIDEBAR ── */
@@ -172,8 +172,8 @@
         }
 
         .sidebar-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+            background: var(--colors-surface-card);
+            border: 1px solid var(--colors-hairline);
             border-radius: 12px;
             padding: 1.5rem;
         }
@@ -181,10 +181,10 @@
         .sidebar-price {
             font-family: var(--font-display);
             font-size: 1.8rem; font-weight: 600;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             margin-bottom: 0.25rem;
         }
-        .sidebar-area { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+        .sidebar-area { color: var(--colors-muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
 
         /* Phone reveal */
         .phone-row {
@@ -195,7 +195,7 @@
             font-size: 1rem; font-weight: 600; letter-spacing: 0.5px;
         }
         .phone-reveal-btn {
-            background: #1a9c6e; color: #fff; border: none;
+            background: #1a9c6e; color: var(--colors-canvas); border: none;
             padding: 5px 14px; border-radius: 6px; font-size: 0.8rem;
             cursor: pointer; transition: background 0.2s; font-family: var(--font-body);
             white-space: nowrap;
@@ -207,32 +207,32 @@
         }
         .phone-login-inline {
             font-size: 0.78rem;
-            color: var(--accent-gold);
+            color: var(--colors-primary);
             cursor: pointer;
             text-decoration: none;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 3px;
-            border: 1px solid var(--accent-gold);
+            border: 1px solid var(--colors-primary);
             padding: 3px 10px;
             border-radius: 20px;
             transition: all 0.2s;
         }
         .phone-login-inline:hover {
-            background: var(--accent-gold);
-            color: #fff;
+            background: var(--colors-primary);
+            color: var(--colors-canvas);
         }
 
         .contact-btn {
             display: block; width: 100%;
-            background: var(--text-light); color: var(--bg-panel);
+            background: var(--colors-ink); color: var(--colors-surface-card);
             border: none; padding: 13px; border-radius: 8px;
             font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
             text-align: center; cursor: pointer; text-decoration: none;
             transition: background 0.2s;
         }
-        .contact-btn:hover { background: var(--accent-gold); }
+        .contact-btn:hover { background: var(--colors-primary); }
 
         /* ── AUTH MODAL ── */
         .modal-overlay {
@@ -244,7 +244,7 @@
         .modal-overlay.active { display: flex; }
 
         .modal-box {
-            background: var(--bg-panel); border-radius: 14px;
+            background: var(--colors-surface-card); border-radius: 14px;
             padding: 2.5rem 2rem; width: 420px; max-width: 95vw;
             position: relative; animation: fadeInModal 0.25s ease;
         }
@@ -255,32 +255,32 @@
         .modal-close {
             position: absolute; top: 1rem; right: 1rem;
             background: none; border: none; font-size: 1.4rem;
-            cursor: pointer; color: var(--text-muted); line-height: 1;
+            cursor: pointer; color: var(--colors-muted); line-height: 1;
         }
         .modal-title {
             font-family: var(--font-display); font-size: 1.6rem;
-            margin-bottom: 1.5rem; color: var(--text-light);
+            margin-bottom: 1.5rem; color: var(--colors-ink);
         }
         .modal-input {
-            width: 100%; border: 1px solid var(--border-color);
+            width: 100%; border: 1px solid var(--colors-hairline);
             border-radius: 8px; padding: 10px 14px; margin-bottom: 0.8rem;
             font-family: var(--font-body); font-size: 0.95rem;
-            color: var(--text-light); background: var(--bg-dark); outline: none;
+            color: var(--colors-ink); background: var(--colors-surface-soft); outline: none;
             transition: border-color 0.2s;
         }
-        .modal-input:focus { border-color: var(--accent-gold); }
+        .modal-input:focus { border-color: var(--colors-primary); }
         .modal-submit {
-            width: 100%; background: var(--text-light); color: var(--bg-panel);
+            width: 100%; background: var(--colors-ink); color: var(--colors-surface-card);
             border: none; padding: 13px; border-radius: 8px; font-size: 1rem;
             font-weight: 600; font-family: var(--font-body); cursor: pointer;
             margin-top: 0.4rem; transition: background 0.2s;
         }
-        .modal-submit:hover { background: var(--accent-gold); }
+        .modal-submit:hover { background: var(--colors-primary); }
         .modal-switch {
             text-align: center; margin-top: 1rem; font-size: 0.88rem;
-            color: var(--text-muted);
+            color: var(--colors-muted);
         }
-        .modal-switch a { color: var(--accent-gold); cursor: pointer; }
+        .modal-switch a { color: var(--colors-primary); cursor: pointer; }
         .modal-error {
             color: #e63946; font-size: 0.84rem; margin-bottom: 0.6rem;
             min-height: 18px;
@@ -340,20 +340,20 @@
             <div class="specs-section">
                 <h3>Đặc điểm bất động sản</h3>
                 <table class="specs-table">
-                    <tr><td>📐 Diện tích</td><td>{{ prop.area_m2 }} m²</td></tr>
-                    <tr><td>🛏 Số phòng ngủ</td><td>{{ prop.bedrooms_num | int }}</td></tr>
-                    <tr><td>🧭 Hướng nhà</td><td>{{ prop.direction }}</td></tr>
+                    <tr><td><i class="fa-solid fa-ruler-combined"></i> Diện tích</td><td>{{ prop.area_m2 }} m²</td></tr>
+                    <tr><td><i class="fa-solid fa-bed"></i> Số phòng ngủ</td><td>{{ prop.bedrooms_num | int }}</td></tr>
+                    <tr><td><i class="fa-regular fa-compass"></i> Hướng nhà</td><td>{{ prop.direction }}</td></tr>
                     {% if prop.type == 'chung_cu' %}
-                    <tr><td>🏠 Hướng ban công</td><td>{{ prop.balcony_direction }}</td></tr>
+                    <tr><td><i class="fa-solid fa-house"></i> Hướng ban công</td><td>{{ prop.balcony_direction }}</td></tr>
                     {% endif %}
                     {% if prop.type == 'nha_dat' %}
-                    <tr><td>🏢 Số tầng</td><td>{{ prop.floors_num | int }}</td></tr>
-                    <tr><td>📏 Mặt tiền</td><td>{{ prop.frontage_m }} m</td></tr>
-                    <tr><td>🛣 Đường vào</td><td>{{ prop.road_width_m }} m</td></tr>
+                    <tr><td><i class="fa-solid fa-building"></i> Số tầng</td><td>{{ prop.floors_num | int }}</td></tr>
+                    <tr><td><i class="fa-solid fa-ruler"></i> Mặt tiền</td><td>{{ prop.frontage_m }} m</td></tr>
+                    <tr><td><i class="fa-solid fa-road"></i> Đường vào</td><td>{{ prop.road_width_m }} m</td></tr>
                     {% endif %}
-                    <tr><td>🛋 Nội thất</td><td>{{ prop.furniture_std }}</td></tr>
-                    <tr><td>📜 Pháp lý</td><td>{{ prop.legal_std }}</td></tr>
-                    <tr><td>📍 Khu vực</td><td>{{ prop.district }}</td></tr>
+                    <tr><td><i class="fa-solid fa-couch"></i> Nội thất</td><td>{{ prop.furniture_std }}</td></tr>
+                    <tr><td><i class="fa-solid fa-scroll"></i> Pháp lý</td><td>{{ prop.legal_std }}</td></tr>
+                    <tr><td><i class="fa-solid fa-location-dot"></i> Khu vực</td><td>{{ prop.district }}</td></tr>
                 </table>
             </div>
 
@@ -370,21 +370,28 @@
                 <div class="sidebar-price">{{ prop.price_billion | round(2) }} Tỷ VNĐ</div>
                 <div class="sidebar-area">{{ prop.area_m2 }} m² · {{ prop.district }}</div>
 
+                {% if logged_in %}
+                <button class="save-btn" id="save-btn" onclick="toggleSave()" style="width:100%;justify-content:center;margin-bottom:12px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="save-icon"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+                    <span id="save-text">Lưu BĐS</span>
+                </button>
+                {% endif %}
+
                 <!-- Phone number -->
                 <div class="phone-row">
                     <span class="phone-number" id="phone-display">{{ prop.phone_masked }}</span>
                     {% if logged_in %}
                         <button class="phone-reveal-btn" onclick="revealPhone()">Hiện số</button>
                     {% else %}
-                        <a class="phone-login-inline" onclick="openAuthModal('login')">🔒 Đăng nhập để hiển thị đầy đủ</a>
+                        <a class="phone-login-inline" onclick="openAuthModal('login')"><i class="fa-solid fa-lock"></i> Đăng nhập để hiển thị đầy đủ</a>
                     {% endif %}
                 </div>
 
-                <a href="#" class="contact-btn" onclick="handleContact(event)">📞 Liên hệ ngay</a>
+                <a href="#" class="contact-btn" onclick="handleContact(event)"><i class="fa-solid fa-phone"></i> Liên hệ ngay</a>
             </div>
 
-            <div class="sidebar-card" style="font-size:0.9rem; color:var(--text-muted); line-height:1.7;">
-                <p>✅ <strong style="color:var(--text-light)">Dữ liệu từ batdongsan.com.vn</strong></p>
+            <div class="sidebar-card" style="font-size:0.9rem; color:var(--colors-muted); line-height:1.7;">
+                <p><i class="fa-solid fa-check"></i> <strong style="color:var(--colors-ink)">Dữ liệu từ batdongsan.com.vn</strong></p>
                 <p style="margin-top:0.4rem">Giá được định giá bởi AI Prophet Estate dựa trên thị trường thực tế.</p>
             </div>
         </div>
@@ -428,16 +435,45 @@ function handleContact(e) {
     {% endif %}
 }
 
-// Smooth page transition
-document.addEventListener('click', e => {
-    const link = e.target.closest('a[href]');
-    if (link && link.href && !link.href.startsWith('#') && link.target !== '_blank' && !link.href.startsWith('javascript:')) {
-        e.preventDefault();
-        document.body.style.transition = 'opacity 0.25s';
-        document.body.style.opacity = '0';
-        setTimeout(() => location.href = link.href, 250);
+// ── SAVE PROPERTY ──
+const PROP_TYPE = "{{ prop.type }}";
+const PROP_ID = {{ prop.id }};
+
+{% if logged_in %}
+(async function() {
+    try {
+        const res = await fetch(`/api/is-saved?type=${PROP_TYPE}&id=${PROP_ID}`);
+        const data = await res.json();
+        if (data.saved) updateSaveUI(true);
+    } catch(e) {}
+})();
+{% endif %}
+
+async function toggleSave() {
+    const btn = document.getElementById('save-btn');
+    const isSaved = btn.classList.contains('saved');
+    const url = isSaved ? '/api/unsave-property' : '/api/save-property';
+    try {
+        const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type: PROP_TYPE, id: PROP_ID}) });
+        const data = await res.json();
+        updateSaveUI(data.saved);
+    } catch(e) {}
+}
+
+function updateSaveUI(saved) {
+    const btn = document.getElementById('save-btn');
+    const icon = document.getElementById('save-icon');
+    const text = document.getElementById('save-text');
+    if (saved) {
+        btn.classList.add('saved');
+        icon.setAttribute('fill', 'currentColor');
+        text.textContent = 'Đã lưu';
+    } else {
+        btn.classList.remove('saved');
+        icon.setAttribute('fill', 'none');
+        text.textContent = 'Lưu BĐS';
     }
-});
+}
 </script>
 </body>
 </html>
