@@ -33,7 +33,7 @@ EXPERIMENT_DIR = Path(__file__).resolve().parent
 HANOI_MODEL_DIR = EXPERIMENT_DIR / 'models_hanoi'
 
 ORIGINAL_META_PATH = BASE_DIR / 'models' / 'model_meta.pkl'
-HANOI_META_PATH = HANOI_MODEL_DIR / 'model_meta_hanoi.pkl'
+HANOI_META_PATH = HANOI_MODEL_DIR / 'model_meta.pkl'
 
 DATA_CC = BASE_DIR / 'data' / 'processed' / 'cleaned_chung_cu.csv'
 DATA_ND = BASE_DIR / 'data' / 'processed' / 'cleaned_nha_dat.csv'
@@ -205,8 +205,8 @@ Thay vào đó, script Hà Nội-only dùng lại dữ liệu tổng hiện có 
 | Model gốc | `models/best_model_pipeline.pkl` |
 | Metadata gốc | `models/model_meta.pkl` |
 | Training Hà Nội-only | `experiments/hanoi_only/run_training_hanoi.py` |
-| Model Hà Nội-only | `experiments/hanoi_only/models_hanoi/best_model_pipeline_hanoi.pkl` |
-| Metadata Hà Nội-only | `experiments/hanoi_only/models_hanoi/model_meta_hanoi.pkl` |
+| Model Hà Nội-only | `experiments/hanoi_only/models_hanoi/best_model_pipeline.pkl` |
+| Metadata Hà Nội-only | `experiments/hanoi_only/models_hanoi/model_meta.pkl` |
 | Biểu đồ so sánh | `experiments/hanoi_only/comparison_hanoi_vs_all.png` |
 
 ## Dataset sau filter training

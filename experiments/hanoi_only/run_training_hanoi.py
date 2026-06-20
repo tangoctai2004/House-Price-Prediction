@@ -213,9 +213,9 @@ def save_charts(results, cv_results, best_name):
                     f'{val:{fmt}}', ha='center', va='bottom', fontsize=8)
     plt.suptitle('So sánh 4 thuật toán ML — Dữ liệu Hà Nội', fontweight='bold')
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / 'model_comparison_hanoi.png', dpi=150, bbox_inches='tight')
+    plt.savefig(OUTPUT_DIR / 'model_comparison.png', dpi=150, bbox_inches='tight')
     plt.close(fig)
-    print(f"  Đã lưu: {OUTPUT_DIR / 'model_comparison_hanoi.png'}")
+    print(f"  Đã lưu: {OUTPUT_DIR / 'model_comparison.png'}")
 
     fig_ov, ax_ov = plt.subplots(figsize=(8, 4))
     x_pos = np.arange(len(names))
@@ -230,9 +230,9 @@ def save_charts(results, cv_results, best_name):
     ax_ov.set_xticklabels(names, fontsize=9)
     ax_ov.legend()
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / 'overfitting_analysis_hanoi.png', dpi=150, bbox_inches='tight')
+    plt.savefig(OUTPUT_DIR / 'overfitting_analysis.png', dpi=150, bbox_inches='tight')
     plt.close(fig_ov)
-    print(f"  Đã lưu: {OUTPUT_DIR / 'overfitting_analysis_hanoi.png'}")
+    print(f"  Đã lưu: {OUTPUT_DIR / 'overfitting_analysis.png'}")
 
     fig2, axes2 = plt.subplots(1, 2, figsize=(12, 4))
     for ax, model_name in [(axes2[0], 'Random Forest'), (axes2[1], 'XGBoost')]:
@@ -246,9 +246,54 @@ def save_charts(results, cv_results, best_name):
         ax.barh(fi_df['feature'], fi_df['importance'], color='#3498db')
         ax.set_title(f'Top 15 Features — {model_name}', fontweight='bold', fontsize=9)
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / 'feature_importance_hanoi.png', dpi=150, bbox_inches='tight')
+    plt.savefig(OUTPUT_DIR / 'feature_importance.png', dpi=150, bbox_inches='tight')
     plt.close(fig2)
-    print(f"  Đã lưu: {OUTPUT_DIR / 'feature_importance_hanoi.png'}")
+    print(f"  Đã lưu: {OUTPUT_DIR / 'feature_importance.png'}")
+
+
+def test_predictions(best_pipeline):
+    """
+    Test dự đoán nhanh — tương đương Section 11 của 03_training.ipynb.
+    Sử dụng Pipeline nên không cần encode/scale thủ công.
+    """
+    def predict_price(area_m2, bedrooms, district_name, furniture, legal, loai='chung_cu',
+                      floors=0, frontage=0, road_width=0, direction='Không rõ'):
+        sample = pd.DataFrame([{
+            'area_m2': area_m2, 'bedrooms_num': bedrooms,
+            'district': district_name, 'direction': direction,
+            'furniture_std': furniture, 'legal_std': legal,
+            'floors_num': floors, 'frontage_m': frontage,
+            'road_width_m': road_width, 'loai_bds': loai
+        }])
+        return best_pipeline.predict(sample)[0]
+
+    test_cases = [
+        ('Chung cư 75m², 2PN, Cầu Giấy, Đầy đủ, Sổ đỏ',
+         dict(area_m2=75, bedrooms=2, district_name='Cầu Giấy',
+              furniture='Đầy đủ', legal='Sổ đỏ/Sổ hồng', loai='chung_cu')),
+        ('Chung cư 50m², 2PN, Hà Đông, Cơ bản, HĐMB',
+         dict(area_m2=50, bedrooms=2, district_name='Hà Đông',
+              furniture='Cơ bản', legal='HĐMB', loai='chung_cu')),
+        ('Nhà đất 45m², 4PN, Thanh Xuân, Đầy đủ, Sổ đỏ, 5 tầng',
+         dict(area_m2=45, bedrooms=4, district_name='Thanh Xuân',
+              furniture='Đầy đủ', legal='Sổ đỏ/Sổ hồng', loai='nha_dat',
+              floors=5, frontage=4.2, road_width=4.0)),
+        ('Nhà đất 60m², 3PN, Ba Đình, Đầy đủ, Sổ đỏ, 4 tầng',
+         dict(area_m2=60, bedrooms=3, district_name='Ba Đình',
+              furniture='Đầy đủ', legal='Sổ đỏ/Sổ hồng', loai='nha_dat',
+              floors=4, frontage=4.0, road_width=5.0)),
+        ('Nhà đất 40m², 3PN, Đống Đa, Cơ bản, Sổ đỏ, 3 tầng',
+         dict(area_m2=40, bedrooms=3, district_name='Đống Đa',
+              furniture='Cơ bản', legal='Sổ đỏ/Sổ hồng', loai='nha_dat',
+              floors=3, frontage=3.5, road_width=3.0)),
+    ]
+
+    print('\n🔮 THỬ NGHIỆM DỰ ĐOÁN GIÁ (Hà Nội):')
+    print('=' * 60)
+    for desc, params in test_cases:
+        price = predict_price(**params)
+        print(f'  📍 {desc}')
+        print(f'     → Giá dự đoán: {price:.2f} tỷ VNĐ (~{price * 1000:.0f} triệu)\n')
 
 
 def main():
@@ -276,6 +321,17 @@ def main():
     best_name = max(results, key=lambda name: results[name]['R2'])
     print(f"\nModel tốt nhất trên test set Hà Nội: {best_name}  (R² test = {results[best_name]['R2']:.4f}, Gap = {results[best_name]['overfit_gap']:.4f})")
 
+    # Bảng so sánh kết quả — tương đương Section 8 notebook
+    print('\n' + '=' * 65)
+    print('📊 BẢNG SO SÁNH KẾT QUẢ 4 MÔ HÌNH (HÀ NỘI)')
+    print('=' * 65)
+    compare_df = pd.DataFrame({
+        name: {'RMSE (tỷ)': v['RMSE'], 'MAE (tỷ)': v['MAE'], 'R² Score': v['R2']}
+        for name, v in results.items()
+    }).T.round(4)
+    print(compare_df.to_string())
+    print(f'\n🏆 MODEL TỐT NHẤT: {best_name}  (R² = {results[best_name]["R2"]:.4f})')
+
     print("\n[6/8] Cross-Validation 5-Fold trên dữ liệu Hà Nội...")
     cv_results = {}
     for name, result in results.items():
@@ -295,7 +351,7 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     best_pipeline = results[best_name]['pipeline']
 
-    with open(OUTPUT_DIR / 'best_model_pipeline_hanoi.pkl', 'wb') as f:
+    with open(OUTPUT_DIR / 'best_model_pipeline.pkl', 'wb') as f:
         pickle.dump(best_pipeline, f)
 
     fi_dict, total_importance, _ = get_feature_importance(best_pipeline)
@@ -318,13 +374,16 @@ def main():
         'feature_importance': fi_dict,
         'total_importance': total_importance,
     }
-    with open(OUTPUT_DIR / 'model_meta_hanoi.pkl', 'wb') as f:
+    with open(OUTPUT_DIR / 'model_meta.pkl', 'wb') as f:
         pickle.dump(model_meta, f)
 
-    print(f"  Đã lưu: {OUTPUT_DIR / 'best_model_pipeline_hanoi.pkl'}")
-    print(f"  Đã lưu: {OUTPUT_DIR / 'model_meta_hanoi.pkl'}")
+    print(f"  Đã lưu: {OUTPUT_DIR / 'best_model_pipeline.pkl'}")
+    print(f"  Đã lưu: {OUTPUT_DIR / 'model_meta.pkl'}")
 
     save_charts(results, cv_results, best_name)
+
+    # Test dự đoán nhanh — tương đương Section 11 notebook
+    test_predictions(best_pipeline)
 
     print("\n" + "=" * 70)
     print("HOÀN THÀNH TRAINING RIÊNG CHO HÀ NỘI")
