@@ -179,6 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finalPrice = result.predicted_price_vnd;
                 animateValue(predictedPriceEl, 0, finalPrice, 2000);
 
+                // Render Model Info
+                const modelInfoEl = document.getElementById('model-used-info');
+                if (modelInfoEl && result.model_info) {
+                    modelInfoEl.style.display = 'block';
+                    modelInfoEl.innerHTML = `<i class="fa-solid fa-brain"></i> Mô hình chính: ${result.model_info.name} (R² = ${result.model_info.r2})`;
+                } else if (modelInfoEl) {
+                    modelInfoEl.style.display = 'none';
+                }
+
                 // 1. Render Confidence Interval
                 const ciEl = document.getElementById('confidence-interval');
                 if (ciEl) {

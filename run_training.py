@@ -201,7 +201,7 @@ for ax, metric, title, best_fn in zip(axes, ['RMSE','MAE','R2','MAPE'],
     for bar, val in zip(bars, vals):
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() * 1.01,
                 f'{val:{fmt}}', ha='center', va='bottom', fontsize=8)
-plt.suptitle('So sánh 4 Thuật toán ML — Giá BĐS Việt Nam', fontweight='bold')
+plt.suptitle('Comparison of 4 ML Algorithms — Vietnam Real Estate Price', fontweight='bold')
 plt.tight_layout()
 plt.savefig('models/model_comparison.png', dpi=150, bbox_inches='tight')
 print(" Đã lưu: models/model_comparison.png")
@@ -215,7 +215,7 @@ test_r2  = [results[n]['R2']       for n in names]
 bars1 = ax_ov.bar(x_pos - width/2, train_r2, width, label='R² Train', color='#3498db', edgecolor='black', linewidth=0.5)
 bars2 = ax_ov.bar(x_pos + width/2, test_r2,  width, label='R² Test',  color='#e74c3c', edgecolor='black', linewidth=0.5)
 ax_ov.set_ylabel('R² Score')
-ax_ov.set_title('Phân tích Overfitting — R² Train vs Test', fontweight='bold')
+ax_ov.set_title('Overfitting Analysis — R² Train vs Test', fontweight='bold')
 ax_ov.set_xticks(x_pos)
 ax_ov.set_xticklabels(names, fontsize=9)
 ax_ov.legend()

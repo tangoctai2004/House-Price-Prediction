@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Mô Hình AI | Prophet Estate</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo1.png') }}">
+    <meta name="description"
+        content="Báo cáo chi tiết và so sánh thực nghiệm 10 mô hình Machine Learning & Deep Learning (Transformer) định giá bất động sản.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-override.css') }}">
+    <style>
+        body {
+            font-family: var(--font-body);
+            background: var(--colors-surface-soft);
+            color: var(--colors-ink);
+            margin: 0;
+        }
+
+        /* ── HERO ── */
+        .models-hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url("{{ url_for('static', filename='analytics_bg.png') }}");
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.25);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 4rem 2rem 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 5px 16px;
+            font-size: 0.78rem;
+            color: #60a5fa;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .models-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 40%, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .models-hero p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── LAYOUT CONTAINER ── */
+        .models-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--colors-hairline);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--colors-ink);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-sub {
+            color: var(--colors-muted);
+            font-size: 0.95rem;
+            margin: 0.35rem 0 0;
+        }
+
+        /* ── PRODUCTION CARDS ── */
+        .production-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .prod-card {
+            background: var(--colors-canvas);
+            border: 1px solid var(--colors-hairline);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .prod-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .prod-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .prod-badge {
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .prod-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0.5rem 0 0.25rem;
+        }
+
+        .prod-algo {
+            font-size: 0.85rem;
+            color: var(--colors-muted);
+            font-weight: 500;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            background: var(--colors-surface-soft);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--colors-hairline);
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-lbl {
+            font-size: 0.75rem;
+            color: var(--colors-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-val {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--colors-primary);
+            margin-top: 0.25rem;
+        }
+
+        .prod-desc {
+            font-size: 0.88rem;
+            color: var(--colors-body);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── TABS FOR COMPARISON ── */
+        .tab-container {
+            background: var(--colors-canvas);
+            border: 1px solid var(--colors-hairline);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3.5rem;
+        }
+
+        .tab-headers {
+            display: flex;
+            background: var(--colors-surface-soft);
+            padding: 4px;
+            border-radius: 10px;
+            gap: 4px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--colors-muted);
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .tab-btn.active {
+            background: var(--colors-canvas);
+            color: var(--colors-ink);
+            box-shadow: var(--shadow-soft);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── TABLES ── */
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border: 1px solid var(--colors-hairline);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        th {
+            background: var(--colors-surface-soft);
+            color: var(--colors-ink);
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--colors-hairline);
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--colors-hairline);
+            color: var(--colors-body);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.highlight-row {
+            background: rgba(59, 130, 246, 0.04);
+            font-weight: 500;
+        }
+
+        tr.highlight-row td {
+            color: var(--colors-ink);
+        }
+
+        tr.highlight-row td:first-child::before {
+            content: '⭐ ';
+        }
+
+        .badge-table {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-gray { background: #f3f4f6; color: #4b5563; }
+
+        /* ── CHARTS CONTAINER ── */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .chart-box {
+            background: var(--colors-surface-soft);
+            border: 1px solid var(--colors-hairline);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .chart-box h5 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--colors-ink);
+        }
+
+        .chart-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .chart-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* ── DEEP LEARNING VS ML ── */
+        .insight-section {
+            background: var(--colors-canvas);
+            border: 1px solid var(--colors-hairline);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3.5rem;
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .insight-text h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .insight-text p {
+            color: var(--colors-body);
+            line-height: 1.7;
+            font-size: 0.92rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .insight-bullet {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .bullet-icon {
+            font-size: 1.2rem;
+            color: var(--colors-primary);
+            flex-shrink: 0;
+        }
+
+        .bullet-content h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .bullet-content p {
+            margin: 2px 0 0 0;
+            font-size: 0.85rem;
+            color: var(--colors-muted);
+            line-height: 1.5;
+        }
+
+        /* ── POPUP IMAGE PREVIEW ── */
+        .preview-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .preview-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .preview-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-overlay.active .preview-img {
+            transform: scale(1);
+        }
+
+        .preview-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .production-grid, .charts-grid, .insight-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .models-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% include '_header.html' %}
+
+    <!-- HERO -->
+    <div class="models-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">📊 Đánh Giá & So Sánh Thực Nghiệm 10 Mô Hình</div>
+            <h1>Báo Cáo Nghiên Cứu Mô Hình AI</h1>
+            <p>Hệ thống so sánh chi tiết hiệu năng giữa mô hình Machine Learning truyền thống và mô hình Deep Learning (Transformer) định giá bất động sản.</p>
+        </div>
+    </div>
+
+    <!-- MAIN BODY -->
+    <div class="models-wrap">
+
+        <!-- SECTION 1: PRODUCTION MODELS -->
+        <div class="section-header">
+            <h2 class="section-title">🚀 Mô Hình Triển Khai Thực Tế (Production)</h2>
+            <p class="section-sub">Hai mô hình tối ưu nhất được lựa chọn dựa trên kiểm thử chéo (Cross-Validation) và tập Test độc lập.</p>
+        </div>
+
+        <div class="production-grid">
+            <!-- Condo Card -->
+            <div class="prod-card">
+                <div>
+                    <div class="prod-card-header">
+                        <span class="prod-badge">XGBoost Regressor</span>
+                        <span style="font-size: 1.5rem;">🏢</span>
+                    </div>
+                    <h3 class="prod-title">Phân Khúc: Chung Cư</h3>
+                    <div class="prod-algo">Có đặc trưng Tỉnh/Thành | Random State: 42</div>
+                    <hr style="border: 0; border-top: 1px solid var(--colors-hairline); margin: 1rem 0;">
+                </div>
+                <div class="metrics-row">
+                    <div class="metric-item">
+                        <div class="metric-lbl">R² Test Score</div>
+                        <div class="metric-val">0.6734</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-lbl">MAE (Sai Số)</div>
+                        <div class="metric-val">1.67 tỷ</div>
+                    </div>
+                </div>
+                <p class="prod-desc">
+                    Mô hình học máy XGBoost kết hợp với kỹ thuật ColumnTransformer cho kết quả tối ưu nhất với tập dữ liệu chung cư. Điểm Cross-Validation đạt 0.6970 ± 0.0269, chứng tỏ mô hình có tính ổn định cực kì cao trên các fold dữ liệu khác nhau.
+                </p>
+            </div>
+
+            <!-- Land Card -->
+            <div class="prod-card">
+                <div>
+                    <div class="prod-card-header">
+                        <span class="prod-badge">XGBoost Regressor</span>
+                        <span style="font-size: 1.5rem;">🏠</span>
+                    </div>
+                    <h3 class="prod-title">Phân Khúc: Nhà Đất</h3>
+                    <div class="prod-algo">Có đặc trưng Tỉnh/Thành | Random State: 42</div>
+                    <hr style="border: 0; border-top: 1px solid var(--colors-hairline); margin: 1rem 0;">
+                </div>
+                <div class="metrics-row">
+                    <div class="metric-item">
+                        <div class="metric-lbl">R² Test Score</div>
+                        <div class="metric-val">0.7555</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-lbl">MAE (Sai Số)</div>
+                        <div class="metric-val">3.13 tỷ</div>
+                    </div>
+                </div>
+                <p class="prod-desc">
+                    Sau khi căn chỉnh và huấn luyện lại để đảm bảo tính đồng nhất về số lượng đặc trưng đầu vào (61 đặc trưng sau One-Hot Encoding), mô hình XGBoost Nhà đất đạt độ chính xác R² = 0.7555. Điểm kiểm thử chéo vô cùng ổn định (sai số chuẩn chỉ ±0.0076).
+                </p>
+            </div>
+        </div>
+
+        <!-- SECTION 2: DETAILED EXPERIMENTATION TABLES -->
+        <div class="section-header">
+            <h2 class="section-title">📊 Kết Quả Thực Nghiệm Toàn Quốc</h2>
+            <p class="section-sub">Bảng thống kê và so sánh chi tiết hiệu năng của tất cả các phương pháp huấn luyện trên bộ dữ liệu toàn quốc.</p>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-headers">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-cc')">🏢 Phân Khúc Chung Cư</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-nd')">🏠 Phân Khúc Nhà Đất</button>
+            </div>
+
+            <!-- Tab Chung Cu -->
+            <div id="tab-cc" class="tab-content active">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thuật toán</th>
+                                <th>Cấu hình đặc trưng</th>
+                                <th>R² Test</th>
+                                <th>RMSE (tỷ)</th>
+                                <th>MAE (tỷ)</th>
+                                <th>MAPE (%)</th>
+                                <th>CV R² Mean</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td>XGBoost (Được chọn)</td>
+                                <td style="font-weight: 600;">Có City <span class="badge-table badge-green">Production</span></td>
+                                <td>0.6734</td>
+                                <td>3.1375</td>
+                                <td>1.6656</td>
+                                <td>24.6%</td>
+                                <td>0.6970 ± 0.0269</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost</td>
+                                <td>Không City</td>
+                                <td>0.6777</td>
+                                <td>3.1167</td>
+                                <td>1.6532</td>
+                                <td>24.5%</td>
+                                <td>0.6975 ± 0.0268</td>
+                            </tr>
+                            <tr>
+                                <td>Transformer (Học sâu)</td>
+                                <td>Có City <span class="badge-table badge-blue">Deep Learning</span></td>
+                                <td>0.6451</td>
+                                <td>3.1608</td>
+                                <td>1.7821</td>
+                                <td>26.4%</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>Có City</td>
+                                <td>0.6608</td>
+                                <td>3.1972</td>
+                                <td>1.7132</td>
+                                <td>25.2%</td>
+                                <td>0.6894 ± 0.0288</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>Không City</td>
+                                <td>0.6428</td>
+                                <td>3.2810</td>
+                                <td>1.8302</td>
+                                <td>27.8%</td>
+                                <td>0.6789 ± 0.0298</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Regression</td>
+                                <td>Có City</td>
+                                <td>0.6240</td>
+                                <td>3.3663</td>
+                                <td>2.0306</td>
+                                <td>33.1%</td>
+                                <td>0.6275 ± 0.0332</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Regression</td>
+                                <td>Không City</td>
+                                <td>0.6188</td>
+                                <td>3.3894</td>
+                                <td>2.0428</td>
+                                <td>33.4%</td>
+                                <td>0.6248 ± 0.0336</td>
+                            </tr>
+                            <tr>
+                                <td>Decision Tree</td>
+                                <td>Có City</td>
+                                <td>0.5354</td>
+                                <td>3.7421</td>
+                                <td>2.0285</td>
+                                <td>30.5%</td>
+                                <td>0.5726 ± 0.0424</td>
+                            </tr>
+                            <tr>
+                                <td>Decision Tree</td>
+                                <td>Không City</td>
+                                <td>0.5214</td>
+                                <td>3.7979</td>
+                                <td>2.1225</td>
+                                <td>32.6%</td>
+                                <td>0.5728 ± 0.0526</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h5>Biểu đồ so sánh các thuật toán (Chung cư)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/comparison_chart_chung_cu.png') }}" alt="ML Comparison Chung Cư" onclick="previewImage(this.src)">
+                    </div>
+                    <div class="chart-box">
+                        <h5>Biểu đồ hồi quy: XGBoost vs Transformer (Chung cư)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/transformer_vs_xgboost_cc.png') }}" alt="XGBoost vs Transformer CC" onclick="previewImage(this.src)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Nha Dat -->
+            <div id="tab-nd" class="tab-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thuật toán</th>
+                                <th>Cấu hình đặc trưng</th>
+                                <th>R² Test</th>
+                                <th>RMSE (tỷ)</th>
+                                <th>MAE (tỷ)</th>
+                                <th>MAPE (%)</th>
+                                <th>CV R² Mean</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td>XGBoost (Được chọn)</td>
+                                <td style="font-weight: 600;">Có City <span class="badge-table badge-green">Production</span></td>
+                                <td>0.7555</td>
+                                <td>5.9421</td>
+                                <td>3.1252</td>
+                                <td>25.8%</td>
+                                <td>0.7514 ± 0.0076</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost</td>
+                                <td>Không City</td>
+                                <td>0.7961</td>
+                                <td>5.4256</td>
+                                <td>2.8827</td>
+                                <td>26.1%</td>
+                                <td>0.7461 ± 0.0289</td>
+                            </tr>
+                            <tr>
+                                <td>Transformer (Học sâu)</td>
+                                <td>Có City <span class="badge-table badge-blue">Deep Learning</span></td>
+                                <td>0.7355</td>
+                                <td>6.0772</td>
+                                <td>3.2697</td>
+                                <td>30.3%</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>Có City</td>
+                                <td>0.7416</td>
+                                <td>6.1078</td>
+                                <td>3.0991</td>
+                                <td>27.4%</td>
+                                <td>0.7329 ± 0.0145</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>Không City</td>
+                                <td>0.7539</td>
+                                <td>5.9615</td>
+                                <td>3.2177</td>
+                                <td>30.1%</td>
+                                <td>0.7057 ± 0.0283</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Regression</td>
+                                <td>Có City</td>
+                                <td>0.6123</td>
+                                <td>7.4822</td>
+                                <td>4.1900</td>
+                                <td>42.1%</td>
+                                <td>0.5836 ± 0.0236</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Regression</td>
+                                <td>Không City</td>
+                                <td>0.6127</td>
+                                <td>7.4779</td>
+                                <td>4.1928</td>
+                                <td>42.2%</td>
+                                <td>0.5838 ± 0.0238</td>
+                            </tr>
+                            <tr>
+                                <td>Decision Tree</td>
+                                <td>Có City</td>
+                                <td>0.6189</td>
+                                <td>7.4182</td>
+                                <td>3.7645</td>
+                                <td>33.0%</td>
+                                <td>0.5785 ± 0.0327</td>
+                            </tr>
+                            <tr>
+                                <td>Decision Tree</td>
+                                <td>Không City</td>
+                                <td>0.6463</td>
+                                <td>7.1466</td>
+                                <td>3.9213</td>
+                                <td>35.2%</td>
+                                <td>0.5364 ± 0.0628</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h5>Biểu đồ so sánh các thuật toán (Nhà đất)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/comparison_chart_nha_dat.png') }}" alt="ML Comparison Nhà Đất" onclick="previewImage(this.src)">
+                    </div>
+                    <div class="chart-box">
+                        <h5>Biểu đồ hồi quy: XGBoost vs Transformer (Nhà đất)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/transformer_vs_xgboost_nd.png') }}" alt="XGBoost vs Transformer ND" onclick="previewImage(this.src)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: DEEP LEARNING VS TRADITIONAL ML -->
+        <div class="insight-section">
+            <div class="insight-grid">
+                <div class="insight-text">
+                    <h3>💡 Phân Tích: XGBoost vs Transformer</h3>
+                    <p>Trong thực nghiệm trên, mặc dù <strong>Transformer</strong> là một mô hình Deep Learning tiên tiến, nhưng <strong>XGBoost</strong> (Học máy truyền thống dựa trên cây quyết định) vẫn giành chiến thắng áp đảo về cả chỉ số R² và MAE.</p>
+                    
+                    <div class="insight-bullet">
+                        <div class="bullet-icon">📊</div>
+                        <div class="bullet-content">
+                            <h4>Kích thước dữ liệu trung bình</h4>
+                            <p>Các mô hình học sâu như Transformer đòi hỏi tập dữ liệu cực kỳ lớn (thường >50.000 mẫu) để hội tụ tốt. Với bộ dữ liệu 5.000–6.000 mẫu của chúng ta, thuật toán Boosted Trees (XGBoost) học các biên quyết định hiệu quả hơn nhiều.</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-bullet">
+                        <div class="bullet-icon">🔍</div>
+                        <div class="bullet-content">
+                            <h4>Đặc tính dữ liệu dạng bảng (Tabular Data)</h4>
+                            <p>Dữ liệu bất động sản chứa nhiều thuộc tính phân loại rời rạc (Quận/Huyện, Tỉnh, Hướng, Pháp lý). XGBoost kết hợp với mã hóa One-Hot tối ưu hóa việc phân nhánh trực tiếp trên các biến rời rạc này, tránh việc làm phẳng cấu trúc như mạng nơ-ron.</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-bullet">
+                        <div class="bullet-icon">⚡</div>
+                        <div class="bullet-content">
+                            <h4>Độ phức tạp và Khả năng giải thích (XAI)</h4>
+                            <p>XGBoost tính toán cực nhanh (<1 phút) và cho phép trích xuất Feature Importance rõ ràng trực tiếp cho ứng dụng. Transformer hoạt động như một hộp đen (black box) và mất nhiều thời gian huấn luyện (~10 phút).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid" style="grid-template-columns: 1fr; margin-top: 0;">
+                    <div class="chart-box" style="background: var(--colors-canvas);">
+                        <h5>Đường cong Training Loss (Transformer Chung cư)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/training_loss_cc.png') }}" alt="Training Loss CC" onclick="previewImage(this.src)">
+                    </div>
+                    <div class="chart-box" style="background: var(--colors-canvas);">
+                        <h5>Đường cong Training Loss (Transformer Nhà đất)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/training_loss_nd.png') }}" alt="Training Loss ND" onclick="previewImage(this.src)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: HANOI SPECIALIZED MODELS -->
+        <div class="section-header">
+            <h2 class="section-title">⚠️ Mô Hình Chuyên Biệt Hà Nội (Tham Khảo)</h2>
+            <p class="section-sub">Được huấn luyện trên tập dữ liệu con (Subset) chỉ gồm các bất động sản ở Hà Nội.</p>
+        </div>
+
+        <div style="background: var(--colors-canvas); border: 1px solid var(--colors-hairline); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow-sm);">
+            <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; color: #b45309; font-size: 0.88rem; font-weight: 500; display: flex; gap: 10px; align-items: center;">
+                <span>⚠️</span>
+                <span><strong>Cảnh báo thực nghiệm:</strong> Kích thước mẫu của tập Hà Nội rất nhỏ (Chung cư: 875 mẫu, Nhà đất: 2.174 mẫu), do đó các mô hình Hà Nội chỉ dùng để nghiên cứu tham khảo, không được tích hợp trực tiếp làm mô hình dự đoán chính trên hệ thống thực tế.</span>
+            </div>
+
+            <div class="tab-headers">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-hn-cc')">🏢 Chung cư Hà Nội</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-hn-nd')">🏠 Nhà đất Hà Nội</button>
+            </div>
+
+            <!-- Tab HN CC -->
+            <div id="tab-hn-cc" class="tab-content active">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thuật toán</th>
+                                <th>Cấu hình mô hình</th>
+                                <th>R² Test</th>
+                                <th>RMSE (tỷ)</th>
+                                <th>MAE (tỷ)</th>
+                                <th>MAPE (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td>XGBoost (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội</td>
+                                <td>0.6109</td>
+                                <td>3.0103</td>
+                                <td>1.7793</td>
+                                <td>20.5%</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost (Full Model)</td>
+                                <td>Mô hình Toàn quốc (đánh giá trên tập test Hà Nội)</td>
+                                <td>0.6313</td>
+                                <td>2.9302</td>
+                                <td>1.7874</td>
+                                <td>21.0%</td>
+                            </tr>
+                            <tr>
+                                <td>Transformer (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội (Học sâu)</td>
+                                <td>0.5945</td>
+                                <td>2.9478</td>
+                                <td>1.8691</td>
+                                <td>21.4%</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội</td>
+                                <td>0.5880</td>
+                                <td>3.0976</td>
+                                <td>1.8633</td>
+                                <td>21.7%</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest (Full Model)</td>
+                                <td>Mô hình Toàn quốc</td>
+                                <td>0.5782</td>
+                                <td>3.1342</td>
+                                <td>1.8635</td>
+                                <td>21.8%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h5>So sánh thuật toán (Chung cư Hà Nội)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/hanoi_comparison_chart_chung_cu.png') }}" alt="Comparison CC HN" onclick="previewImage(this.src)">
+                    </div>
+                    <div class="chart-box">
+                        <h5>XGBoost vs Transformer (Chung cư Hà Nội)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/transformer_vs_xgboost_cc_hn.png') }}" alt="XGBoost vs Transformer CC HN" onclick="previewImage(this.src)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab HN ND -->
+            <div id="tab-hn-nd" class="tab-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thuật toán</th>
+                                <th>Cấu hình mô hình</th>
+                                <th>R² Test</th>
+                                <th>RMSE (tỷ)</th>
+                                <th>MAE (tỷ)</th>
+                                <th>MAPE (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td>XGBoost (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội</td>
+                                <td>0.7391</td>
+                                <td>7.8578</td>
+                                <td>4.4163</td>
+                                <td>26.3%</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost (Full Model)</td>
+                                <td>Mô hình Toàn quốc (đánh giá trên tập test Hà Nội)</td>
+                                <td>0.7405</td>
+                                <td>7.8373</td>
+                                <td>4.4097</td>
+                                <td>26.7%</td>
+                            </tr>
+                            <tr>
+                                <td>Transformer (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội (Học sâu)</td>
+                                <td>0.6890</td>
+                                <td>8.7916</td>
+                                <td>4.9782</td>
+                                <td>30.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest (Full Model)</td>
+                                <td>Mô hình Toàn quốc</td>
+                                <td>0.7137</td>
+                                <td>8.2318</td>
+                                <td>4.6961</td>
+                                <td>27.8%</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest (Hanoi-Only)</td>
+                                <td>Chuyên biệt Hà Nội</td>
+                                <td>0.7057</td>
+                                <td>8.3458</td>
+                                <td>4.7524</td>
+                                <td>28.1%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h5>So sánh thuật toán (Nhà đất Hà Nội)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/hanoi_comparison_chart_nha_dat.png') }}" alt="Comparison ND HN" onclick="previewImage(this.src)">
+                    </div>
+                    <div class="chart-box">
+                        <h5>XGBoost vs Transformer (Nhà đất Hà Nội)</h5>
+                        <img class="chart-img" src="{{ url_for('static', filename='images/models/transformer_vs_xgboost_nd_hn.png') }}" alt="XGBoost vs Transformer ND HN" onclick="previewImage(this.src)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- POPUP PREVIEW -->
+    <div id="preview-overlay" class="preview-overlay" onclick="closePreview()">
+        <button class="preview-close">&times;</button>
+        <img id="preview-img" class="preview-img" src="" alt="Preview Image" onclick="event.stopPropagation()">
+    </div>
+
+    {% include '_footer.html' %}
+
+    <script>
+        function switchTab(evt, tabId) {
+            // Find parent of active tab headers
+            const headersContainer = evt.target.parentElement;
+            const tabContentContainer = headersContainer.parentElement;
+
+            // Remove active classes
+            headersContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            tabContentContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class
+            evt.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function previewImage(src) {
+            const overlay = document.getElementById('preview-overlay');
+            const img = document.getElementById('preview-img');
+            img.src = src;
+            overlay.classList.add('active');
+        }
+
+        function closePreview() {
+            const overlay = document.getElementById('preview-overlay');
+            overlay.classList.remove('active');
+        }
+    </script>
+</body>
+
+</html>

@@ -118,80 +118,135 @@ def user_from_google_id_token(id_token_value):
 
 
 # ==========================================
-# Khởi động app: Load model 1 lần duy nhất (Singleton Pattern)
+# ML Models: Load 2 model chuyên biệt (CC & NĐ) — kết quả thực nghiệm tốt nhất
+# Chung cư  → model_cc_with_city.pkl  (XGBoost có city, R²=0.6734, CV=0.6970±0.0269)
+# Nhà đất   → model_nd_with_city.pkl  (XGBoost có city, R²=0.7587, CV=0.7514±0.0076)
 # ==========================================
-models = {}
+ml_models = {}   # {'cc': pipeline, 'nd': pipeline}
+ml_fi     = {}   # {'cc': {feat: importance, ...}, 'nd': {...}}
+ML_MAE    = {'cc': 1.666, 'nd': 3.125}  # MAE thực nghiệm (tỷ VNĐ)
 
-def load_model(name):
-    # Lấy đường dẫn an toàn cho dù chạy từ root hay thư mục app/
-    model_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', f'{name}.pkl')
-    if not os.path.exists(model_path): # Fallback
-        model_path = f'models/{name}.pkl'
+def load_ml_models():
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    specs = [
+        ('cc', 'model_cc_with_city.pkl'),
+        ('nd', 'model_nd_with_city.pkl'),
+    ]
+    for key, filename in specs:
+        path = os.path.join(project_root, 'models', 'ml_traditional', 'national', filename)
+        if not os.path.exists(path):
+            path = f'models/ml_traditional/national/{filename}'
+        try:
+            with open(path, 'rb') as f:
+                pipeline = pickle.load(f)
+            ml_models[key] = pipeline
+            # Trích xuất Feature Importance từ Pipeline ngay khi load
+            try:
+                xgb_model   = pipeline.named_steps['model']
+                preprocessor = pipeline.named_steps['preprocessor']
+                num_cols     = list(preprocessor.transformers_[0][2])
+                ohe          = preprocessor.transformers_[1][1]
+                cat_cols     = list(preprocessor.transformers_[1][2])
+                ohe_names    = list(ohe.get_feature_names_out(cat_cols))
+                all_features = num_cols + ohe_names
+                ml_fi[key]   = dict(zip(all_features, xgb_model.feature_importances_))
+            except Exception as fe:
+                print(f'[WARNING] Khong lay duoc feature importance cho {key}: {fe}')
+                ml_fi[key] = {}
+            print(f'[OK] Da load thanh cong {filename}')
+        except FileNotFoundError:
+            print(f'[ERROR] Khong tim thay {path}')
+            ml_models[key] = None
+            ml_fi[key]     = {}
+
+load_ml_models()
+
+transformer_models = {}
+
+def load_transformer_models():
+    """Load all separate Transformer models (National & Hanoi-Only) without breaking the main web app."""
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base_models_dir = os.path.join(project_root, 'models', 'transformer')
+    
+    specs = [
+        ('cc_full', 'national', 'transformer_model_cc.pt', 'preprocessing_cc.pkl'),
+        ('nd_full', 'national', 'transformer_model_nd.pt', 'preprocessing_nd.pkl'),
+        ('cc_hn', 'hanoi_only', 'transformer_model_cc_hn.pt', 'preprocessing_cc_hn.pkl'),
+        ('nd_hn', 'hanoi_only', 'transformer_model_nd_hn.pt', 'preprocessing_nd_hn.pkl'),
+    ]
+    
     try:
-        with open(model_path, 'rb') as f:
-            models[name] = pickle.load(f)
-        print(f"[OK] Da load thanh cong {name}")
-    except FileNotFoundError:
-        print(f"[ERROR] Chua tim thay model {name}. Vui long chay file run_training.py truoc!")
-        models[name] = None
-
-# Load mô hình duy nhất đã được gộp bằng Pipeline
-load_model('best_model_pipeline')
-
-transformer_bundle = {}
-
-def load_transformer_model():
-    """Load optional Transformer experiment model without breaking the main web app."""
-    transformer_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'transformer')
-    output_dir = os.path.join(transformer_dir, 'outputs')
-    checkpoint_path = os.path.join(output_dir, 'transformer_model.pt')
-    preprocessing_path = os.path.join(output_dir, 'preprocessing.pkl')
-
-    if not (os.path.exists(checkpoint_path) and os.path.exists(preprocessing_path)):
-        print("[WARNING] Chua tim thay Transformer outputs, bo qua model Transformer")
-        return
-
-    try:
-        if transformer_dir not in sys.path:
-            sys.path.insert(0, transformer_dir)
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
         import torch
         from transformer_model import HousePriceTransformer
-
+        
         torch.set_num_threads(1)
-
-        with open(preprocessing_path, 'rb') as f:
-            preprocessing = pickle.load(f)
-
-        checkpoint = torch.load(checkpoint_path, map_location='cpu')
-        model = HousePriceTransformer(**checkpoint['model_params'])
-        model.load_state_dict(checkpoint['state_dict'])
-        model.eval()
-
-        transformer_bundle.update({
-            'torch': torch,
-            'model': model,
-            'preprocessing': preprocessing,
-        })
-        print("[OK] Da load thanh cong Transformer model")
+        
+        loaded_count = 0
+        for key, folder, ckpt_name, prep_name in specs:
+            ckpt_path = os.path.join(base_models_dir, folder, ckpt_name)
+            prep_path = os.path.join(base_models_dir, folder, prep_name)
+            
+            if os.path.exists(ckpt_path) and os.path.exists(prep_path):
+                with open(prep_path, 'rb') as f:
+                    prep = pickle.load(f)
+                checkpoint = torch.load(ckpt_path, map_location='cpu')
+                model = HousePriceTransformer(**checkpoint['model_params'])
+                model.load_state_dict(checkpoint['state_dict'])
+                model.eval()
+                
+                transformer_models[key] = {
+                    'model': model,
+                    'preprocessing': prep
+                }
+                loaded_count += 1
+        
+        if loaded_count > 0:
+            print(f"[OK] Da load thanh cong {loaded_count} Transformer models")
+            transformer_models['torch'] = torch
+        else:
+            print("[WARNING] Khong tim thay bat ky Transformer outputs nao, bo qua")
     except Exception as e:
-        transformer_bundle.clear()
-        print("[WARNING] Khong load duoc Transformer model:", e)
+        transformer_models.clear()
+        print("[WARNING] Khong load duoc Transformer models:", e)
 
 def predict_with_transformer(input_data):
-    if not transformer_bundle:
+    if not transformer_models or 'torch' not in transformer_models:
         return None
 
-    torch = transformer_bundle['torch']
-    model = transformer_bundle['model']
-    preprocessing = transformer_bundle['preprocessing']
+    torch = transformer_models['torch']
+    row = input_data.iloc[0]
+    loai_bds = str(row['loai_bds']).strip()
+    city = str(row['city']).strip()
+    
+    # Quyết định chọn mô hình phù hợp
+    is_hanoi = (city == "Hà Nội" or city == "Hanoi")
+    
+    if loai_bds == "chung_cu":
+        model_key = 'cc_hn' if (is_hanoi and 'cc_hn' in transformer_models) else 'cc_full'
+    else:
+        model_key = 'nd_hn' if (is_hanoi and 'nd_hn' in transformer_models) else 'nd_full'
+        
+    bundle = transformer_models.get(model_key)
+    if not bundle:
+        # Fallback về model full
+        fallback_key = 'cc_full' if loai_bds == "chung_cu" else 'nd_full'
+        bundle = transformer_models.get(fallback_key)
+        if not bundle:
+            return None
+
+    model = bundle['model']
+    preprocessing = bundle['preprocessing']
 
     numeric_features = preprocessing['numeric_features']
     categorical_features = preprocessing['categorical_features']
 
+    # StandardScaler
     numeric = preprocessing['scaler'].transform(input_data[numeric_features])
 
+    # Label encode
     cat_ids = []
-    row = input_data.iloc[0]
     for col in categorical_features:
         mapping = preprocessing['category_mappings'][col]
         cat_ids.append(mapping.get(str(row[col]), 0))
@@ -199,23 +254,14 @@ def predict_with_transformer(input_data):
     with torch.no_grad():
         output = model(
             torch.tensor(numeric, dtype=torch.float32),
-            torch.tensor([cat_ids], dtype=torch.long),
+            torch.tensor([cat_ids], dtype=torch.long)
         )
     return float(output.item())
 
-load_transformer_model()
+load_transformer_models()
 
-# Load metadata (MAE, Features importance, etc.)
-model_metadata = {}
-try:
-    meta_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'models', 'model_meta.pkl')
-    if not os.path.exists(meta_path): meta_path = 'models/model_meta.pkl'
-    with open(meta_path, 'rb') as f:
-        model_metadata = pickle.load(f)
-    print("[OK] Da load thanh cong model_meta")
-except:
-    model_metadata = {'metrics': {'MAE': 0.85}, 'feature_names': []}
-    print("[WARNING] Khong tim thay model_meta.pkl, dung mac dinh")
+# Model metadata được tích hợp trực tiếp vào ml_models & ml_fi ở trên
+# MAE thực nghiệm: CC=1.666 tỷ, NĐ=2.995 tỷ (xem MODEL_COMPARISON_REPORT.md)
 
 # Load data cho gợi ý căn nhà tương tự
 dataframes = {}
@@ -391,6 +437,10 @@ def analytics():
 def about():
     return render_template('about.html', user=session.get('user'))
 
+@app.route('/models')
+def models_comparison():
+    return render_template('models.html', user=session.get('user'))
+
 @app.route('/news')
 def news():
     return render_template('news.html', user=session.get('user'))
@@ -559,21 +609,26 @@ def predict():
         for c in ['city', 'district', 'direction', 'furniture_std', 'legal_std', 'loai_bds']:
             input_data[c] = input_data[c].astype(str)
         
-        # 2. Đưa thẳng DataFrame vào model dự đoán
-        model = models.get('best_model_pipeline')
+        # 2. Chọn model chuyên biệt theo loại BĐS rồi dự đoán
+        model_key = 'cc' if property_type == 'chung_cu' else 'nd'
+        model = ml_models.get(model_key)
+
+        # Lọc chỉ giữ đúng các cột model cần (tránh passthrough gây lỗi feature mismatch)
+        CC_COLS = ['area_m2', 'bedrooms_num', 'city', 'district', 'direction', 'furniture_std', 'legal_std']
+        ND_COLS = ['area_m2', 'bedrooms_num', 'floors_num', 'frontage_m', 'road_width_m',
+                   'city', 'district', 'direction', 'furniture_std', 'legal_std']
+        model_input = input_data[CC_COLS if model_key == 'cc' else ND_COLS]
+
         prediction_billion = 0
         if model:
-            prediction_billion = float(model.predict(input_data)[0])
+            prediction_billion = float(model.predict(model_input)[0])
             prediction_vnd = float(prediction_billion * 1_000_000_000)
         else:
             prediction_billion = float(data.get('area', 0)) * 0.1
             prediction_vnd = float(prediction_billion * 1_000_000_000)
 
-        # Tạo DataFrame riêng cho Transformer có thêm tinh_thanh
-        input_data_transformer = input_data.copy()
-        input_data_transformer['tinh_thanh'] = str(data.get('province', 'Khác'))
-
-        transformer_prediction_billion = predict_with_transformer(input_data_transformer)
+        # Gọi dự đoán từ mô hình Transformer phù hợp
+        transformer_prediction_billion = predict_with_transformer(input_data)
         transformer_result = None
         if transformer_prediction_billion is not None:
             transformer_result = {
@@ -583,9 +638,9 @@ def predict():
             }
             
         # 3. Tính toán Feature Contributions (XAI) & Confidence Interval
-        mae = model_metadata.get('metrics', {}).get('MAE', 0.85)
-        fi = model_metadata.get('feature_importance', {})
-        total_importance = model_metadata.get('total_importance', 1.0)  # Tổng importance từ training
+        mae = ML_MAE.get(model_key, 1.5)
+        fi = ml_fi.get(model_key, {})
+        total_importance = sum(fi.values()) or 1.0
         
         # Mapping tên tiếng Việt chuyên nghiệp
         human_names = {
@@ -728,6 +783,11 @@ def predict():
             'price_per_m2': round(price_per_m2, 1),
             'district_avg_m2': round(district_avg_m2, 1),
             'mae': round(mae, 2),
+            'model_info': {
+                'name': 'XGBoost Regressor (Đặc trưng Tỉnh/Thành)',
+                'r2': 0.6734 if model_key == 'cc' else 0.7555,
+                'mae': round(mae, 2)
+            },
             'transformer_prediction': transformer_result,
             'contributions': contributions,
             'similar_properties': similar_properties,
