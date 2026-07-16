@@ -50,10 +50,6 @@
                             <div class="display-md" style="color: var(--colors-ink);">43</div>
                             <div class="caption">Quận/Huyện</div>
                         </div>
-                        <div>
-                            <div class="display-md" style="color: var(--colors-ink);">AI</div>
-                            <div class="caption">XGBoost</div>
-                        </div>
                     </div>
                 </div>
 
@@ -71,11 +67,13 @@
                         <div class="form-grid">
                             <div class="input-group">
                                 <label for="area">Diện tích (m²)</label>
-                                <input type="number" id="area" name="area" class="text-input" step="0.1" placeholder="VD: 50">
+                                <input type="number" id="area" name="area" class="text-input" step="0.1"
+                                    placeholder="VD: 50">
                             </div>
                             <div class="input-group">
                                 <label for="bedrooms">Số phòng ngủ</label>
-                                <input type="number" id="bedrooms" name="bedrooms" class="text-input" min="0" placeholder="VD: 2">
+                                <input type="number" id="bedrooms" name="bedrooms" class="text-input" min="0"
+                                    placeholder="VD: 2">
                             </div>
                             <div class="input-group">
                                 <label for="province">Tỉnh/Thành phố</label>
@@ -177,34 +175,53 @@
                     <div class="prediction-price-box">
                         <div style="font-size: 32px; margin-bottom: 8px;">💰</div>
                         <p class="result-label" style="color: var(--colors-ink); font-weight: 500;">Giá ước tính</p>
-                        <h3 id="predicted-price" class="result-price" style="font-size: 2.5rem; margin-top: 8px; color: var(--colors-primary); margin-bottom: 4px;">--</h3>
-                        <div id="price-per-m2" style="font-size: 1.1rem; font-weight: 500; color: var(--colors-ink); margin-bottom: 6px;"></div>
-                        <div id="model-used-info" style="font-size: 0.85rem; color: var(--colors-primary); font-weight: 600; margin-bottom: 10px; display: none;"></div>
-                        <div id="district-comparison-badge" style="display: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; width: fit-content;"></div>
-                        <div id="confidence-interval" style="font-size: 0.9rem; color: var(--colors-muted); font-weight: 500;"></div>
+                        <h3 id="predicted-price" class="result-price"
+                            style="font-size: 2.5rem; margin-top: 8px; color: var(--colors-primary); margin-bottom: 4px;">
+                            --</h3>
+                        <div id="price-per-m2"
+                            style="font-size: 1.1rem; font-weight: 500; color: var(--colors-ink); margin-bottom: 6px;">
+                        </div>
+                        <div id="model-used-info"
+                            style="font-size: 0.85rem; color: var(--colors-primary); font-weight: 600; margin-bottom: 10px; display: none;">
+                        </div>
+                        <div id="district-comparison-badge"
+                            style="display: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; width: fit-content;">
+                        </div>
+                        <div id="confidence-interval"
+                            style="font-size: 0.9rem; color: var(--colors-muted); font-weight: 500;"></div>
                         <div id="transformer-comparison" class="transformer-comparison" style="display: none;">
                             <span class="transformer-label">Transformer thử nghiệm</span>
                             <strong id="transformer-price">--</strong>
                             <small id="transformer-diff"></small>
                         </div>
-                        <p id="result-message" class="body-md" style="margin-top: 16px; color: var(--colors-muted); font-size: 0.9rem;"></p>
+                        <p id="result-message" class="body-md"
+                            style="margin-top: 16px; color: var(--colors-muted); font-size: 0.9rem;"></p>
                     </div>
 
-                    <div id="explanation-container" class="explanation-box" style="display: none; margin-top: 24px; background: var(--colors-surface-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline);">
-                        <h4 style="font-size: 1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px;">
+                    <div id="explanation-container" class="explanation-box"
+                        style="display: none; margin-top: 24px; background: var(--colors-surface-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline);">
+                        <h4
+                            style="font-size: 1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px;">
                             <i class="fa-solid fa-chart-bar" style="color: var(--colors-primary);"></i>
                             Phân tích mức độ ảnh hưởng
                         </h4>
-                        <div id="explanation-list" style="display: flex; flex-direction: column; gap: 14px; max-height: 250px; overflow-y: auto; padding-right: 6px;"></div>
+                        <div id="explanation-list"
+                            style="display: flex; flex-direction: column; gap: 14px; max-height: 250px; overflow-y: auto; padding-right: 6px;">
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="prediction-modal-right">
-                    <div id="similar-properties-container" style="display: none; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline); height: 100%; display: flex; flex-direction: column;">
-                        <h4 style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px; flex-shrink: 0;">
-                            <i class="fa-solid fa-house-chimney" style="color: var(--colors-primary); margin-right: 8px;"></i>Tham khảo nhà tương tự
+                    <div id="similar-properties-container"
+                        style="display: none; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--colors-hairline); height: 100%; display: flex; flex-direction: column;">
+                        <h4
+                            style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid var(--colors-hairline); padding-bottom: 12px; flex-shrink: 0;">
+                            <i class="fa-solid fa-house-chimney"
+                                style="color: var(--colors-primary); margin-right: 8px;"></i>Tham khảo nhà tương tự
                         </h4>
-                        <div id="similar-list" class="similar-list-scrollable" style="flex-grow: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 12px;"></div>
+                        <div id="similar-list" class="similar-list-scrollable"
+                            style="flex-grow: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 12px;">
+                        </div>
                     </div>
                 </div>
             </div>

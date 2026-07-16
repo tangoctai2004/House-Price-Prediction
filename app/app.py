@@ -433,9 +433,7 @@ def analytics():
                            stats_json=_json.dumps(stats, ensure_ascii=False),
                            user=session.get('user'))
 
-@app.route('/about')
-def about():
-    return render_template('about.html', user=session.get('user'))
+
 
 @app.route('/models')
 def models_comparison():
