@@ -28,7 +28,6 @@
 - [Mô Hình AI](#-mô-hình-ai)
 - [Dữ Liệu](#-dữ-liệu)
 - [API Endpoints](#-api-endpoints)
-- [Thành Viên Nhóm](#-thành-viên-nhóm)
 
 ---
 
@@ -645,34 +644,4 @@ curl -X POST http://localhost:5003/predict \
 | **Web Scraping** | curl_cffi, BeautifulSoup4 |
 | **Authentication** | Flask Session, Google OAuth 2.0 |
 
----
 
-## 👥 Thành Viên Nhóm
-
-<div align="center">
-
-| Thành viên | Vai trò |
-|------------|---------|
-| **Tạ Ngọc Tài** | Team Lead / Full-stack Developer |
-| **Trịnh Quang Thái** | ML Engineer / Data Scientist |
-| **Nguyễn Đức Đồng** | Frontend Developer |
-| **Nguyễn Hoàng Đức** | Data Analyst / Web Scraping |
-| **Bùi Lê Mai Anh** | UI/UX Designer / Tester |
-
-</div>
-
----
-
-## 📄 License
-
-Project được phát triển phục vụ mục đích học tập và nghiên cứu.
-
----
-
-<div align="center">
-
-**Made with ❤️ by ProphetEstate Team**
-
-*Đồ án Khoa học Dữ liệu — 2025*
-
-</div>
