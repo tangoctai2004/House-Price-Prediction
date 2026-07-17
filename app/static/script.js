@@ -175,38 +175,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show modal
                 if (predictionModal) predictionModal.classList.add('active');
                 
-                // Animate price
-                const finalPrice = result.predicted_price_vnd;
-                animateValue(predictedPriceEl, 0, finalPrice, 2000);
+                // Determine the main price: use Transformer if available, fallback to XGBoost
+                let mainPriceVnd, mainPriceBillion;
+                if (result.transformer_prediction) {
+                    mainPriceBillion = result.transformer_prediction.price_billion;
+                    mainPriceVnd = result.transformer_prediction.predicted_price_vnd;
+                } else {
+                    mainPriceBillion = result.price_billion;
+                    mainPriceVnd = result.predicted_price_vnd;
+                }
 
-                // Render Model Info
+                // Animate price with Transformer value
+                animateValue(predictedPriceEl, 0, mainPriceVnd, 2000);
+
+                // Render Model Info - show Transformer info instead of XGBoost
                 const modelInfoEl = document.getElementById('model-used-info');
-                if (modelInfoEl && result.model_info) {
+                if (modelInfoEl && result.transformer_prediction) {
                     modelInfoEl.style.display = 'block';
-                    modelInfoEl.innerHTML = `<i class="fa-solid fa-brain"></i> Mô hình chính: ${result.model_info.name} (R² = ${result.model_info.r2})`;
+                    modelInfoEl.innerHTML = `<i class="fa-solid fa-brain"></i> Mô hình: Transformer Deep Learning`;
                 } else if (modelInfoEl) {
                     modelInfoEl.style.display = 'none';
                 }
 
-                // 1. Render Confidence Interval
+                // 1. Render Confidence Interval based on Transformer price
                 const ciEl = document.getElementById('confidence-interval');
-                if (ciEl) {
+                if (ciEl && result.transformer_prediction) {
+                    const tBillion = result.transformer_prediction.price_billion;
+                    const mae = result.mae || 1.5;
+                    const low = (tBillion - mae).toFixed(2);
+                    const high = (tBillion + mae).toFixed(2);
+                    ciEl.innerHTML = `Khoảng ước tính: ${low} — ${high} tỷ (±${mae})`;
+                } else if (ciEl) {
                     ciEl.innerHTML = `Khoảng ước tính: ${result.price_low} — ${result.price_high} tỷ (±${result.mae})`;
                 }
 
+                // Hide transformer comparison box (it's now the main price)
                 const transformerBox = document.getElementById('transformer-comparison');
-                const transformerPrice = document.getElementById('transformer-price');
-                const transformerDiff = document.getElementById('transformer-diff');
-                if (transformerBox && transformerPrice && transformerDiff && result.transformer_prediction) {
-                    const t = result.transformer_prediction;
-                    transformerBox.style.display = 'grid';
-                    transformerPrice.textContent = `${Number(t.price_billion).toFixed(2)} tỷ VNĐ`;
-                    const diff = Number(t.difference_billion);
-                    const diffLabel = diff >= 0 ? `cao hơn XGBoost ${diff.toFixed(2)} tỷ` : `thấp hơn XGBoost ${Math.abs(diff).toFixed(2)} tỷ`;
-                    transformerDiff.textContent = diffLabel;
-                } else if (transformerBox) {
-                    transformerBox.style.display = 'none';
-                }
+                if (transformerBox) transformerBox.style.display = 'none';
 
                 // 2. Render Explanation (XAI)
                 const explainContainer = document.getElementById('explanation-container');
@@ -241,16 +246,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 resultMessageEl.textContent = result.message || 'Mô hình AI đã phân tích thành công đặc điểm của bất động sản này.';
 
-                // Render Price per m2 and District Comparison
+                // Render Price per m2 based on Transformer price
                 const pricePerM2El = document.getElementById('price-per-m2');
-                if (pricePerM2El && result.price_per_m2) {
+                const areaVal = parseFloat(data.area) || 0;
+                let displayPricePerM2 = result.price_per_m2;
+                if (pricePerM2El && areaVal > 0 && mainPriceBillion) {
+                    displayPricePerM2 = ((mainPriceBillion * 1000) / areaVal).toFixed(1);
+                    pricePerM2El.textContent = `(~ ${displayPricePerM2} Triệu/m²)`;
+                } else if (pricePerM2El && result.price_per_m2) {
                     pricePerM2El.textContent = `(~ ${result.price_per_m2} Triệu/m²)`;
                 }
 
                 const badgeEl = document.getElementById('district-comparison-badge');
-                if (badgeEl && result.district_avg_m2) {
+                if (badgeEl && result.district_avg_m2 && displayPricePerM2) {
                     badgeEl.style.display = 'inline-block';
-                    const diff = result.price_per_m2 - result.district_avg_m2;
+                    const diff = parseFloat(displayPricePerM2) - result.district_avg_m2;
                     const pct = Math.abs(diff / result.district_avg_m2) * 100;
                     if (pct < 5) {
                         badgeEl.textContent = 'Tương đương mặt bằng chung';

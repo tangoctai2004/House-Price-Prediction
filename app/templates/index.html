@@ -173,8 +173,8 @@
             <div class="prediction-modal-body">
                 <div class="prediction-modal-left">
                     <div class="prediction-price-box">
-                        <div style="font-size: 32px; margin-bottom: 8px;">💰</div>
-                        <p class="result-label" style="color: var(--colors-ink); font-weight: 500;">Giá ước tính</p>
+                        <div style="font-size: 32px; margin-bottom: 8px;">🤖</div>
+                        <p class="result-label" style="color: var(--colors-ink); font-weight: 500;">Giá dự đoán AI (Transformer)</p>
                         <h3 id="predicted-price" class="result-price"
                             style="font-size: 2.5rem; margin-top: 8px; color: var(--colors-primary); margin-bottom: 4px;">
                             --</h3>
@@ -189,11 +189,10 @@
                         </div>
                         <div id="confidence-interval"
                             style="font-size: 0.9rem; color: var(--colors-muted); font-weight: 500;"></div>
-                        <div id="transformer-comparison" class="transformer-comparison" style="display: none;">
-                            <span class="transformer-label">Transformer thử nghiệm</span>
-                            <strong id="transformer-price">--</strong>
-                            <small id="transformer-diff"></small>
-                        </div>
+                        <!-- Transformer comparison box hidden - now transformer is the main price -->
+                        <div id="transformer-comparison" style="display: none !important;"></div>
+                        <div id="transformer-price" style="display: none;"></div>
+                        <div id="transformer-diff" style="display: none;"></div>
                         <p id="result-message" class="body-md"
                             style="margin-top: 16px; color: var(--colors-muted); font-size: 0.9rem;"></p>
                     </div>

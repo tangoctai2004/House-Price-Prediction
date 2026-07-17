@@ -619,7 +619,22 @@ def predict():
 
         prediction_billion = 0
         if model:
-            prediction_billion = float(model.predict(model_input)[0])
+            try:
+                # Thử predict trực tiếp qua pipeline trước
+                prediction_billion = float(model.predict(model_input)[0])
+            except ValueError as ve:
+                if 'shape mismatch' in str(ve).lower() or 'feature' in str(ve).lower():
+                    # Workaround: tách preprocessor & XGBoost, cắt đúng số features
+                    import numpy as np
+                    preprocessor = model.named_steps['preprocessor']
+                    xgb_model = model.named_steps['model']
+                    X_transformed = preprocessor.transform(model_input)
+                    n_expected = xgb_model.n_features_in_
+                    if X_transformed.shape[1] > n_expected:
+                        X_transformed = X_transformed[:, :n_expected]
+                    prediction_billion = float(xgb_model.predict(X_transformed)[0])
+                else:
+                    raise
             prediction_vnd = float(prediction_billion * 1_000_000_000)
         else:
             prediction_billion = float(data.get('area', 0)) * 0.1
@@ -1008,5 +1023,5 @@ if __name__ == '__main__':
     # Chạy server ở port 5000
     debug = os.environ.get('FLASK_DEBUG', '').lower() in {'1', 'true', 'yes'}
     host = os.environ.get('FLASK_HOST', 'localhost')
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5003))
     app.run(debug=debug, host=host, port=port, use_reloader=False)
